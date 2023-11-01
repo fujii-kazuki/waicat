@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_11_01_144618) do
+ActiveRecord::Schema.define(version: 2023_11_01_144812) do
 
   create_table "admins", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -74,6 +74,13 @@ ActiveRecord::Schema.define(version: 2023_11_01_144618) do
     t.date "publication_date", null: false
     t.date "publication_deadline", null: false
     t.integer "publication_status", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "chatroom_users", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "chatroom_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
