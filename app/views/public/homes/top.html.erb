@@ -1,2 +1,6 @@
 <h1>Public::Homes#top</h1>
 <p>Find me in app/views/public/homes/top.html.erb</p>
+
+<% if user_signed_in? %>
+  <%= link_to '会員退会', users_leave_path, method: :patch %>
+<% end %>
