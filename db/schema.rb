@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_11_01_130543) do
+ActiveRecord::Schema.define(version: 2023_11_01_141351) do
 
   create_table "admins", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -22,6 +22,33 @@ ActiveRecord::Schema.define(version: 2023_11_01_130543) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["email"], name: "index_admins_on_email", unique: true
     t.index ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true
+  end
+
+  create_table "cats", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.string "publication_title", default: "", null: false
+    t.string "name", default: "", null: false
+    t.float "age", null: false
+    t.integer "gender", null: false
+    t.float "weight", null: false
+    t.string "breed", default: "", null: false
+    t.string "animal_print", default: "", null: false
+    t.string "hair_length", default: "", null: false
+    t.boolean "castration_flag", default: false, null: false
+    t.boolean "vaccine_flag", default: false, null: false
+    t.string "postal_code", default: "", null: false
+    t.string "prefecture", default: "", null: false
+    t.string "municipalitie", default: "", null: false
+    t.text "background"
+    t.text "personality"
+    t.text "health"
+    t.text "delivery_place"
+    t.text "remarks"
+    t.date "publication_date", null: false
+    t.date "publication_deadline", null: false
+    t.integer "publication_status", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "users", force: :cascade do |t|
