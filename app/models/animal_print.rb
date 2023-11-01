@@ -1,0 +1,2 @@
+class AnimalPrint < ApplicationRecord
+end
