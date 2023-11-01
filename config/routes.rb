@@ -70,7 +70,7 @@ Rails.application.routes.draw do
   }
 
   namespace :admin do
-    get '/' => 'homes#top', as: 'root'
+    get '/' => 'homes#top', as: 'top'
 
     # admin/catsコントローラー
     resources :cats, only: [:index, :show] do
