@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  devise_for :admins
+  devise_for :users
   root 'public/homes#top'
 
   ################## 利用者側 ##################  
