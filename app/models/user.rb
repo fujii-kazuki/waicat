@@ -2,7 +2,7 @@ class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable
+         :recoverable, :rememberable
 
   has_many :cats
   has_many :candicates
@@ -14,9 +14,10 @@ class User < ApplicationRecord
   has_many :chatroom_users
   has_many :contacts
 
-  validates :name, :postal_code, :address, :telephone_number, presence: true
-  validates :email, uniqueness: true
-  validates :telephone_number, format: { with: /\A\d{10,11}\z/ }
-  validates :postal_code, format: { with: /\A\d{7}\z/ }
+  validates :name, presence: true
+  validates :postal_code, presence: true, format: { with: /\A\d{7}\z/ }
+  validates :address, presence: true
+  validates :telephone_number, presence: true, format: { with: /\A\d{10,11}\z/ }
 
+  devise :validatable
 end
