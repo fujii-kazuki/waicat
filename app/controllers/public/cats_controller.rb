@@ -6,6 +6,7 @@ class Public::CatsController < ApplicationController
   end
 
   def show
+    @cat = Cat.find(params[:id])
   end
 
   def new
