@@ -1,2 +1,23 @@
 <h1>Public::Cats#index</h1>
 <p>Find me in app/views/public/cats/index.html.erb</p>
+
+<% if @cats.any? %>
+  <ul>
+    <% @cats.each do |cat| %>
+      <li>
+        <p>ID：<%= cat.id %></p>
+        <p>お名前：<%= cat.name %></p>
+        <p>年齢：<%= cat.age %></p>
+        <p>性別：<%= cat.gender_i18n %></p>
+        <p>種類：<%= cat.breed %></p>
+        <p>所在地：<%= cat.prefecture + cat.municipalitie %></p>
+        <p>掲載日：<%= cat.publication_date %></p>
+        <p>掲載期限：<%= cat.publication_deadline %></p>
+        <p>投稿ステータス：<%= cat.publication_status_i18n %></p>
+        <%= link_to '詳細へ', cat_path(cat.id) %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>現在里親募集中の猫ちゃんはいないよ！</p>
+<% end %>

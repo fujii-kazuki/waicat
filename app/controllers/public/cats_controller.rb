@@ -1,5 +1,8 @@
 class Public::CatsController < ApplicationController
+  before_action :authenticate_user!
+
   def index
+    @cats = Cat.all
   end
 
   def show
