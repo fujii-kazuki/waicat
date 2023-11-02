@@ -35,3 +35,37 @@ User.create!(
     password: '000000'
   )
 end
+
+# 猫ちゃん
+time_from = Time.zone.parse('2022-01-01 00:00:00')
+time_to = Time.zone.now
+15.times do |num|
+  num += 1
+  publication_date = rand(time_from...time_to)
+  publication_deadline = publication_date.since(rand(5..30).days)
+
+  Cat.create!(
+    user_id: num,
+    publication_title: "タイトル-#{num}",
+    name: "#{num}にゃん",
+    age: Random.rand(12.5).ceil(1),
+    gender: rand(0..1),
+    weight: Random.rand(8.5).ceil(1),
+    breed: '種類',
+    animal_print: '毛の柄',
+    hair_length: rand(0..1),
+    castration_flag: [true, false].sample,
+    vaccine_flag: [true, false].sample,
+    postal_code: '1234567',
+    prefecture: '都道府県',
+    municipalitie: '市区町村',
+    background: '里親募集の経緯',
+    personality: '性格',
+    health: '健康状態',
+    delivery_place: '譲渡場所',
+    remarks: '備考',
+    publication_date: publication_date,
+    publication_deadline: publication_deadline,
+    publication_status: rand(0..5)
+  )
+end
