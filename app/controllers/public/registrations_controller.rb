@@ -50,13 +50,13 @@ class Public::RegistrationsController < Devise::RegistrationsController
   #   devise_parameter_sanitizer.permit(:account_update, keys: [:attribute])
   # end
 
-  # The path used after sign up.
+  # 新規登録後にマイページへリダイレクト
   def after_sign_up_path_for(resource)
-    root_path
+    users_my_page_path	
   end
 
   # The path used after sign up for inactive accounts.
   def after_inactive_sign_up_path_for(resource)
-    root_path
+    users_my_page_path	
   end
 end
