@@ -13,8 +13,19 @@ Admin.create!(
   password: 'adminmin'
 )
 
+# ゲストユーザー
+User.create!(
+  name: 'ゲストユーザー',
+  email: 'guest@example.com',
+  postal_code: '1234567',
+  address: '**********',
+  telephone_number: '09012345678',
+  password: SecureRandom.urlsafe_base64
+)
+
 # 会員
 15.times do |num|
+  num += 1
   User.create!(
     name: "猫山太郎-#{num}",
     email: "sample@sample#{num}.jp",
