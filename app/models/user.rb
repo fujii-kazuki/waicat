@@ -20,4 +20,20 @@ class User < ApplicationRecord
   validates :telephone_number, presence: true, format: { with: /\A\d{10,11}\z/ }
 
   devise :validatable
+  
+  def self.guest
+    user = find_or_create_by!(email: 'guest@example.com') do |user|
+      user.name = 'ゲストユーザー'
+      user.postal_code = '1234567'
+      user.address = '**********'
+      user.telephone_number = '09012345678'
+      user.password = SecureRandom.urlsafe_base64
+    end
+    user.update(deleted_flag: false)
+    return user
+  end
+
+  def is_guest_user?
+    email == 'guest@example.com' ? true : false
+  end
 end
