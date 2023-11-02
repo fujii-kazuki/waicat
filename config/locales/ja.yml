@@ -1,5 +1,19 @@
 ja:
   enums:
+    cat:
+      gender:
+        male: 'オス'
+        female: 'メス'
+      hair_length:
+        short: '短毛'
+        long: '長毛'
+      publication_status:
+        draft: '下書き'
+        public: '公開'
+        private: '非公開'
+        in_consultation: '相談中'
+        recruitment_closed: '募集終了'
+        foster_parents_decided: '里親決定'
   activerecord:
     errors:
       messages:
