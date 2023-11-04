@@ -22,7 +22,7 @@
 <p>備考：<%= @cat.remarks %></p>
 <p>掲載期限：<%= @cat.publication_deadline %></p>
 
-<%= form_with model: @cat do |f| %>
+<%= form_with model: @cat, method: "#{:patch if params[:edit]}" do |f| %>
   <%= f.hidden_field :publication_title %>
   <%= f.hidden_field :name %>
   <%= f.hidden_field :age %>
@@ -43,6 +43,6 @@
   <%= f.hidden_field :remarks %>
   <%= f.hidden_field :publication_deadline %>
 
-  <%= f.submit '戻る', name: :back %>
-  <%= f.submit '里親の募集を開始' %>
+  <%= f.submit '戻る', name: "#{params[:new] ? :back_new : :back_edit }" %>
+  <%= f.submit params[:new] ? '里親募集を開始' : '掲載の内容を更新' %>
 <% end %>

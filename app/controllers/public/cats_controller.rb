@@ -15,13 +15,14 @@ class Public::CatsController < ApplicationController
 
   def create
     @cat = Cat.new(cat_params)
-    @cat.user_id = current_user.id
-    @cat.publication_date = Time.zone.now
-    @cat.publication_status = 1
-
-    if params[:back]
+    
+    # 戻るリンクを選択した場合
+    if params[:back_new]
       render :new
     else
+      @cat.user_id = current_user.id
+      @cat.publication_date = Time.zone.now
+      @cat.publication_status = 1
       @cat.save
       flash[:notice] = '掲載が完了しました。'
       redirect_to cat_path(@cat.id)
@@ -29,18 +30,38 @@ class Public::CatsController < ApplicationController
   end
 
   def edit
+    @cat = Cat.find(params[:id])
+  end
+
+  def update
+    @cat = Cat.find(params[:id])
+    
+    # 戻るリンクを選択した場合
+    if params[:back_edit]
+      set_params(@cat)
+      render :edit
+    else
+      @cat.update(cat_params)
+      flash[:notice] = '掲載の更新が完了しました。'
+      redirect_to cat_path(@cat.id)
+    end
   end
 
   def confirm
-    @cat = Cat.new(cat_params)
+    # 新規掲載フォームからの確認の場合
+    if params[:new]
+      @cat = Cat.new(cat_params)
+      if @cat.invalid?
+        render :new
+      end
 
-    # 仮ステータス
-    @cat.user_id = 1
-    @cat.publication_date = Time.zone.now
-    @cat.publication_status = 0
-
-    if @cat.invalid?
-      render :new
+    # 掲載編集フォームからの確認の場合
+    elsif params[:edit]
+      @cat = Cat.find(params[:cat][:id])
+      set_params(@cat)
+      if @cat.invalid?
+        render :edit
+      end
     end
   end
 
@@ -52,6 +73,7 @@ class Public::CatsController < ApplicationController
   # ストロングパラメーター
   def cat_params
     params.require(:cat).permit(
+      :user_id,
       :publication_title,
       :name,
       :age,
@@ -70,7 +92,31 @@ class Public::CatsController < ApplicationController
       :health,
       :delivery_place,
       :remarks,
-      :publication_deadline
+      :publication_date,
+      :publication_deadline,
+      :publication_status
     )
+  end
+
+  def set_params(cat)
+    cat.publication_title = params[:cat][:publication_title]
+    cat.name = params[:cat][:name]
+    cat.age = params[:cat][:age]
+    cat.gender = params[:cat][:gender]
+    cat.weight = params[:cat][:weight]
+    cat.breed = params[:cat][:breed]
+    cat.animal_print = params[:cat][:animal_print]
+    cat.hair_length = params[:cat][:hair_length]
+    cat.castration_flag = params[:cat][:castration_flag]
+    cat.vaccine_flag = params[:cat][:vaccine_flag]
+    cat.postal_code = params[:cat][:postal_code]
+    cat.prefecture = params[:cat][:prefecture]
+    cat.municipalitie = params[:cat][:municipalitie]
+    cat.background = params[:cat][:background]
+    cat.personality = params[:cat][:personality]
+    cat.health = params[:cat][:health]
+    cat.delivery_place = params[:cat][:delivery_place]
+    cat.remarks = params[:cat][:remarks]
+    cat.publication_deadline = params[:cat][:publication_deadline]
   end
 end
