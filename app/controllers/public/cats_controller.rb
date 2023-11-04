@@ -65,6 +65,12 @@ class Public::CatsController < ApplicationController
     end
   end
 
+  def destroy
+    Cat.find(params[:id]).destroy
+    flash[:notice] = '掲載を削除しました。'
+    redirect_to cats_path
+  end
+
   def thanks
   end
 
