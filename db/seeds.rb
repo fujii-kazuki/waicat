@@ -124,6 +124,6 @@ time_to = Time.zone.now
     remarks: '備考',
     publication_date: publication_date,
     publication_deadline: publication_deadline,
-    publication_status: rand(0..5)
+    publication_status: rand(0..6)
   )
 end
