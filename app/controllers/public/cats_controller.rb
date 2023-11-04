@@ -39,6 +39,7 @@ class Public::CatsController < ApplicationController
       set_params(@cat)
       render :edit
     else
+      @cat.publication_status = 1
       @cat.update(cat_params)
       flash[:notice] = '掲載の更新が完了しました。'
       redirect_to cat_path(@cat.id)
@@ -66,9 +67,18 @@ class Public::CatsController < ApplicationController
         render :new
       end
 
+    # 掲載編集フォームからの下書き保存の場合
+    elsif params[:edit_draft]
+      cat = Cat.find(params[:cat][:id])
+      cat.publication_status = 0
+      cat.update(cat_params)
+      flash[:notice] = '下書き保存が完了しました。'
+      redirect_to cats_path
+
     # 掲載編集フォームからの確認の場合
     elsif params[:edit]
       @cat = Cat.find(params[:cat][:id])
+      @cat.publication_status = 1
       set_params(@cat)
       if @cat.invalid?
         render :edit
