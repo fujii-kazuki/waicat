@@ -15,6 +15,23 @@ ja:
         recruitment_closed: '募集終了'
         foster_parents_decided: '里親決定'
   activerecord:
+    attributes:
+      cat:
+        publication_title: '掲載タイトル'
+        name: '名前'
+        age: '年齢'
+        weight: '体重'
+        breed: '種類'
+        animal_print: '毛の柄'
+        postal_code: '郵便番号'
+        prefecture: '都道府県'
+        municipalitie: '市区町村'
+        background: '経緯'
+        personality: '性格'
+        health: '健康状態'
+        delivery_place: '譲渡場所'
+        remarks: '備考'
+        publication_deadline: '掲載期限'
     errors:
       messages:
         record_invalid: 'バリデーションに失敗しました: %{errors}'

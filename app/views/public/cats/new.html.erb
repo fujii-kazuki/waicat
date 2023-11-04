@@ -1,6 +1,8 @@
 <h1>Public::Cats#new</h1>
 <p>Find me in app/views/public/cats/new.html.erb</p>
 
+<%= render 'layouts/error_messages', obj: @cat %>
+
 <%= form_with model: @cat, url: confirm_cats_path do |f| %>
   <div>
     <%= f.label :publication_title, '掲載タイトル' %>
