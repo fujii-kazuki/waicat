@@ -67,7 +67,7 @@ ActiveRecord::Schema.define(version: 2023_11_01_145830) do
     t.float "weight", null: false
     t.string "breed", default: "", null: false
     t.string "animal_print", default: "", null: false
-    t.string "hair_length", default: "", null: false
+    t.integer "hair_length", null: false
     t.boolean "castration_flag", default: false, null: false
     t.boolean "vaccine_flag", default: false, null: false
     t.string "postal_code", default: "", null: false
@@ -78,8 +78,8 @@ ActiveRecord::Schema.define(version: 2023_11_01_145830) do
     t.text "health"
     t.text "delivery_place"
     t.text "remarks"
-    t.date "publication_date", null: false
-    t.date "publication_deadline", null: false
+    t.datetime "publication_date", null: false
+    t.datetime "publication_deadline", null: false
     t.integer "publication_status", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

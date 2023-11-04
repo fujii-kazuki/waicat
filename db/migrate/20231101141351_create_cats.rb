@@ -9,7 +9,7 @@ class CreateCats < ActiveRecord::Migration[6.1]
       t.float :weight,                  null: false, default: ""
       t.string :breed,                  null: false, default: ""
       t.string :animal_print,           null: false, default: ""
-      t.string :hair_length,            null: false, default: ""
+      t.integer :hair_length,           null: false, default: ""
       t.boolean :castration_flag,       null: false, default: false
       t.boolean :vaccine_flag,          null: false, default: false
       t.string :postal_code,            null: false, default: ""
@@ -20,8 +20,8 @@ class CreateCats < ActiveRecord::Migration[6.1]
       t.text :health
       t.text :delivery_place
       t.text :remarks
-      t.date :publication_date,         null: false
-      t.date :publication_deadline,     null: false
+      t.datetime :publication_date,     null: false
+      t.datetime :publication_deadline, null: false
       t.integer :publication_status,    null: false
 
       t.timestamps
