@@ -39,7 +39,7 @@ class Public::CatsController < ApplicationController
       set_params(@cat)
       render :edit
     else
-      @cat.publication_status = 1
+      @cat.publication_status = 'public'
       @cat.update(cat_params)
       flash[:notice] = '掲載の更新が完了しました。'
       redirect_to cat_path(@cat.id)
@@ -52,7 +52,7 @@ class Public::CatsController < ApplicationController
       cat = Cat.new(cat_params)
       cat.user_id = current_user.id
       cat.publication_date = Time.zone.now
-      cat.publication_status = 0
+      cat.publication_status = 'draft'
       cat.save
       flash[:notice] = '下書き保存が完了しました。'
       redirect_to cats_path
@@ -62,7 +62,7 @@ class Public::CatsController < ApplicationController
       @cat = Cat.new(cat_params)
       @cat.user_id = current_user.id
       @cat.publication_date = Time.zone.now
-      @cat.publication_status = 1
+      @cat.publication_status = 'public'
       if @cat.invalid?
         render :new
       end
@@ -70,7 +70,7 @@ class Public::CatsController < ApplicationController
     # 掲載編集フォームからの下書き保存の場合
     elsif params[:edit_draft]
       cat = Cat.find(params[:cat][:id])
-      cat.publication_status = 0
+      cat.publication_status = 'draft'
       cat.update(cat_params)
       flash[:notice] = '下書き保存が完了しました。'
       redirect_to cats_path
@@ -78,7 +78,7 @@ class Public::CatsController < ApplicationController
     # 掲載編集フォームからの確認の場合
     elsif params[:edit]
       @cat = Cat.find(params[:cat][:id])
-      @cat.publication_status = 1
+      @cat.publication_status = 'public'
       set_params(@cat)
       if @cat.invalid?
         render :edit
@@ -122,6 +122,7 @@ class Public::CatsController < ApplicationController
     )
   end
 
+  # 一時的に値をセット
   def set_params(cat)
     cat.publication_title = params[:cat][:publication_title]
     cat.name = params[:cat][:name]
