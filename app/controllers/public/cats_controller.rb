@@ -15,6 +15,9 @@ class Public::CatsController < ApplicationController
   def edit
   end
 
+  def confirm
+  end
+
   def thanks
   end
 end

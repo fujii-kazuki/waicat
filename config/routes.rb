@@ -24,9 +24,10 @@ Rails.application.routes.draw do
     
     # public/catsコントローラー
     resources :cats do
-      member do
-        get 'thanks'
+      collection do
+        post 'confirm'
       end
+      get 'thanks'
 
       # public/commentsコントローラー
       resources :comments, only: [:index, :create]
