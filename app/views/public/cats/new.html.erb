@@ -101,8 +101,8 @@
   </div>
 
   <div>
-    <%= f.label :publication_deadline, '掲載期限' %>
-    <%= f.datetime_field :publication_deadline %>
+    <%= f.label :publication_deadline, '掲載期限（当日含む）' %>
+    <%= f.date_field :publication_deadline %>
   </div>
 
   <%= f.submit '下書き保存', name: :new_draft %>

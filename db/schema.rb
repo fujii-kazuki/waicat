@@ -78,8 +78,8 @@ ActiveRecord::Schema.define(version: 2023_11_01_145830) do
     t.text "health"
     t.text "delivery_place"
     t.text "remarks"
-    t.datetime "publication_date"
-    t.datetime "publication_deadline"
+    t.date "publication_date"
+    t.date "publication_deadline"
     t.integer "publication_status", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
