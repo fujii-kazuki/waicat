@@ -27,7 +27,6 @@ Rails.application.routes.draw do
       collection do
         post 'confirm'
       end
-      get 'thanks'
 
       # public/commentsコントローラー
       resources :comments, only: [:index, :create]

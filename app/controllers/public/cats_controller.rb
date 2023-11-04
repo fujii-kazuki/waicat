@@ -71,9 +71,6 @@ class Public::CatsController < ApplicationController
     redirect_to cats_path
   end
 
-  def thanks
-  end
-
   private
   
   # ストロングパラメーター
