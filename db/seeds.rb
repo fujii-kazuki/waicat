@@ -95,12 +95,10 @@ animal_print_names.each do |animal_print_name|
 end
 
 # 猫ちゃん
-time_from = Time.zone.parse('2022-01-01 00:00:00')
-time_to = Time.zone.now
 15.times do |num|
   num += 1
-  publication_date = rand(time_from...time_to)
-  publication_deadline = publication_date.since(rand(5..30).days)
+  publication_date = Time.zone.now
+  publication_deadline = publication_date.since(rand(2..14).days)
 
   Cat.create!(
     user_id: num,

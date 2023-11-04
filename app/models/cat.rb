@@ -5,20 +5,22 @@ class Cat < ApplicationRecord
   has_many :candidates
   has_many :comments
 
+  # 掲載ステータスが'public'の時のみ、以下バリデーションが有効
   with_options if: :published? do 
     validates :publication_title, presence: true
     validates :name, presence: true
     validates :age, presence: true
     validates :gender, presence: true
     validates :weight, presence: true
-    validates :breed, presence: true
-    validates :animal_print, presence: true
+    validates :breed, presence: { message: 'を選択してください' }
+    validates :animal_print, presence: { message: 'を選択してください' }
     validates :hair_length, presence: true
     validates :postal_code, presence: true, format: { with: /\A\d{7}\z/ }
     validates :prefecture, presence: true
     validates :municipalitie, presence: true
     validates :publication_date, presence: true
     validates :publication_deadline, presence: true
+    validate :confirm_publication_deadline
   end
 
   validates :publication_status, presence: true
@@ -35,5 +37,12 @@ class Cat < ApplicationRecord
   # 掲載ステータスが公開になっているかの判定
   def published?
     publication_status == 'public'
+  end
+
+  # 掲載期間が今日の日付以降か確認
+  def confirm_publication_deadline
+    return if publication_deadline.blank?
+    errors.add(:publication_deadline, "は本日から最低でも翌日以降の日付を選択してください") if publication_deadline < Time.zone.now.tomorrow
+    errors.add(:publication_deadline, "は掲載日（新規の掲載の場合は本日）から当日含む14日以内の日付を選択してください") if publication_deadline > publication_date.since(2.weeks)
   end
 end
