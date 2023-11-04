@@ -60,26 +60,26 @@ ActiveRecord::Schema.define(version: 2023_11_01_145830) do
 
   create_table "cats", force: :cascade do |t|
     t.integer "user_id", null: false
-    t.string "publication_title", default: "", null: false
-    t.string "name", default: "", null: false
-    t.float "age", null: false
-    t.integer "gender", null: false
-    t.float "weight", null: false
-    t.string "breed", default: "", null: false
-    t.string "animal_print", default: "", null: false
-    t.integer "hair_length", null: false
-    t.boolean "castration_flag", default: false, null: false
-    t.boolean "vaccine_flag", default: false, null: false
-    t.string "postal_code", default: "", null: false
-    t.string "prefecture", default: "", null: false
-    t.string "municipalitie", default: "", null: false
+    t.string "publication_title"
+    t.string "name"
+    t.float "age"
+    t.integer "gender"
+    t.float "weight"
+    t.string "breed"
+    t.string "animal_print"
+    t.integer "hair_length"
+    t.boolean "castration_flag", default: false
+    t.boolean "vaccine_flag", default: false
+    t.string "postal_code"
+    t.string "prefecture"
+    t.string "municipalitie"
     t.text "background"
     t.text "personality"
     t.text "health"
     t.text "delivery_place"
     t.text "remarks"
-    t.datetime "publication_date", null: false
-    t.datetime "publication_deadline", null: false
+    t.datetime "publication_date"
+    t.datetime "publication_deadline"
     t.integer "publication_status", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

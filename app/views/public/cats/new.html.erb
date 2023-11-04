@@ -4,10 +4,6 @@
 <%= render 'layouts/error_messages', obj: @cat %>
 
 <%= form_with model: @cat, url: confirm_cats_path do |f| %>
-  <%= f.hidden_field :user_id, value: current_user.id %>
-  <%= f.hidden_field :publication_date, value: Time.zone.now %>
-  <%= f.hidden_field :publication_status, value: 'draft' %>
-
   <div>
     <%= f.label :publication_title, '掲載タイトル' %>
     <%= f.text_field :publication_title, autocomplete: 'publication_title' %>
@@ -109,5 +105,6 @@
     <%= f.datetime_field :publication_deadline %>
   </div>
 
+  <%= f.submit '下書き保存', name: :new_draft %>
   <%= f.submit '入力内容の確認画面へ', name: :new %>
 <% end %>

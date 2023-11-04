@@ -20,9 +20,7 @@ class Public::CatsController < ApplicationController
     if params[:back_new]
       render :new
     else
-      @cat.user_id = current_user.id
       @cat.publication_date = Time.zone.now
-      @cat.publication_status = 1
       @cat.save
       flash[:notice] = '掲載が完了しました。'
       redirect_to cat_path(@cat.id)
@@ -48,9 +46,22 @@ class Public::CatsController < ApplicationController
   end
 
   def confirm
+    # 新規掲載フォームからの下書き保存の場合
+    if params[:new_draft]
+      cat = Cat.new(cat_params)
+      cat.user_id = current_user.id
+      cat.publication_date = Time.zone.now
+      cat.publication_status = 0
+      cat.save
+      flash[:notice] = '下書き保存が完了しました。'
+      redirect_to cats_path
+
     # 新規掲載フォームからの確認の場合
-    if params[:new]
+    elsif params[:new]
       @cat = Cat.new(cat_params)
+      @cat.user_id = current_user.id
+      @cat.publication_date = Time.zone.now
+      @cat.publication_status = 1
       if @cat.invalid?
         render :new
       end
