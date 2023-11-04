@@ -1,2 +1,48 @@
 <h1>Public::Cats#confirm</h1>
 <p>Find me in app/views/public/cats/confirm.html.erb</p>
+
+<h2>内容確認</h2>
+<p>掲載タイトル：<%= @cat.publication_title %></p>
+<p>名前：<%= @cat.name %></p>
+<p>年齢：<%= @cat.age %></p>
+<p>性別：<%= @cat.gender_i18n %></p>
+<p>体重：<%= @cat.weight %></p>
+<p>種類：<%= @cat.breed %></p>
+<p>毛の柄：<%= @cat.animal_print %></p>
+<p>毛の長さ：<%= @cat.hair_length_i18n %></p>
+<p>去勢・避妊フラグ：<%= @cat.castration_flag %></p>
+<p>ワクチン接種フラグ：<%= @cat.vaccine_flag %></p>
+<p>郵便番号：<%= @cat.postal_code %></p>
+<p>都道府県：<%= @cat.prefecture %></p>
+<p>市区町村：<%= @cat.municipalitie %></p>
+<p>経緯：<%= @cat.background %></p>
+<p>性格：<%= @cat.personality %></p>
+<p>健康状態：<%= @cat.health %></p>
+<p>譲渡場所：<%= @cat.delivery_place %></p>
+<p>備考：<%= @cat.remarks %></p>
+<p>掲載期限：<%= @cat.publication_deadline %></p>
+
+<%= form_with model: @cat do |f| %>
+  <%= f.hidden_field :publication_title %>
+  <%= f.hidden_field :name %>
+  <%= f.hidden_field :age %>
+  <%= f.hidden_field :gender %>
+  <%= f.hidden_field :weight %>
+  <%= f.hidden_field :breed %>
+  <%= f.hidden_field :animal_print %>
+  <%= f.hidden_field :hair_length %>
+  <%= f.hidden_field :castration_flag %>
+  <%= f.hidden_field :vaccine_flag %>
+  <%= f.hidden_field :postal_code %>
+  <%= f.hidden_field :prefecture %>
+  <%= f.hidden_field :municipalitie %>
+  <%= f.hidden_field :background %>
+  <%= f.hidden_field :personality %>
+  <%= f.hidden_field :health %>
+  <%= f.hidden_field :delivery_place %>
+  <%= f.hidden_field :remarks %>
+  <%= f.hidden_field :publication_deadline %>
+
+  <%= f.submit '戻る', name: :back %>
+  <%= f.submit '里親の募集を開始' %>
+<% end %>

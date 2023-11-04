@@ -13,13 +13,30 @@ class Public::CatsController < ApplicationController
     @cat = Cat.new
   end
 
+  def create
+    @cat = Cat.new(cat_params)
+    @cat.user_id = current_user.id
+    @cat.publication_date = Time.zone.now
+    @cat.publication_status = 1
+
+    if params[:back]
+      render :new
+    else
+      @cat.save
+      flash[:notice] = '掲載が完了しました。'
+      redirect_to cat_path(@cat.id)
+    end
+  end
+
   def edit
   end
 
   def confirm
     @cat = Cat.new(cat_params)
-    @cat.user_id = current_user.id
-    @cat.publication_date = Time.zone.now  # 仮の掲載日
+
+    # 仮ステータス
+    @cat.user_id = 1
+    @cat.publication_date = Time.zone.now
     @cat.publication_status = 0
 
     if @cat.invalid?
