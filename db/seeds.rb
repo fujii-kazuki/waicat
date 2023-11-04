@@ -36,6 +36,64 @@ User.create!(
   )
 end
 
+# 種類
+breed_names = [
+  '雑種（ミックス）',
+  'スコティッシュフォールド',
+  'マンチカン',
+  'アメリカンショートヘア',
+  'ラグドール',
+  'ブリティッシュショートヘア',
+  'ノルウェージャンフォレストキャット',
+  'サイベリアン',
+  'ロシアンブルー',
+  'ベンガル',
+  'アメリカンカール',
+  'メインクーン',
+  'ペルシャ',
+  'ラガマフィン',
+  'エキゾチック',
+  'シャム猫(サイアミーズ）',
+  'ソマリ',
+  'アビシニアン',
+  'シンガプーラ',
+  'トンキニーズ',
+  'シャルトリュー',
+  'ヒマラヤン',
+  'セルカークレックス',
+  'ボンベイ',
+  'マンチカール',
+  'エジプシャンマウ',
+  'ジャパニーズ・ボブテイル',
+  'オシキャット',
+  'ラパーマ',
+  'バーマン',
+  'その他'
+]
+breed_names.each do |breed_name|
+  Breed.create!(name: breed_name)
+end
+
+# 毛の柄
+animal_print_names = [
+  '白（ホワイト）',
+  '黒（ブラック）',
+  '灰色（グレー）',
+  'キジトラ（ブラウンタビー）',
+  'サバトラ（シルバータビー）',
+  '茶トラ（レッドタビー）',
+  '黒白／白黒（ブラック＆ホワイト／ホワイト＆ブラック）',
+  '三毛（キャリコ）',
+  'サビ（トーティシェル）',
+  'キジ白（ブラウンタビー&ホワイト）',
+  'サバ白（シルバータビー&ホワイト）',
+  '茶白（レッドタビー&ホワイト）',
+  'その他'
+]
+animal_print_names.each do |animal_print_name|
+  AnimalPrint.create!(name: animal_print_name)
+end
+
 # 猫ちゃん
 time_from = Time.zone.parse('2022-01-01 00:00:00')
 time_to = Time.zone.now
@@ -51,8 +109,8 @@ time_to = Time.zone.now
     age: Random.rand(12.5).ceil(1),
     gender: rand(0..1),
     weight: Random.rand(8.5).ceil(1),
-    breed: '種類',
-    animal_print: '毛の柄',
+    breed: breed_names.sample,
+    animal_print: animal_print_names.sample,
     hair_length: rand(0..1),
     castration_flag: [true, false].sample,
     vaccine_flag: [true, false].sample,
