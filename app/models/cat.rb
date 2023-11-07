@@ -5,6 +5,12 @@ class Cat < ApplicationRecord
   has_many :candidates
   has_many :comments
 
+  has_many_attached :photos
+
+  validates :photos, content_type: [:jpg, :jpeg, :png], size: { less_than: 5.megabytes }
+  validate :photos_check # ここでバリデーションエラー対象の写真を削除
+  validates :photos, limit: { min: 3, max: 10, message: 'は最低でも3枚アップロードしてください' }
+    
   # 掲載ステータスが'public'の時のみ、以下バリデーションが有効
   with_options if: :published? do 
     validates :publication_title, presence: true
@@ -44,5 +50,14 @@ class Cat < ApplicationRecord
     return if publication_deadline.blank?
     errors.add(:publication_deadline, "は本日から最低でも翌日以降の日付を選択してください") if publication_deadline < Time.zone.now.tomorrow
     errors.add(:publication_deadline, "は掲載日（新規の掲載の場合は本日）から当日含む14日以内の日付を選択してください") if publication_deadline > publication_date.since(2.weeks)
+  end
+
+  # バリデーションエラー対象の写真を削除
+  def photos_check
+    if self.photos.any?
+      self.photos.select! do |photo|
+        photo.blob.content_type.in?(%('image/jpg image/jpeg image/png')) && photo.blob.byte_size < 5.megabytes
+      end
+    end
   end
 end

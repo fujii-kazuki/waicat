@@ -98,6 +98,7 @@ class Public::CatsController < ApplicationController
   def cat_params
     params.require(:cat).permit(
       :user_id,
+      { photos: [] },
       :publication_title,
       :name,
       :age,
@@ -125,6 +126,7 @@ class Public::CatsController < ApplicationController
   # 一時的に値をセット
   def set_params(cat)
     cat.publication_title = params[:cat][:publication_title]
+    cat.photos = params[:cat][:photos]
     cat.name = params[:cat][:name]
     cat.age = params[:cat][:age]
     cat.gender = params[:cat][:gender]

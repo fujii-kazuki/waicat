@@ -2,6 +2,13 @@
 <p>Find me in app/views/public/cats/confirm.html.erb</p>
 
 <h2>内容確認</h2>
+<% if @cat.photos.attached? %>
+  <div>写真：
+    <% @cat.photos.each do |photo| %>
+      <%= image_tag photo %>
+    <% end %>
+  </div>
+<% end %>
 <p>掲載タイトル：<%= @cat.publication_title %></p>
 <p>名前：<%= @cat.name %></p>
 <p>年齢：<%= @cat.age %></p>
@@ -23,6 +30,9 @@
 <p>掲載期限：<%= @cat.publication_deadline %></p>
 
 <%= form_with model: @cat, method: "#{:patch if params[:edit]}" do |f| %>
+  <% @cat.photos.each do |photo| %>
+    <%= f.hidden_field :photos, multiple: true, value: photo.signed_id %>
+  <% end %>
   <%= f.hidden_field :publication_title %>
   <%= f.hidden_field :name %>
   <%= f.hidden_field :age %>

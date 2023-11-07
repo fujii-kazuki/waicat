@@ -5,6 +5,22 @@
 
 <%= form_with model: @cat, url: confirm_cats_path, method: :post do |f| %>
   <%= f.hidden_field :id %>
+  
+  <% if @cat.photos.attached? %>
+    <div>
+      <% @cat.photos.each do |photo| %>
+        <div>
+          <%= image_tag photo %>
+          <%= f.hidden_field :photos, multiple: true, value: photo.signed_id %>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+
+  <div>
+    <%= f.label :photos, '写真' %>
+    <%= f.file_field :photos, accept: 'image/jpg, image/jpeg, image/png', multiple: true, direct_upload: true %>
+  </div>
 
   <div>
     <%= f.label :publication_title, '掲載タイトル' %>

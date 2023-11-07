@@ -18,6 +18,7 @@ ja:
   activerecord:
     attributes:
       cat:
+        photos: '写真'
         publication_title: '掲載タイトル'
         name: '名前'
         age: '年齢'
@@ -39,6 +40,7 @@ ja:
         restrict_dependent_destroy:
           has_one: "%{record}が存在しているので削除できません"
           has_many: "%{record}が存在しているので削除できません"
+        content_type_invalid: 'のファイル形式が不正です'
   date:
     abbr_day_names:
     - 日
