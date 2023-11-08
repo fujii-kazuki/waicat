@@ -1,35 +1,25 @@
 <h1>Public::Comments#index</h1>
 <p>Find me in app/views/public/comments/index.html.erb</p>
 
-<%= render 'layouts/error_messages', obj: @comment %>
-
 <%= link_to @cat.publication_title, cat_path(@cat.id) %>
+
 <div>
   <h2>コメント一覧</h2>
-  <% if @comments.any? %>
-  <ul>
-    <% @comments.each do |comment| %>
-      <li>
-        <p><%= comment.user.name %>：<%= comment.created_at %></p>
-        <p><%= comment.body %></p>
-        <% if comment.user.id == current_user.id %>
-          <%= link_to '削除', cat_comment_path(cat_id: @cat.id, id: comment.id), method: :delete %>
-        <% end %>
-        <% if @cat.user_id == current_user.id && comment.user.id != current_user.id  %>
-          <%= link_to '不適切なコメントとして削除', cat_comment_path(cat_id: @cat.id, id: comment.id), method: :delete %>
-        <% end %>
-      </li>
-    <% end %>
-  </ul>
-  <% else %>
-    <p>コメントはありません。</p>
-  <% end %>
+  <div id="cat-comment-list">
+    <%= render 'list' %>
+  </div>
 </div>
 
 <div>
+  <div id="comment-error-messages">
+    <%= render 'layouts/error_messages', obj: @comment %>
+  </div>
+  <div id="comment-flash-messages">
+    <%= render 'layouts/flash_messages' %>
+  </div>
   <h2>コメント</h2>
-  <%= form_with model: [@cat, @comment] do |f| %>
-    <%= f.text_area :body, autocomplete: 'body' %>
+  <%= form_with model: [@cat, @comment], local: false do |f| %>
+    <%= f.text_area :body, autocomplete: 'body', id: 'comment-text-area' %>
     <%= f.submit '送信' %>
   <% end %>
 </div>

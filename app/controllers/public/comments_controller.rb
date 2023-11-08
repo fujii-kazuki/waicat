@@ -14,9 +14,8 @@ class Public::CommentsController < ApplicationController
 
     if @comment.save
       flash[:notice] = 'コメントを投稿しました。'
-      redirect_to cat_comments_path(@cat.id)
     else
-      render :index
+      flash[:notice] = ''
     end
   end
 
@@ -25,7 +24,6 @@ class Public::CommentsController < ApplicationController
     @comments = @cat.comments
     @cat.comments.find(params[:id]).destroy
     flash[:notice] = 'コメントを削除しました。'
-    redirect_to cat_comments_path(@cat.id)
   end
 
   private
