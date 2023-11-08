@@ -100,7 +100,7 @@ end
   publication_date = Time.zone.now
   publication_deadline = publication_date.since(rand(2..14).days)
 
-  Cat.create!(
+  cat = Cat.new(
     user_id: num,
     publication_title: "タイトル-#{num}",
     name: "#{num}にゃん",
@@ -124,4 +124,9 @@ end
     publication_deadline: publication_deadline,
     publication_status: rand(0..6)
   )
+  # 画像を登録
+  cat.photos.attach(io: File.open(Rails.root.join("app/assets/images/cats/img-1.jpg")), filename: "img-1.jpg")
+  cat.photos.attach(io: File.open(Rails.root.join("app/assets/images/cats/img-2.jpg")), filename: "img-2.jpg")
+  cat.photos.attach(io: File.open(Rails.root.join("app/assets/images/cats/img-3.jpg")), filename: "img-3.jpg")
+  cat.save!
 end
