@@ -44,6 +44,14 @@ class Cat < ApplicationRecord
 
   private
 
+  # Gem「ransack」の検索対象カラムをホワイトリストに登録
+  def self.ransackable_associations(auth_object = nil)
+    ['publication_title', 'name', 'breed', 'animal_print', 'prefecture', 'municipalitie']
+  end
+  def self.ransackable_attributes(auth_object = nil)
+    ['publication_title', 'name', 'breed', 'animal_print', 'prefecture', 'municipalitie']
+  end
+
   # 掲載ステータスが公開になっているかの判定
   def published?
     publication_status == 'public'
