@@ -13,6 +13,11 @@
     <% end %>
   </div>
 <% end %>
+<% if @cat.video.attached? %>
+  <div>
+    <%= video_tag rails_blob_path(@cat.video), controls: true %>
+  </div>
+<% end %>
 <p>掲載タイトル：<%= @cat.publication_title %></p>
 <p>名前：<%= @cat.name %></p>
 <p>年齢：<%= @cat.age %></p>

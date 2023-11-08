@@ -99,6 +99,7 @@ class Public::CatsController < ApplicationController
     params.require(:cat).permit(
       :user_id,
       { photos: [] },
+      :video,
       :publication_title,
       :name,
       :age,

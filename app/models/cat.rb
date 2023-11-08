@@ -6,10 +6,14 @@ class Cat < ApplicationRecord
   has_many :comments
 
   has_many_attached :photos
+  has_one_attached :video
 
   validates :photos, content_type: [:jpg, :jpeg, :png], size: { less_than: 5.megabytes }
   validate :photos_check # ここでバリデーションエラー対象の写真を削除
   validates :photos, limit: { min: 3, max: 10, message: 'は最低でも3枚アップロードしてください' }
+  
+  validates :video, content_type: [:mp4, :mov], size: { less_than: 30.megabytes }
+  validate :video_check # ここでバリデーションエラー対象の映像を削除
     
   # 掲載ステータスが'public'の時のみ、以下バリデーションが有効
   with_options if: :published? do 
@@ -57,6 +61,15 @@ class Cat < ApplicationRecord
     if self.photos.any?
       self.photos.select! do |photo|
         photo.blob.content_type.in?(%('image/jpg image/jpeg image/png')) && photo.blob.byte_size < 5.megabytes
+      end
+    end
+  end
+
+  # バリデーションエラー対象の映像を削除
+  def video_check
+    if !self.video.blank?
+      if !self.video.blob.content_type.in?(%('video/mp4 video/quicktime')) || self.video.blob.byte_size >= 30.megabytes
+        self.video = nil
       end
     end
   end

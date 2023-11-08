@@ -22,6 +22,18 @@
     <%= f.file_field :photos, accept: 'image/jpg, image/jpeg, image/png', multiple: true, direct_upload: true %>
   </div>
 
+  <% if @cat.video.attached? %>
+    <div>
+      <%= video_tag rails_blob_path(@cat.video), controls: true %>
+      <%= f.hidden_field :video, value: @cat.video.signed_id %>
+    </div>
+  <% end %>
+
+  <div>
+    <%= f.label :video, '映像' %>
+    <%= f.file_field :video, accept: 'video/*', direct_upload: true %>
+  </div>
+
   <div>
     <%= f.label :publication_title, '掲載タイトル' %>
     <%= f.text_field :publication_title, autocomplete: 'publication_title' %>
