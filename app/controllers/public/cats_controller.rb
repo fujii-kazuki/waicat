@@ -33,14 +33,14 @@ class Public::CatsController < ApplicationController
 
   def update
     @cat = Cat.find(params[:id])
+    @cat.assign_attributes(cat_params) # attributeを変更（DBへの保存は行われない）
     
     # 戻るリンクを選択した場合
     if params[:back_edit]
-      set_params(@cat)
       render :edit
     else
       @cat.publication_status = 'public'
-      @cat.update(cat_params)
+      @cat.save
       flash[:notice] = '掲載の更新が完了しました。'
       redirect_to cat_path(@cat.id)
     end
@@ -78,8 +78,8 @@ class Public::CatsController < ApplicationController
     # 掲載編集フォームからの確認の場合
     elsif params[:edit]
       @cat = Cat.find(params[:cat][:id])
+      @cat.assign_attributes(cat_params) # attributeを変更（DBへの保存は行われない）
       @cat.publication_status = 'public'
-      set_params(@cat)
       if @cat.invalid?
         render :edit
       end
@@ -121,29 +121,5 @@ class Public::CatsController < ApplicationController
       :publication_deadline,
       :publication_status
     )
-  end
-
-  # 一時的に値をセット
-  def set_params(cat)
-    cat.publication_title = params[:cat][:publication_title]
-    cat.photos = params[:cat][:photos]
-    cat.name = params[:cat][:name]
-    cat.age = params[:cat][:age]
-    cat.gender = params[:cat][:gender]
-    cat.weight = params[:cat][:weight]
-    cat.breed = params[:cat][:breed]
-    cat.animal_print = params[:cat][:animal_print]
-    cat.hair_length = params[:cat][:hair_length]
-    cat.castration_flag = params[:cat][:castration_flag]
-    cat.vaccine_flag = params[:cat][:vaccine_flag]
-    cat.postal_code = params[:cat][:postal_code]
-    cat.prefecture = params[:cat][:prefecture]
-    cat.municipalitie = params[:cat][:municipalitie]
-    cat.background = params[:cat][:background]
-    cat.personality = params[:cat][:personality]
-    cat.health = params[:cat][:health]
-    cat.delivery_place = params[:cat][:delivery_place]
-    cat.remarks = params[:cat][:remarks]
-    cat.publication_deadline = params[:cat][:publication_deadline]
   end
 end
