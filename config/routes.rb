@@ -29,7 +29,7 @@ Rails.application.routes.draw do
       end
 
       # public/commentsコントローラー
-      resources :comments, only: [:index, :create]
+      resources :comments, only: [:index, :create, :destroy]
 
       # public/candicatesコントローラー
       resources :candicates, only: [:create] do
