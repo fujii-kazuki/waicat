@@ -1,0 +1,30 @@
+<%= form_with url: searches_path, method: :get do |f| %>
+  <%= f.hidden_field :search_type, value: 'categories' %>
+
+  <div>
+    <%= f.label :prefecture %>
+    <%= f.collection_select :prefecture, Prefecture.all, :name, :name, include_blank: 'すべて' %>
+  </div>
+
+  <div>
+    <%= f.label :breed %>
+    <%= f.collection_select :breed, Breed.all, :name, :name, include_blank: 'すべて' %>
+  </div>
+
+  <div>
+    <%= f.label :age %>
+    <%= f.select :age, [['子猫（0~1歳）', 'kitten'], ['成猫（1~8歳）', 'adult_cat'], ['老猫（8歳~）', 'old_cat']], include_blank: 'すべて' %>
+  </div>
+
+  <div>
+    <%= f.label :gender %>
+    <%= f.select :gender, [[Cat.genders_i18n[:male], 'male'], [Cat.genders_i18n[:female], 'female']], include_blank: 'すべて' %>
+  </div>
+
+  <div>
+    <%= f.label :animal_print %>
+    <%= f.collection_select :animal_print, AnimalPrint.all, :name, :name, include_blank: 'すべて' %>
+  </div>
+
+  <%= f.submit '検索' %>
+<% end %>
