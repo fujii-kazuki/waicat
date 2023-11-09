@@ -32,9 +32,10 @@ end
 User.create!(
   name: 'ゲストユーザー',
   email: 'guest@example.com',
-  postal_code: '1234567',
-  address: '**********',
-  telephone_number: '09012345678',
+  postal_code: '0000000',
+  prefecture: '***',
+  city: '***',
+  telephone_number: '00000000000',
   password: SecureRandom.urlsafe_base64
 )
 
@@ -43,10 +44,11 @@ User.create!(
   i += 1
   User.create!(
     name: "猫山太郎-#{i}",
+    telephone_number: '09012345678',
     email: "sample@sample#{i}.jp",
-    telephone_number: '00000000000',
-    postal_code: '0000000',
-    address: "大阪府大阪市中央区難波◯丁目1-#{i}",
+    postal_code: '1234567',
+    prefecture: Prefecture.find(rand(1..47)).name,
+    city: "にゃん#{i}区",
     password: '000000'
   )
 end
@@ -128,8 +130,8 @@ end
     castration_flag: [true, false].sample,
     vaccine_flag: [true, false].sample,
     postal_code: '1234567',
-    prefecture: '都道府県',
-    municipalitie: '市区町村',
+    prefecture: Prefecture.find(rand(1..47)).name,
+    city: "にゃん#{i}町",
     background: '里親募集の経緯',
     personality: '性格',
     health: '健康状態',

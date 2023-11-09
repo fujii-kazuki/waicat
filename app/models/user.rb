@@ -15,18 +15,20 @@ class User < ApplicationRecord
   has_many :contacts
 
   validates :name, presence: true
-  validates :postal_code, presence: true, format: { with: /\A\d{7}\z/ }
-  validates :address, presence: true
-  validates :telephone_number, presence: true, format: { with: /\A\d{10,11}\z/ }
+  validates :postal_code, presence: true, numericality: { only_integer: true }, length: { is: 7 }
+  validates :prefecture, presence: true
+  validates :city, presence: true
+  validates :telephone_number, presence: true, numericality: { only_integer: true }, length: { in: 10..11 }
 
   devise :validatable
   
   def self.guest
     user = find_or_create_by!(email: 'guest@example.com') do |user|
       user.name = 'ゲストユーザー'
-      user.postal_code = '1234567'
-      user.address = '**********'
-      user.telephone_number = '09012345678'
+      user.postal_code = '0000000'
+      user.prefecture = '***'
+      user.city = '***'
+      user.telephone_number = '00000000000'
       user.password = SecureRandom.urlsafe_base64
     end
     user.update(deleted_flag: false)

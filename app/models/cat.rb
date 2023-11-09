@@ -25,9 +25,9 @@ class Cat < ApplicationRecord
     validates :breed, presence: { message: 'を選択してください' }
     validates :animal_print, presence: { message: 'を選択してください' }
     validates :hair_length, presence: true
-    validates :postal_code, presence: true, format: { with: /\A\d{7}\z/ }
+    validates :postal_code, presence: true, numericality: { only_integer: true }, length: { is: 7 }
     validates :prefecture, presence: true
-    validates :municipalitie, presence: true
+    validates :city, presence: true
     validates :publication_date, presence: true
     validates :publication_deadline, presence: true
     validate :confirm_publication_deadline

@@ -14,7 +14,7 @@ class CreateCats < ActiveRecord::Migration[6.1]
       t.boolean :vaccine_flag,          default: false
       t.string :postal_code
       t.string :prefecture
-      t.string :municipalitie
+      t.string :city
       t.text :background
       t.text :personality
       t.text :health
