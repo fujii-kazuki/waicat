@@ -1,5 +1,7 @@
 <header id="header" class="header">
   <br>
-  <%= link_to 'マイページ', users_my_page_path %>
+  <% if user_signed_in? %>
+    <%= link_to 'マイページ', users_my_page_path %>
+  <% end %>
   <%= render 'public/searches/keywords_form' %>
 </header>
