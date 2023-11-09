@@ -14,12 +14,13 @@ class Public::CatsController < ApplicationController
   end
 
   def create
-    @cat = Cat.new(cat_params)
+    @cat = current_user.cats.new(cat_params)
     
     # 戻るリンクを選択した場合
     if params[:back_new]
       render :new
     else
+      @cat.publication_status = 'public'
       @cat.publication_date = Time.zone.now
       @cat.save
       flash[:notice] = '掲載が完了しました。'
@@ -49,18 +50,20 @@ class Public::CatsController < ApplicationController
   def confirm
     # 新規掲載フォームからの下書き保存の場合
     if params[:new_draft]
-      cat = Cat.new(cat_params)
-      cat.user_id = current_user.id
-      cat.publication_date = Time.zone.now
-      cat.publication_status = 'draft'
-      cat.save
-      flash[:notice] = '下書き保存が完了しました。'
-      redirect_to cats_path
+      @cat = current_user.cats.new(cat_params)
+      @cat.publication_date = Time.zone.now
+      @cat.publication_status = 'draft'
+      if @cat.invalid?
+        render :new
+      else
+        @cat.save
+        flash[:notice] = '下書き保存が完了しました。'
+        redirect_to cats_path
+      end
 
     # 新規掲載フォームからの確認の場合
     elsif params[:new]
-      @cat = Cat.new(cat_params)
-      @cat.user_id = current_user.id
+      @cat = current_user.cats.new(cat_params)
       @cat.publication_date = Time.zone.now
       @cat.publication_status = 'public'
       if @cat.invalid?
@@ -69,11 +72,16 @@ class Public::CatsController < ApplicationController
 
     # 掲載編集フォームからの下書き保存の場合
     elsif params[:edit_draft]
-      cat = Cat.find(params[:cat][:id])
-      cat.publication_status = 'draft'
-      cat.update(cat_params)
-      flash[:notice] = '下書き保存が完了しました。'
-      redirect_to cats_path
+      @cat = Cat.find(params[:cat][:id])
+      @cat.assign_attributes(cat_params) # attributeを変更（DBへの保存は行われない）
+      @cat.publication_status = 'draft'
+      if @cat.invalid?
+        render :edit
+      else
+        @cat.save
+        flash[:notice] = '下書き保存が完了しました。'
+        redirect_to cats_path
+      end
 
     # 掲載編集フォームからの確認の場合
     elsif params[:edit]
@@ -97,9 +105,8 @@ class Public::CatsController < ApplicationController
   # ストロングパラメーター
   def cat_params
     params.require(:cat).permit(
-      :user_id,
-      { photos: [] },
       :video,
+      { photos: [] },
       :publication_title,
       :name,
       :age,
@@ -112,13 +119,12 @@ class Public::CatsController < ApplicationController
       :vaccine_flag,
       :postal_code,
       :prefecture,
-      :municipalitie,
+      :city,
       :background,
       :personality,
       :health,
       :delivery_place,
       :remarks,
-      :publication_date,
       :publication_deadline,
       :publication_status
     )

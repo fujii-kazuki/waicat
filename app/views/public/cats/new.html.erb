@@ -16,7 +16,7 @@
   <% end %>
 
   <div>
-    <%= f.label :photos, '写真' %>
+    <%= f.label :photos %>
     <%= f.file_field :photos, accept: 'image/jpg, image/jpeg, image/png', multiple: true, direct_upload: true %>
   </div>
 
@@ -28,27 +28,27 @@
   <% end %>
 
   <div>
-    <%= f.label :video, '映像' %>
+    <%= f.label :video %>
     <%= f.file_field :video, accept: 'video/*', direct_upload: true %>
   </div>
 
   <div>
-    <%= f.label :publication_title, '掲載タイトル' %>
+    <%= f.label :publication_title %>
     <%= f.text_field :publication_title, autocomplete: 'publication_title' %>
   </div>
 
   <div>
-    <%= f.label :name, 'お名前' %>
+    <%= f.label :name %>
     <%= f.text_field :name, autocomplete: 'name', placeholder: '例）タマちゃん' %>
   </div>
 
   <div>
-    <%= f.label :age, '年齢' %>
+    <%= f.label :age %>
     <%= f.number_field :age, autocomplete: 'age', placeholder: '例）1.5', step: '0.1', min: '0' %> 歳
   </div>
 
   <div>
-    <%= f.label :gender, '性別' %>
+    <%= f.label :gender %>
     <%= f.radio_button :gender, 'male', checked: true %>
     <%= f.label :gender, Cat.genders_i18n[:male], value: 'male' %>
     <%= f.radio_button :gender, 'female' %>
@@ -56,22 +56,21 @@
   </div>
 
   <div>
-    <%= f.label :weight, '体重' %>
+    <%= f.label :weight %>
     <%= f.number_field :weight, autocomplete: 'weight', placeholder: '例）4.5', step: '0.1', min: '0.1' %> kg
   </div>
 
   <div>
-    <%= f.label :breed, '種類' %>
-    <%= f.select :breed, Breed.all_names_array, { include_blank: '選択してください'} %>
+    <%= f.label :breed %>
+    <%= f.collection_select :breed, Breed.all, :name, :name, include_blank: '選択してください' %>
+
+  <div>
+    <%= f.label :animal_print %>
+    <%= f.collection_select :animal_print, AnimalPrint.all, :name, :name, include_blank: '選択してください' %>
   </div>
 
   <div>
-    <%= f.label :animal_print, '毛の柄' %>
-    <%= f.select :animal_print, AnimalPrint.all_names_array, { include_blank: '選択してください'} %>
-  </div>
-
-  <div>
-    <%= f.label '毛の長さ' %>
+    <%= f.label :hair_length %>
     <%= f.radio_button :hair_length, 'short', checked: true %>
     <%= f.label :hair_length, Cat.hair_lengths_i18n[:short], value: 'short' %>
     <%= f.radio_button :hair_length, 'long' %>
@@ -89,47 +88,48 @@
   </div>
 
   <div>
-    <%= f.label :postal_code, '郵便番号' %>
+    <%= f.label :postal_code %>
     <%= f.text_field :postal_code, autocomplete: 'postal_code', placeholder: '例）1234567' %>
   </div>
 
+   <div class="field">
+    <%= f.label :prefecture %>
+    <%= f.collection_select :prefecture, Prefecture.all, :name, :name, include_blank: true %>
+  </div>
+
+
   <div>
-    <%= f.label :prefecture, '都道府県' %>
-    <%= f.text_field :prefecture, autocomplete: 'prefecture', placeholder: '例）大阪府' %>
+    <%= f.label :city %>
+    <%= f.text_field :city, autocomplete: 'city', placeholder: '例）大阪市中央区' %>
   </div>
 
   <div>
-    <%= f.label :municipalitie, '市区町村' %>
-    <%= f.text_field :municipalitie, autocomplete: 'municipalitie', placeholder: '例）大阪市中央区' %>
-  </div>
-
-  <div>
-    <%= f.label :background, '募集の経緯' %>
+    <%= f.label :background %>
     <%= f.text_area :background, autocomplete: 'background', placeholder: 'できるだけ内容を詳細に記入して下さい。' %>
   </div>
 
   <div>
-    <%= f.label :personality, '性格' %>
+    <%= f.label :personality %>
     <%= f.text_area :personality, autocomplete: 'personality', placeholder: 'できるだけ内容を詳細に記入して下さい。' %>
   </div>
 
   <div>
-    <%= f.label :health, '健康状態' %>
+    <%= f.label :health %>
     <%= f.text_area :health, autocomplete: 'health', placeholder: 'できるだけ内容を詳細に記入して下さい。' %>
   </div>
 
   <div>
-    <%= f.label :delivery_place, '譲渡場所' %>
+    <%= f.label :delivery_place %>
     <%= f.text_area :delivery_place, autocomplete: 'delivery_place', placeholder: 'できるだけ内容を詳細に記入して下さい。' %>
   </div>
 
   <div>
-    <%= f.label :remarks, '備考' %>
+    <%= f.label :remarks %>
     <%= f.text_area :remarks, autocomplete: 'remarks', placeholder: 'できるだけ内容を詳細に記入して下さい。' %>
   </div>
 
   <div>
-    <%= f.label :publication_deadline, '掲載期限（翌日以降、掲載日から14日間まで）' %>
+    <%= f.label :publication_deadline %>
     <%= f.date_field :publication_deadline %>
   </div>
 

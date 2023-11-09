@@ -27,7 +27,7 @@
 <p>ワクチン接種フラグ：<%= @cat.vaccine_flag %></p>
 <p>郵便番号：<%= @cat.postal_code %></p>
 <p>都道府県：<%= @cat.prefecture %></p>
-<p>市区町村：<%= @cat.municipalitie %></p>
+<p>市区町村：<%= @cat.city %></p>
 <p>経緯：<%= @cat.background %></p>
 <p>性格：<%= @cat.personality %></p>
 <p>健康状態：<%= @cat.health %></p>
@@ -39,7 +39,9 @@
   <% @cat.photos.each do |photo| %>
     <%= f.hidden_field :photos, multiple: true, value: photo.signed_id %>
   <% end %>
-  <%= f.hidden_field :video, value: @cat.video.signed_id %>
+  <% if @cat.video.attached? %>
+    <%= f.hidden_field :video, value: @cat.video.signed_id %>
+  <% end %>
   <%= f.hidden_field :publication_title %>
   <%= f.hidden_field :name %>
   <%= f.hidden_field :age %>
@@ -52,7 +54,7 @@
   <%= f.hidden_field :vaccine_flag %>
   <%= f.hidden_field :postal_code %>
   <%= f.hidden_field :prefecture %>
-  <%= f.hidden_field :municipalitie %>
+  <%= f.hidden_field :city %>
   <%= f.hidden_field :background %>
   <%= f.hidden_field :personality %>
   <%= f.hidden_field :health %>
