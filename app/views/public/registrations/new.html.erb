@@ -13,9 +13,11 @@
     <%= f.text_field :postal_code, autocomplete: 'postal_code', placeholder: '例）1234567', required: true %>
   </div>
 
+  <button type="button" id="search_address_button">住所検索</button>
+
   <div class="field">
     <%= f.label :prefecture %><br />
-    <%= f.collection_select(:prefecture, Prefecture.all, :name, :name, { include_blank: true }, required: true) %>
+    <%= f.collection_select :prefecture, Prefecture.all, :name, :name, include_blank: true, required: true %>
   </div>
   
   <div class="field">
@@ -52,3 +54,5 @@
 <% end %>
 
 <p>アカウントをお持ちの方は<%= link_to 'こちら', new_user_session_path %></p>
+
+<%= javascript_pack_tag 'search-address' %>

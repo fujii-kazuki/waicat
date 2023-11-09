@@ -92,6 +92,8 @@
     <%= f.text_field :postal_code, autocomplete: 'postal_code', placeholder: '例）1234567' %>
   </div>
 
+  <button type="button" id="search_address_button">住所検索</button>
+  
    <div class="field">
     <%= f.label :prefecture %>
     <%= f.collection_select :prefecture, Prefecture.all, :name, :name, include_blank: true %>
@@ -136,3 +138,5 @@
   <%= f.submit '下書き保存', name: :new_draft %>
   <%= f.submit '入力内容の確認画面へ', name: :new %>
 <% end %>
+
+<%= javascript_pack_tag 'search-address' %>
