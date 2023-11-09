@@ -25,9 +25,17 @@ class Public::RegistrationsController < Devise::RegistrationsController
   # end
 
   # DELETE /resource
-  # def destroy
-  #   super
-  # end
+  def destroy
+    resource.update(deleted_flag: true) # 論理削除
+    # 全ての里親募集の掲載の掲載ステータスを「募集終了」にする
+    resource.cats.each do |cat|
+      cat.update(publication_status: 'recruitment_closed')
+    end
+    Devise.sign_out_all_scopes ? sign_out : sign_out(resource_name)
+    set_flash_message :notice, :destroyed
+    yield resource if block_given?
+    respond_with_navigational(resource){ redirect_to after_sign_out_path_for(resource_name) }
+  end
 
   # GET /resource/cancel
   # Forces the session data which is usually expired after sign
