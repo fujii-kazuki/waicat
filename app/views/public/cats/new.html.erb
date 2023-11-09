@@ -63,6 +63,7 @@
   <div>
     <%= f.label :breed %>
     <%= f.collection_select :breed, Breed.all, :name, :name, include_blank: '選択してください' %>
+  </div>
 
   <div>
     <%= f.label :animal_print %>
@@ -94,7 +95,7 @@
 
   <button type="button" id="search_address_button">住所検索</button>
   
-   <div class="field">
+   <div>
     <%= f.label :prefecture %>
     <%= f.collection_select :prefecture, Prefecture.all, :name, :name, include_blank: true %>
   </div>
