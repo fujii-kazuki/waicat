@@ -16,7 +16,7 @@ class User < ApplicationRecord
 
   validates :name, presence: true
   validates :postal_code, presence: true, numericality: { only_integer: true }, length: { is: 7 }
-  validates :prefecture, presence: true
+  validates :prefecture, presence: { message: 'を選択してください' }
   validates :city, presence: true
   validates :telephone_number, presence: true, numericality: { only_integer: true }, length: { in: 10..11 }
 

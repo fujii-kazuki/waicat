@@ -5,27 +5,32 @@
 
   <div class="field">
     <%= f.label :name %><br />
-    <%= f.text_field :name, autocomplete: 'name', autofocus: true, placeholder: '例）猫山太郎' %>
+    <%= f.text_field :name, autocomplete: 'name', autofocus: true, placeholder: '例）猫山太郎', required: true %>
   </div>
 
   <div class="field">
     <%= f.label :postal_code %><br />
-    <%= f.text_field :postal_code, autocomplete: 'postal_code', placeholder: '例）1234567' %>
+    <%= f.text_field :postal_code, autocomplete: 'postal_code', placeholder: '例）1234567', required: true %>
   </div>
 
   <div class="field">
-    <%= f.label :address %><br />
-    <%= f.text_field :address, autocomplete: 'address', placeholder: '例）大阪府大阪市中央区難波◯丁目1-1' %>
+    <%= f.label :prefecture %><br />
+    <%= f.collection_select(:prefecture, Prefecture.all, :name, :name, { include_blank: true }, required: true) %>
+  </div>
+  
+  <div class="field">
+    <%= f.label :city %><br />
+    <%= f.text_field :city, autocomplete: 'city', placeholder: '例）新宿区', required: true %>
   </div>
 
   <div class="field">
     <%= f.label :telephone_number %><br />
-    <%= f.telephone_field :telephone_number, autocomplete: 'telephone_number', placeholder: '例）09012345678' %>
+    <%= f.telephone_field :telephone_number, autocomplete: 'telephone_number', placeholder: '例）09012345678', required: true %>
   </div>
 
   <div class="field">
     <%= f.label :email %><br />
-    <%= f.email_field :email, autocomplete: "email", placeholder: '例）sample@sample.jp' %>
+    <%= f.email_field :email, autocomplete: "email", placeholder: '例）sample@sample.jp', required: true %>
   </div>
 
   <div class="field">
@@ -33,12 +38,12 @@
     <% if @minimum_password_length %>
     <em>(<%= @minimum_password_length %>文字以上)</em>
     <% end %><br />
-    <%= f.password_field :password, autocomplete: "new-password" %>
+    <%= f.password_field :password, autocomplete: "new-password", required: true %>
   </div>
 
   <div class="field">
     <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
+    <%= f.password_field :password_confirmation, autocomplete: "new-password", required: true %>
   </div>
 
   <div class="actions">
