@@ -46,8 +46,7 @@ Rails.application.routes.draw do
     # public/usersコントローラー
     namespace :users do
       get 'my_page', action: 'show'
-      get 'check'
-      patch 'leave'
+      get 'confirm'
       scope :infomation do
         get 'edit', as: 'infomation_edit'
         patch 'update', as: 'infomation_update'

@@ -3,7 +3,7 @@
 
 <% if user_signed_in? %>
   <%= link_to 'ログアウト', destroy_user_session_path, method: :delete %>
-  <%= link_to '会員退会', users_leave_path, method: :patch %>
+  <%= link_to '会員退会', user_registration_path, method: :delete %>
 <% else %>
   <%= link_to '新規登録', new_user_registration_path %>
   <%= link_to 'ログイン', new_user_session_path %>

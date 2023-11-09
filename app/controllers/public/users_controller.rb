@@ -3,10 +3,7 @@ class Public::UsersController < ApplicationController
     @user = current_user
   end
 
-  def edit
-  end
-
-  def check
+  def confirm
   end
 
   def leave
