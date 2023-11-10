@@ -24,8 +24,8 @@ Rails.application.routes.draw do
     
     # public/catsコントローラー
     resources :cats do
-      member do
-        get 'thanks'
+      collection do
+        post 'confirm'
       end
 
       # public/commentsコントローラー

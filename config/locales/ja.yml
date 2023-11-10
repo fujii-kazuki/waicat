@@ -1,12 +1,47 @@
 ja:
   enums:
+    cat:
+      gender:
+        male: 'オス'
+        female: 'メス'
+      hair_length:
+        short: '短毛'
+        long: '長毛'
+      publication_status:
+        draft: '下書き'
+        public: '公開'
+        private: '非公開'
+        in_consultation: '相談中'
+        recruitment_closed: '募集終了'
+        foster_parents_decided: '里親決定'
+        publication_deadline: '掲載締め切り'
   activerecord:
+    attributes:
+      cat:
+        photos: '写真'
+        video: '動画'
+        publication_title: '掲載タイトル'
+        name: '名前'
+        age: '年齢'
+        weight: '体重'
+        breed: '種類'
+        animal_print: '毛の柄'
+        postal_code: '郵便番号'
+        prefecture: '都道府県'
+        municipalitie: '市区町村'
+        background: '経緯'
+        personality: '性格'
+        health: '健康状態'
+        delivery_place: '譲渡場所'
+        remarks: '備考'
+        publication_deadline: '掲載期限'
     errors:
       messages:
         record_invalid: 'バリデーションに失敗しました: %{errors}'
         restrict_dependent_destroy:
           has_one: "%{record}が存在しているので削除できません"
           has_many: "%{record}が存在しているので削除できません"
+        content_type_invalid: 'のファイル形式が不正です'
   date:
     abbr_day_names:
     - 日
