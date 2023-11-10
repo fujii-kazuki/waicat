@@ -5,6 +5,10 @@
 <%= link_to '内容を編集する', edit_cat_path %>
 <%= link_to '掲載を削除', cat_path, method: :delete %>
 <%= link_to 'コメント一覧', cat_comments_path(@cat.id) %>
+<div id=<%="bookmark-#{@cat.id}"%>>
+  <%= render 'public/bookmarks/button', cat_id: @cat.id %>
+</div>
+
 <p>猫ID：<%= @cat.id %></p>
 <p>会員ID：<%= @cat.user_id %></p>
 <% if @cat.photos.attached? %>

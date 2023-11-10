@@ -14,9 +14,6 @@
   <div id="comment-error-messages">
     <%= render 'layouts/error_messages', obj: @comment %>
   </div>
-  <div id="comment-flash-messages">
-    <%= render 'layouts/flash_messages' %>
-  </div>
   <h2>コメント</h2>
   <%= form_with model: [@cat, @comment], local: false do |f| %>
     <%= f.text_area :body, autocomplete: 'body', id: 'comment-text-area' %>

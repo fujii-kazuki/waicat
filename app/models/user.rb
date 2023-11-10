@@ -33,7 +33,13 @@ class User < ApplicationRecord
     return user
   end
 
+  # ゲストユーザー判定
   def is_guest_user?
     email == 'guest@example.com' ? true : false
+  end
+
+  # 猫のブックマーク判定
+  def bookmarked_cat?(cat_id)
+    bookmarks.exists?(cat_id: cat_id)
   end
 end

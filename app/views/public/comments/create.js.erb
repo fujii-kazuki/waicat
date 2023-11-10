@@ -1,4 +1,4 @@
 $('#cat-comment-list').html("<%= j(render 'list') %>");
 $('#comment-error-messages').html("<%= j(render 'layouts/error_messages', obj: @comment) %>");
-$('#comment-flash-messages').html("<%= j(render 'layouts/flash_messages') %>");
+$('#flash-message').html("<%= j(render 'layouts/flash_message') %>");
 $('#comment-text-area').val('');
