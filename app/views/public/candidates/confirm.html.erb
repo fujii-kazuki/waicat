@@ -46,5 +46,5 @@
   <%= f.label :confirmed, '里親募集の掲載、条件等を全て確認しました。' %>
 
   <%= f.submit '里親立候補' %>
-  <%= link_to '戻る', 'javascript:history.back()' %>
+  <%= link_to '戻る', cat_path(@cat.id) %>
 <% end %>

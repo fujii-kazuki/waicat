@@ -37,9 +37,21 @@ Rails.application.routes.draw do
       end
     end
 
-    # public/bookmarksコントローラー
     scope :users do
+      # public/bookmarksコントローラー
       resources :bookmarks, only: [:index, :create, :destroy]
+
+      # public/chatroomsコントローラー
+      resources :chatrooms, only: [:index, :show] do
+
+        # public/messagesコントローラー
+        resources :messages, only: [:create]
+      end
+
+      # public/noticesコントローラー
+      resources :notices, only: [:index] do
+        patch 'leave'
+      end
     end
 
     # public/usersコントローラー
@@ -50,18 +62,6 @@ Rails.application.routes.draw do
         get 'edit', as: 'infomation_edit'
         patch 'update', as: 'infomation_update'
       end
-    end
-
-    # public/chatroomsコントローラー
-    resources :chatrooms, only: [:index, :show] do
-
-      # public/messagesコントローラー
-      resources :messages, only: [:create]
-    end
-
-    # public/noticesコントローラー
-    resources :notices, only: [:index] do
-      patch 'leave'
     end
   end
 
