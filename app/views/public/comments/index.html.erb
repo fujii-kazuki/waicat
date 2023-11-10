@@ -1,2 +1,26 @@
 <h1>Public::Comments#index</h1>
 <p>Find me in app/views/public/comments/index.html.erb</p>
+
+<%= link_to @cat.publication_title, cat_path(@cat.id) %>
+
+<div>
+  <h2>コメント一覧</h2>
+  <div id="cat-comment-list">
+    <%= render 'list' %>
+  </div>
+</div>
+
+<div>
+  <div id="comment-error-messages">
+    <%= render 'layouts/error_messages', obj: @comment %>
+  </div>
+  <div id="comment-flash-messages">
+    <%= render 'layouts/flash_messages' %>
+  </div>
+  <h2>コメント</h2>
+  <%= form_with model: [@cat, @comment], local: false do |f| %>
+    <%= f.text_area :body, autocomplete: 'body', id: 'comment-text-area' %>
+    <%= f.submit '送信' %>
+  <% end %>
+</div>
+

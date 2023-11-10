@@ -4,6 +4,7 @@
 <%= link_to '一覧に戻る', cats_path %>
 <%= link_to '内容を編集する', edit_cat_path %>
 <%= link_to '掲載を削除', cat_path, method: :delete %>
+<%= link_to 'コメント一覧', cat_comments_path(@cat.id) %>
 <p>猫ID：<%= @cat.id %></p>
 <p>会員ID：<%= @cat.user_id %></p>
 <% if @cat.photos.attached? %>

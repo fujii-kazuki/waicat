@@ -24,14 +24,14 @@ User.create!(
 )
 
 # 会員
-15.times do |num|
-  num += 1
+15.times do |i|
+  i += 1
   User.create!(
-    name: "猫山太郎-#{num}",
-    email: "sample@sample#{num}.jp",
+    name: "猫山太郎-#{i}",
+    email: "sample@sample#{i}.jp",
     telephone_number: '00000000000',
     postal_code: '0000000',
-    address: "大阪府大阪市中央区難波◯丁目1-#{num}",
+    address: "大阪府大阪市中央区難波◯丁目1-#{i}",
     password: '000000'
   )
 end
@@ -95,15 +95,15 @@ animal_print_names.each do |animal_print_name|
 end
 
 # 猫ちゃん
-15.times do |num|
-  num += 1
+15.times do |i|
+  i += 1
   publication_date = Time.zone.now
   publication_deadline = publication_date.since(rand(2..14).days)
 
   cat = Cat.new(
-    user_id: num,
-    publication_title: "タイトル-#{num}",
-    name: "#{num}にゃん",
+    user_id: i,
+    publication_title: "タイトル-#{i}",
+    name: "#{i}にゃん",
     age: Random.rand(12.5).ceil(1),
     gender: rand(0..1),
     weight: Random.rand(8.5).ceil(1),
@@ -129,4 +129,19 @@ end
   cat.photos.attach(io: File.open(Rails.root.join("app/assets/images/cats/img-2.jpg")), filename: "img-2.jpg")
   cat.photos.attach(io: File.open(Rails.root.join("app/assets/images/cats/img-3.jpg")), filename: "img-3.jpg")
   cat.save!
+end
+
+# コメント
+2.times do |i|
+  i += 1
+
+  5.times do |j|
+    j += 1
+
+    Comment.create!(
+      cat_id: i,
+      user_id: j,
+      body: "#{User.find(j).name}のテストコメント"
+    )
+  end
 end

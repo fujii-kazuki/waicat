@@ -35,6 +35,8 @@ ja:
         delivery_place: '譲渡場所'
         remarks: '備考'
         publication_deadline: '掲載期限'
+      comment:
+        body: 'コメントの内容'
     errors:
       messages:
         record_invalid: 'バリデーションに失敗しました: %{errors}'

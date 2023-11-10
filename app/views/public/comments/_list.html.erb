@@ -1,0 +1,18 @@
+<% if @comments.any? %>
+  <ul>
+    <% @comments.each do |comment| %>
+      <li>
+        <p><%= comment.user.name %>　<time><%= comment.created_at.strftime('%Y/%m/%d %H:%M') %></time></p>
+        <p><%= comment.body %></p>
+        <% if comment.user.id == current_user.id %>
+          <%= link_to '削除', cat_comment_path(cat_id: @cat.id, id: comment.id), method: :delete, remote: true %>
+        <% end %>
+        <% if @cat.user_id == current_user.id && comment.user.id != current_user.id  %>
+          <%= link_to '不適切なコメントとして削除', cat_comment_path(cat_id: @cat.id, id: comment.id), method: :delete, remote: true %>
+        <% end %>
+      </li>
+    <% end %>
+</ul>
+<% else %>
+  <p>コメントはありません。</p>
+<% end %>
