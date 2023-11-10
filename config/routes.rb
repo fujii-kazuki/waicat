@@ -24,16 +24,15 @@ Rails.application.routes.draw do
     
     # public/catsコントローラー
     resources :cats do
-      collection do
-        post 'confirm'
-      end
+      post 'confirm', on: :collection
 
       # public/commentsコントローラー
       resources :comments, only: [:index, :create, :destroy]
 
       # public/candicatesコントローラー
-      resources :candicates, only: [:create] do
-        patch 'confirm'
+      resources :candidates, only: [:create] do
+        get 'confirm', on: :collection
+        patch 'decide'
         patch 'decline'
       end
     end
