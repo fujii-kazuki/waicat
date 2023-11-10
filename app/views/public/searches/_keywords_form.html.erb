@@ -1,0 +1,6 @@
+<%= form_with url: searches_path, method: :get do |f| %>
+  <%= f.hidden_field :search_type, value: 'keywords' %>
+  <%= f.search_field :publication_title_or_name_or_breed_or_animal_print_or_prefecture_or_city_cont,
+    placeholder: 'キーワード検索', value: params[:publication_title_or_name_or_breed_or_animal_print_or_prefecture_or_city_cont], required: true %>
+  <%= f.submit '検索' %>
+<% end %>
