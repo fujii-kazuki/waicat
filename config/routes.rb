@@ -10,7 +10,12 @@ Rails.application.routes.draw do
   }
 
   scope module: :public do
+    # Aboutページ
     get 'about' => 'homes#about', as: 'about'
+    # ゲストログイン
+    devise_scope :user do
+      post 'guest_sign_in' => 'sessions#guest_sign_in', as: 'guest_session'
+    end
     
     # public/searchesコントローラー
     scope :cats do
@@ -40,7 +45,7 @@ Rails.application.routes.draw do
 
     # public/usersコントローラー
     namespace :users do
-      get 'my_page', action:'show'
+      get 'my_page', action: 'show'
       get 'check'
       patch 'leave'
       scope :infomation do

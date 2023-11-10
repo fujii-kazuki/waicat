@@ -2,5 +2,9 @@
 <p>Find me in app/views/public/homes/top.html.erb</p>
 
 <% if user_signed_in? %>
+  <%= link_to 'ログアウト', destroy_user_session_path, method: :delete %>
   <%= link_to '会員退会', users_leave_path, method: :patch %>
+<% else %>
+  <%= link_to 'ログイン', new_user_session_path %>
+  <%= link_to 'ゲストログイン', guest_session_path, method: :post %>
 <% end %>

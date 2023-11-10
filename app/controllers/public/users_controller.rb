@@ -11,6 +11,7 @@ class Public::UsersController < ApplicationController
   def leave
     current_user.update(deleted_flag: true)
     reset_session
-    redirect_to root_path, notice: '退会処理が完了しました。ご利用ありがとうございました。'
+    flash[:notice] = '退会処理が完了しました。ご利用ありがとうございました。'
+    redirect_to root_path
   end
 end

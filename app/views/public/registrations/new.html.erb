@@ -9,8 +9,13 @@
   </div>
 
   <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autocomplete: "email", placeholder: '例）sample@sample.jp' %>
+    <%= f.label :postal_code %><br />
+    <%= f.text_field :postal_code, placeholder: '例）1234567' %>
+  </div>
+
+  <div class="field">
+    <%= f.label :address %><br />
+    <%= f.text_field :address, placeholder: '例）大阪府大阪市中央区難波◯丁目1-1' %>
   </div>
 
   <div class="field">
@@ -19,13 +24,8 @@
   </div>
 
   <div class="field">
-    <%= f.label :postal_code %><br />
-    <%= f.text_field :postal_code, placeholder: '例）1234567' %>
-  </div>
-
-  <div class="field">
-    <%= f.label :address %><br />
-    <%= f.text_field :address, placeholder: '例）大阪府大阪市中央区難波◯丁目1-1' %>
+    <%= f.label :email %><br />
+    <%= f.email_field :email, autocomplete: "email", placeholder: '例）sample@sample.jp' %>
   </div>
 
   <div class="field">
