@@ -35,11 +35,11 @@ class Cat < ApplicationRecord
 
   validates :publication_status, presence: true
 
-  # オス, メス
+  # 0:オス, 1:メス
   enum gender: { male: 0, female: 1 }, _prefix: :gender
-  # 短毛, 長毛
+  # 0:短毛, 1:長毛
   enum hair_length: { short: 0, long: 1 }, _prefix: :hair_length
-  # 下書き, 公開, 非公開, 相談中, 募集終了, 里親決定, 掲載締め切り
+  # 0:下書き, 1:公開, 2:非公開, 3:相談中, 4:募集終了, 5:里親決定, 6:掲載締め切り
   enum publication_status: { draft: 0, public: 1, private: 2, in_consultation: 3, recruitment_closed: 4, foster_parents_decided: 5, publication_deadline: 6 }, _prefix: :publication_status
 
   private
@@ -66,7 +66,7 @@ class Cat < ApplicationRecord
 
   # バリデーションエラー対象の写真を削除
   def photos_check
-    if self.photos.any?
+    if self.photos.any? && self.photos.respond_to?(:select!)
       self.photos.select! do |photo|
         photo.blob.content_type.in?(%('image/jpg image/jpeg image/png')) && photo.blob.byte_size < 5.megabytes
       end
