@@ -10,7 +10,7 @@ class Cat < ApplicationRecord
 
   validates :photos, content_type: [:jpg, :jpeg, :png], size: { less_than: 5.megabytes }
   validate :photos_check # ここでバリデーションエラー対象の写真を削除
-  validates :photos, limit: { min: 3, max: 10, message: 'は最低でも3枚アップロードしてください' }
+  validates :photos, limit: { min: 3, max: 10, message: 'は最低でも3枚アップロードしてください' }, if: :published?
   
   validates :video, content_type: [:mp4, :mov], size: { less_than: 30.megabytes }
   validate :video_check # ここでバリデーションエラー対象の映像を削除
@@ -25,9 +25,9 @@ class Cat < ApplicationRecord
     validates :breed, presence: { message: 'を選択してください' }
     validates :animal_print, presence: { message: 'を選択してください' }
     validates :hair_length, presence: true
-    validates :postal_code, presence: true, format: { with: /\A\d{7}\z/ }
-    validates :prefecture, presence: true
-    validates :municipalitie, presence: true
+    validates :postal_code, presence: true, numericality: { only_integer: true }, length: { is: 7 }
+    validates :prefecture, presence: { message: 'を選択してください' }
+    validates :city, presence: true
     validates :publication_date, presence: true
     validates :publication_deadline, presence: true
     validate :confirm_publication_deadline

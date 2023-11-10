@@ -52,7 +52,8 @@ ja:
         name: 名前
         telephone_number: 電話番号
         postal_code: 郵便番号
-        address: 住所
+        prefecture: '都道府県'
+        city: '市区町村'
     models:
       admin: 管理者
       user: ユーザー
