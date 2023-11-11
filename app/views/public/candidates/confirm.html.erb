@@ -1,17 +1,10 @@
-<h1>Public::Cats#show</h1>
-<p>Find me in app/views/public/cats/show.html.erb</p>
+<h1>Public::Candidates#confirm</h1>
+<p>Find me in app/views/public/candidates/confirm.html.erb</p>
 
-<%= link_to '一覧に戻る', cats_path %>
-<%= link_to '内容を編集する', edit_cat_path(@cat.id) %>
-<%= link_to '掲載を削除', cat_path(@cat.id), method: :delete %>
-<%= link_to 'コメント一覧', cat_comments_path(@cat.id) %>
-<div id=<%="bookmark-#{@cat.id}"%>>
-  <%= render 'public/bookmarks/button', cat_id: @cat.id %>
-</div>
-<%= link_to '里親立候補', confirm_cat_candidates_path(@cat.id) %>
+<h2>里親立候補確認</h2>
+<p>※まだ里親立候補は行なわれてません。</p>
+<p>里親として立候補します。もう一度確認をお願いします。</p>
 
-<p>猫ID：<%= @cat.id %></p>
-<p>会員ID：<%= @cat.user_id %></p>
 <% if @cat.photos.attached? %>
   <div>
     <% @cat.photos.each do |photo| %>
@@ -47,3 +40,11 @@
 <p>掲載ステータス：<%= @cat.publication_status_i18n %></p>
 <p>登録日時：<%= @cat.created_at %></p>
 <p>更新日時：<%= @cat.updated_at %></p>
+
+<%= form_with url: cat_candidates_path do |f| %>
+  <%= f.check_box :confirmed, {}, true, false %>
+  <%= f.label :confirmed, '里親募集の掲載、条件等を全て確認しました。' %>
+
+  <%= f.submit '里親立候補' %>
+  <%= link_to '戻る', cat_path(@cat.id) %>
+<% end %>

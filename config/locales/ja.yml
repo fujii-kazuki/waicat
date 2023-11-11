@@ -15,6 +15,12 @@ ja:
         recruitment_closed: '募集終了'
         foster_parents_decided: '里親決定'
         publication_deadline: '掲載締め切り'
+    candidate:
+      status:
+        in_consultation: '相談中'
+        foster_parents_decided: '里親決定'
+        transferred: '譲渡済み'
+        declined: 'お断り'
   activerecord:
     attributes:
       cat:

@@ -5,7 +5,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable
 
   has_many :cats
-  has_many :candicates
+  has_many :candidates
   has_many :comments
   has_many :notices
   has_many :bookmarks
@@ -43,5 +43,15 @@ class User < ApplicationRecord
   # 猫のブックマーク判定
   def bookmarked_cat?(cat_id)
     bookmarks.exists?(cat_id: cat_id)
+  end
+
+  # 里親立候補済みかを判定（過去に1度お断りされている方は立候補済みと扱わない）
+  def candidated_foster_parent?(cat_id)
+    candidates.exists?(cat_id: cat_id, status: [0, 1, 2])
+  end
+
+  # 掲載者本人か確認
+  def is_cat_poster?(cat_id)
+    id == cat_id
   end
 end
