@@ -35,8 +35,8 @@ class Public::CandidatesController < ApplicationController
     cat = Cat.find(params[:cat_id])
     candidate = Candidate.find(params[:candidate_id])
 
-    # 既に掲載ステータスが「里親決定」になっていないかチェック
-    if !cat.publication_status == 'foster_parents_decided' || !candidate.status = 'foster_parents_decided'
+    # 既に立候補ステータスが「相談中」になっているか確認
+    if candidate.status == 'in_consultation'
       # 掲載ステータスを「里親決定」に変更
       cat.update(publication_status: 'foster_parents_decided')
       # 立候補ステータスを「里親決定」に変更
@@ -59,14 +59,34 @@ class Public::CandidatesController < ApplicationController
       )
 
       flash[:notice] = "#{cat.name}の里親を決定しました。"
+    else
+      flash[:danger] = '既に里親決定済みか、譲渡済み、またはお断り済みです。'
     end
-    
     # チャットルームへリダイレクト
     redirect_to chatroom_path(candidate.chatroom.id)
   end
 
   def decline
+    cat = Cat.find(params[:cat_id])
+    candidate = Candidate.find(params[:candidate_id])
+    chatroom = candidate.chatroom
 
+    # 立候補ステータスが相談中か確認
+    if candidate.status == 'in_consultation'
+      # 掲載ステータスを「公開」に変更
+      cat.update(publication_status: 'public')
+      # 立候補ステータスを「お断り」に変更
+      candidate.update(status: 'declined')
+      # チャットルームを論理削除
+      chatroom.update(deleted_flag: true)
+      flash[:notice] = "里親立候補をお断りしました。"
+      # チャットルーム一覧ページへリダイレクト
+      redirect_to chatrooms_path
+    else
+      flash[:danger] = '既に里親決定済みか、譲渡済み、またはお断り済みです。'
+      # チャットルームへリダイレクト
+      redirect_to chatroom_path(candidate.chatroom.id)
+    end
   end
 
   private

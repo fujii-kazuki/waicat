@@ -8,6 +8,10 @@
   <p>里親募集者：<%= @cat.user.name %></p>
 <% end %>
 
+<% if @chatroom.deleted_flag %>
+  <p>このチャットルームは終了しています。</p>
+<% end %>
+
 <% if @messages.any? %>
   <ul>
     <% @messages.each do |message| %>
@@ -21,5 +25,11 @@
 <% if @cat.user_id == current_user.id %>
   <%= link_to '里親決定', cat_candidate_decide_path(cat_id: @cat.id, candidate_id: @candidate.id), method: :patch,
     data: { confirm: "#{@candidate.user.name}さんを#{@cat.name}の里親に決定します。\nよろしいですか？" }
+  %>
+<% end %>
+
+<% if @cat.user_id == current_user.id %>
+  <%= link_to '里親お断り', cat_candidate_decline_path(cat_id: @cat.id, candidate_id: @candidate.id), method: :patch,
+    data: { confirm: "#{@candidate.user.name}さんの里親立候補をお断りし、チャットルームを終了します。\nよろしいですか？" }
   %>
 <% end %>
