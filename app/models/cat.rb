@@ -39,8 +39,13 @@ class Cat < ApplicationRecord
   enum gender: { male: 0, female: 1 }, _prefix: :gender
   # 0:短毛, 1:長毛
   enum hair_length: { short: 0, long: 1 }, _prefix: :hair_length
-  # 0:下書き, 1:公開, 2:非公開, 3:相談中, 4:募集終了, 5:里親決定, 6:掲載締め切り
-  enum publication_status: { draft: 0, public: 1, private: 2, in_consultation: 3, recruitment_closed: 4, foster_parents_decided: 5, publication_deadline: 6 }, _prefix: :publication_status
+  # 0:下書き, 1:公開, 2:非公開, 3:相談中, 4:里親決定, 5:募集終了, 6:掲載締め切り
+  enum publication_status: { draft: 0, public: 1, private: 2, in_consultation: 3, foster_parents_decided: 4, recruitment_closed: 5, publication_deadline: 6 }, _prefix: :publication_status
+
+  # 掲載ステータスが公開になっているかの判定
+  def published?
+    publication_status == 'public'
+  end
 
   private
 
@@ -50,11 +55,6 @@ class Cat < ApplicationRecord
   end
   def self.ransackable_attributes(auth_object = nil)
     ['publication_title', 'name', 'breed', 'animal_print', 'prefecture', 'city']
-  end
-
-  # 掲載ステータスが公開になっているかの判定
-  def published?
-    publication_status == 'public'
   end
 
   # 掲載期間が今日の日付以降か確認

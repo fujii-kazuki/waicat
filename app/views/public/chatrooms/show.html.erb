@@ -1,2 +1,25 @@
 <h1>Public::Chatrooms#show</h1>
 <p>Find me in app/views/public/chatrooms/show.html.erb</p>
+
+<p>掲載：<%= link_to @cat.publication_title, cat_path(@cat.id) %></p>
+<% if @cat.user_id == current_user.id %>
+  <p>里親立候補者：<%= @candidate.user.name %></p>
+<% else %>
+  <p>里親募集者：<%= @cat.user.name %></p>
+<% end %>
+
+<% if @messages.any? %>
+  <ul>
+    <% @messages.each do |message| %>
+      <li><%= safe_join(message.body.split("\n"),tag(:br)) %></li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>メッセージがありません。</p>
+<% end %>
+
+<% if @cat.user_id == current_user.id %>
+  <%= link_to '里親決定', cat_candidate_decide_path(cat_id: @cat.id, candidate_id: @candidate.id), method: :patch,
+    data: { confirm: "#{@candidate.user.name}さんを#{@cat.name}の里親に決定します。\nよろしいですか？" }
+  %>
+<% end %>

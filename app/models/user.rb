@@ -49,4 +49,9 @@ class User < ApplicationRecord
   def candidated_foster_parent?(cat_id)
     candidates.exists?(cat_id: cat_id, status: [0, 1, 2])
   end
+
+  # 掲載者本人か確認
+  def is_cat_poster?(cat_id)
+    id == cat_id
+  end
 end
