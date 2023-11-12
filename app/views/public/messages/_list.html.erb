@@ -1,7 +1,5 @@
 <ul id="message-list">
   <% @messages.each do |message| %>
-    <li class="<%= 'current-user-message' if current_user.id == message.user.id %>">
-      <%= safe_join(message.body.split("\n"),tag(:br)) %>
-    </li>
+    <%= render 'public/messages/item', message: message %>
   <% end %>
 </ul>

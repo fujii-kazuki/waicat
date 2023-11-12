@@ -9,8 +9,20 @@ class Public::ChatroomsController < ApplicationController
   def show
     @chatroom = Chatroom.find(params[:id])
     @messages = @chatroom.messages
+    # 相手のメッセージを既読にする
+    read_messages(@messages)
+
     @message = Message.new
     @candidate = @chatroom.candidate
     @cat = @candidate.cat
+  end
+
+  private
+
+  # 相手のメッセージを既読にする
+  def read_messages(messages)
+    messages.each do |message|
+      message.update(readed_flag: true) if message.user_id != current_user.id
+    end
   end
 end

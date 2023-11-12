@@ -4,6 +4,7 @@ class Message < ApplicationRecord
 
   validates :body, presence: true
 
+  # 空内容判定
   def empty_body?
     /\A[\s\u3000]+\z/.match(body) || #半角の空白類文字+全角空白
     /\A[[:space:]]+\z/.match(body) || #Unicode的空白文字全般

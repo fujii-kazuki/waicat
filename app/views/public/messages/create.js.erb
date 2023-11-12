@@ -2,14 +2,12 @@
 document.querySelector('#message-body-field').value = '';
 
 <%# メッセージの要素を作成 %>
+<% @messages.each do |message| %>
+  document.querySelector('#message-list').insertAdjacentHTML('beforeend', '<%= j(render 'public/messages/item', message: message) %>');
+<% end %>
+
 <% if defined? @message %>
-  var messageList = document.querySelector('#message-list');
-  var messageItem = document.createElement('li');
-  messageItem.innerHTML = '<%= safe_join(@message.body.split("\n"),tag(:br)) %>';
-  <% if current_user.id == @message.user.id %>
-    messageItem.className = 'current-user-message';
-  <% end %>
-  messageList.appendChild(messageItem);
+  document.querySelector('#message-list').insertAdjacentHTML('beforeend', '<%= j(render 'public/messages/item', message: @message) %>');
 <% end %>
 
 <%# フラッシュメッセージをレンダリング %>
