@@ -13,9 +13,6 @@ class Public::MessagesController < ApplicationController
         flash.now[:danger] = '内容を入力してください。'
       else
         @message.save
-        @messages = Message.where(chatroom_id: chatroom.id, readed_flag: false).where.not(user_id: current_user.id)
-        # 相手のメッセージを既読にする
-        read_messages(@messages)
       end
     end
   end
@@ -24,12 +21,5 @@ class Public::MessagesController < ApplicationController
 
   def message_params
     params.require(:message).permit(:body)
-  end
-
-  # 相手のメッセージを既読にする
-  def read_messages(messages)
-    messages.each do |message|
-      message.update(readed_flag: true) if message.user_id != current_user.id
-    end
   end
 end
