@@ -3,6 +3,12 @@
 
 <h2>通知一覧</h2>
 
+<%= form_with url: search_notices_path do |f| %>
+  <%= f.select :pattern, ['全て', '未読のみ', '既読のみ'], selected: params[:pattern] %>
+  <%= f.select :sort, ['新しい順', '古い順'], selected: params[:sort] %>
+  <%= f.submit '検索' %>
+<% end %>
+
 <% if @notices.any? %>
   <ul>
     <% @notices.each do |notice| %>
