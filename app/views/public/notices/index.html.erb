@@ -1,2 +1,10 @@
 <h1>Public::Notices#index</h1>
 <p>Find me in app/views/public/notices/index.html.erb</p>
+
+<h2>通知一覧</h2>
+
+<% if @notices.any? %>
+  <%= render 'list' %>
+<% else %>
+  <p>通知はありません。</p>
+<% end %>
