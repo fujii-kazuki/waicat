@@ -1,9 +1,9 @@
 <h1>Public::Candidates#confirm</h1>
 <p>Find me in app/views/public/candidates/confirm.html.erb</p>
 
-<h2>里親立候補確認</h2>
-<p>※まだ里親立候補は行なわれてません。</p>
-<p>里親として立候補します。もう一度確認をお願いします。</p>
+<h2>里親応募確認</h2>
+<p>※まだ里親応募は行なわれてません。</p>
+<p>里親として応募します。もう一度確認をお願いします。</p>
 
 <% if @cat.photos.attached? %>
   <div>
@@ -45,6 +45,6 @@
   <%= f.check_box :confirmed, {}, true, false %>
   <%= f.label :confirmed, '里親募集の掲載、条件等を全て確認しました。' %>
 
-  <%= f.submit '里親立候補' %>
+  <%= f.submit '里親応募' %>
   <%= link_to '戻る', cat_path(@cat.id) %>
 <% end %>
