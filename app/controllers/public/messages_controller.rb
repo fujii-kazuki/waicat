@@ -13,6 +13,7 @@ class Public::MessagesController < ApplicationController
         flash.now[:danger] = '内容を入力してください。'
       else
         @message.save
+        ActionCable.server.broadcast 'message_channel', { user: current_user, message: @message }
       end
     end
   end

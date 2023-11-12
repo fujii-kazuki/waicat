@@ -1,3 +1,8 @@
+<style>
+  li[user-id="<%= current_user.id %>"] {
+  }
+</style>
+
 <h1>Public::Chatrooms#show</h1>
 <p>Find me in app/views/public/chatrooms/show.html.erb</p>
 
@@ -5,9 +10,9 @@
 
 <p>掲載：<%= link_to @cat.publication_title, cat_path(@cat.id) %></p>
 <% if @candidate.user_id == current_user.id %>
-  <p>里親応募者：<%= @candidate.user.name %></p>
-<% else %>
   <p>里親募集者：<%= @cat.user.name %></p>
+<% else %>
+  <p>里親応募者：<%= @candidate.user.name %></p>
 <% end %>
 
 <% if @chatroom.deleted_flag %>
