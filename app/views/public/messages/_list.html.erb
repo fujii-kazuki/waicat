@@ -1,5 +1,7 @@
 <ul id="message-list">
   <% @messages.each do |message| %>
-    <%= render 'public/messages/item', message: message %>
+    <li user-id="<%= message.user.id %>">
+      <%= safe_join(message.body.split("\n"),tag(:br)) %>
+    </li>
   <% end %>
 </ul>
