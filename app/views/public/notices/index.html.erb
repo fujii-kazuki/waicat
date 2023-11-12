@@ -4,7 +4,13 @@
 <h2>通知一覧</h2>
 
 <% if @notices.any? %>
-  <%= render 'list' %>
+  <ul>
+    <% @notices.each do |notice| %>
+      <li id="notice-<%= notice.id %>">
+        <%= render 'content', notice: notice %>
+      </li>
+    <% end %>
+  </ul>
 <% else %>
   <p>通知はありません。</p>
 <% end %>

@@ -50,6 +50,7 @@ Rails.application.routes.draw do
 
       # public/noticesコントローラー
       resources :notices, only: [:index] do
+        patch 'confirm'
         patch 'leave'
       end
     end
