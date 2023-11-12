@@ -1,0 +1,5 @@
+<ul id="message-list">
+  <% @messages.each do |message| %>
+    <%= render 'public/messages/item', message: message %>
+  <% end %>
+</ul>

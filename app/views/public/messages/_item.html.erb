@@ -1,0 +1,3 @@
+<li user-id="<%= message.user.id %>">
+  <%= safe_join(message.body.split("\n"),tag(:br)) %>
+</li>

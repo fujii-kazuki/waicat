@@ -1,28 +1,25 @@
+<style>
+  li[user-id="<%= current_user.id %>"] {
+  }
+</style>
+
 <h1>Public::Chatrooms#show</h1>
 <p>Find me in app/views/public/chatrooms/show.html.erb</p>
 
 <%= link_to 'チャットルーム一覧に戻る', chatrooms_path %>
 
 <p>掲載：<%= link_to @cat.publication_title, cat_path(@cat.id) %></p>
-<% if @cat.user_id == current_user.id %>
-  <p>里親応募者：<%= @candidate.user.name %></p>
-<% else %>
+<% if @candidate.user_id == current_user.id %>
   <p>里親募集者：<%= @cat.user.name %></p>
+<% else %>
+  <p>里親応募者：<%= @candidate.user.name %></p>
 <% end %>
 
 <% if @chatroom.deleted_flag %>
   <p>このチャットルームは終了しています。</p>
 <% end %>
 
-<% if @messages.any? %>
-  <ul>
-    <% @messages.each do |message| %>
-      <li><%= safe_join(message.body.split("\n"),tag(:br)) %></li>
-    <% end %>
-  </ul>
-<% else %>
-  <p>メッセージがありません。</p>
-<% end %>
+<%= render 'public/messages/list' %>
 
 <% if @cat.user_id == current_user.id %>
   <%= link_to '里親決定', cat_candidate_decide_path(cat_id: @cat.id, candidate_id: @candidate.id), method: :patch,
@@ -34,4 +31,9 @@
   <%= link_to '里親お断り', cat_candidate_decline_path(cat_id: @cat.id, candidate_id: @candidate.id), method: :patch,
     data: { confirm: "#{@candidate.user.name}さんの応募をお断りし、チャットルームを終了します。\nよろしいですか？" }
   %>
+<% end %>
+
+<%= form_with model: [@chatroom, @message], local: false do |f| %>
+  <%= f.text_area :body, autofocus: true, placeholder: '送信メッセージを入力', id: 'message-body-field' %>
+  <%= f.submit '送信' %>
 <% end %>
