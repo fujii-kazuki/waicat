@@ -45,13 +45,13 @@ class User < ApplicationRecord
     bookmarks.exists?(cat_id: cat_id)
   end
 
-  # 里親立候補済みかを判定（過去に1度お断りされている方は立候補済みと扱わない）
+  # 里親応募済みかを判定（過去に1度お断りされている方は応募済みと扱わない）
   def candidated_foster_parent?(cat_id)
     candidates.exists?(cat_id: cat_id, status: [0, 1, 2])
   end
 
   # 掲載者本人か確認
-  def is_cat_poster?(cat_id)
+  def is_cat_publisher?(cat_id)
     id == cat_id
   end
 end

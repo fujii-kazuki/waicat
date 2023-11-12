@@ -1,6 +1,8 @@
 <header id="header" class="header">
   <br>
+  <%= link_to 'ホーム', root_path %>
   <% if user_signed_in? %>
+    <%= link_to '里親募集', cats_path %>
     <%= link_to 'マイページ', users_my_page_path %>
   <% end %>
   <%= render 'public/searches/keywords_form' %>
