@@ -11,4 +11,11 @@ class Admin::CatsController < ApplicationController
   def show
     @cat = Cat.find(params[:id])
   end
+
+  def leave
+    cat = Cat.find(params[:cat_id])
+    cat.update(deleted_flag: true)
+    flash[:notice] = 'この掲載を削除しました。'
+    redirect_to admin_cat_path(cat.id)
+  end
 end
