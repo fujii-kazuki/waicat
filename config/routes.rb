@@ -104,9 +104,6 @@ Rails.application.routes.draw do
     # admin/chatroomsコントローラー
     resources :chatrooms, only: [:index, :show] do
       patch 'leave'
-
-      # admin/messagesコントローラー
-      patch 'messages/:message_id/leave' => 'messages#leave'
     end
 
     # admin/breedsコントローラー
