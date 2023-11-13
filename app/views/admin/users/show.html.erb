@@ -1,6 +1,10 @@
 <h1>Admin::Users#show</h1>
 <p>Find me in app/views/admin/users/show.html.erb</p>
 
+<% if !@user.deleted_flag %>
+  <%= link_to 'この会員を削除', admin_user_leave_path(@user.id), method: :patch, data: { confirm: 'この会員を削除します。よろしいですか？' } %>
+<% end %>
+
 <h2>会員詳細</h2>
 
 <p>名前：<%= @user.name %></p>
