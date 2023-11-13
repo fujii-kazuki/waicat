@@ -1,7 +1,7 @@
 class Admin::CommentsController < ApplicationController
   def index
-  end
-
-  def show
+    if params[:cat_id]
+      @comments = Comment.where(cat_id: params[:cat_id]).order(created_at: :desc)
+    end
   end
 end
