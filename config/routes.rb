@@ -82,6 +82,11 @@ Rails.application.routes.draw do
   namespace :admin do
     get '/' => 'homes#top', as: 'top'
 
+    # admin/usersコントローラー
+    resources :users, only: [:index, :show] do
+      patch 'leave'
+    end
+
     # admin/catsコントローラー
     resources :cats, only: [:index, :show] do
       patch 'leave'
