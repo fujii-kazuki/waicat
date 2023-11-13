@@ -1,2 +1,16 @@
 <h1>Public::Contacts#new</h1>
 <p>Find me in app/views/public/contacts/new.html.erb</p>
+
+<%= render 'layouts/error_messages', obj: @contact %>
+
+<h2>お問い合わせ</h2>
+
+<%= form_with model: @contact do |f| %>
+  <div>
+    <%= f.text_field :title, autocomplete: 'title', autofocus: true, placeholder: 'タイトル', required: true %>
+  </div>
+  <div>
+    <%= f.text_area :body, autocomplete: 'body', autofocus: true, placeholder: '内容', required: true %>
+  </div>
+  <%= f.submit '送信' %>
+<% end %>
