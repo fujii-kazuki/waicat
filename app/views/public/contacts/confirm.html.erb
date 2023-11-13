@@ -1,0 +1,16 @@
+<h1>Public::Contacts#confirm</h1>
+<p>Find me in app/views/public/contacts/confirm.html.erb</p>
+
+<h2>お問い合わせ内容確認</h2>
+
+<p>下記の内容でお問合せを行います。よろしいですか？</p>
+
+<p>内容：<%= @contact.title %></p>
+<p>詳細：<%= @contact.body %></p>
+
+<%= form_with model: @contact do |f| %>
+  <%= f.hidden_field :title %>
+  <%= f.hidden_field :body %>
+  <%= f.submit '戻る' %>
+  <%= f.submit '送信' %>
+<% end %>

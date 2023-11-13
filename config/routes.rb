@@ -67,7 +67,9 @@ Rails.application.routes.draw do
     end
 
     # public/contactsコントローラー
-    resources :contacts, only: [:new, :create]
+    resources :contacts, only: [:new, :create] do
+      get 'confirm', on: :collection
+    end
   end
 
 

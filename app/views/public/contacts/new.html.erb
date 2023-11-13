@@ -5,12 +5,12 @@
 
 <h2>お問い合わせ</h2>
 
-<%= form_with model: @contact do |f| %>
+<%= form_with model: @contact, url: confirm_contacts_path, method: :get do |f| %>
   <div>
     <%= f.text_field :title, autocomplete: 'title', autofocus: true, placeholder: 'タイトル', required: true %>
   </div>
   <div>
     <%= f.text_area :body, autocomplete: 'body', autofocus: true, placeholder: '内容', required: true %>
   </div>
-  <%= f.submit '送信' %>
+  <%= f.submit '確認' %>
 <% end %>
