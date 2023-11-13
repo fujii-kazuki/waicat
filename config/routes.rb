@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
 
+  namespace :admin do
+    get 'users/index'
+    get 'users/show'
+  end
   root 'public/homes#top'
   
   ################## 利用者側 ##################
