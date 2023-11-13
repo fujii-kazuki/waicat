@@ -7,6 +7,12 @@
       <li>
         <p><%= comment.user.name %>　<time><%= comment.created_at.strftime('%Y/%m/%d %H:%M') %></time></p>
         <p><%= comment.body %></p>
+        <% if comment.deleted_flag %>
+          <p>削除済み</p>
+        <% else %>
+          <%= link_to 'このコメントを削除', admin_comments_leave_path(comment_id: comment.id),
+            method: :patch, data: { confirm: "コメント「#{truncate(comment.body)}」を削除します。よろしいですか？" } %>
+        <% end %>
       </li>
     <% end %>
 </ul>
