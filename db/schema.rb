@@ -109,6 +109,7 @@ ActiveRecord::Schema.define(version: 2023_11_09_060440) do
     t.date "publication_date"
     t.date "publication_deadline"
     t.integer "publication_status", null: false
+    t.boolean "deleted_flag", default: false, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
