@@ -102,7 +102,8 @@ Rails.application.routes.draw do
     patch 'comments/:comment_id/leave' => 'comments#leave', as: 'comments_leave'
 
     # admin/chatroomsコントローラー
-    resources :chatrooms, only: [:index, :show, :destroy] do
+    resources :chatrooms, only: [:index, :show] do
+      patch 'leave'
 
       # admin/messagesコントローラー
       patch 'messages/:message_id/leave' => 'messages#leave'
