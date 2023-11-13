@@ -1,9 +1,5 @@
 Rails.application.routes.draw do
 
-  namespace :admin do
-    get 'users/index'
-    get 'users/show'
-  end
   root 'public/homes#top'
   
   ################## 利用者側 ##################
@@ -85,6 +81,11 @@ Rails.application.routes.draw do
 
   namespace :admin do
     get '/' => 'homes#top', as: 'top'
+
+    # admin/usersコントローラー
+    resources :users, only: [:index, :show] do
+      patch 'leave'
+    end
 
     # admin/catsコントローラー
     resources :cats, only: [:index, :show] do
