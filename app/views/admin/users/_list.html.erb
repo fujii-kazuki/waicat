@@ -13,6 +13,8 @@
         <p>都道府県：<%= user.prefecture %></p>
 
         <p>市区町村：<%= user.city %></p>
+
+        <%= link_to '詳細ページへ', admin_user_path(user.id) %>
       </li>
     <% end %>
   </ul>
