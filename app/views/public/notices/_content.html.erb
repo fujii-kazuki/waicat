@@ -1,0 +1,12 @@
+<% if notice.readed_flag %>
+  <p>既読</p>
+<% end %>
+<% if notice.url.blank? %>
+  <%= notice.title %>
+<% else %>
+  <%= link_to notice.title, notice.url %>
+<% end %>
+<p><%= safe_join(notice.body.split("\n"),tag(:br)) %></p>
+<% if !notice.readed_flag %>
+  <%= link_to '確認しました', notice_confirm_path(notice.id), method: :patch, remote: true %>
+<% end %>

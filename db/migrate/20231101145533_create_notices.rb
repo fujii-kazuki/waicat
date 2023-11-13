@@ -4,6 +4,7 @@ class CreateNotices < ActiveRecord::Migration[6.1]
       t.integer :user_id,      null: false
       t.string :title,         null: false, default: ""
       t.text :body,            null: false, default: ""
+      t.string :url,           default: ""
       t.boolean :readed_flag,  null: false, default: false
       t.boolean :deleted_flag, null: false, default: false
 

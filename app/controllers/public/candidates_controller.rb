@@ -25,6 +25,8 @@ class Public::CandidatesController < ApplicationController
         flash[:notice] = '里親の応募とチャットルームの作成が完了しました。'
         # 里親応募メッセージを自動送信
         candidate_message(chatroom)
+        # 掲載者に応募通知を送信
+        candidate_notice(candidate)
         # チャットルームページへリダイレクト
         redirect_to chatroom_path(chatroom.id)
       end
@@ -47,6 +49,8 @@ class Public::CandidatesController < ApplicationController
       # 里親決定メッセージを自動送信
       decide_foster_parent_message(candidate.chatroom)
       flash[:notice] = "#{cat.name}の里親を決定しました。"
+      # 応募者に里親決定通知を送信
+      decide_notice(candidate)
     else
       flash[:danger] = '既に里親決定済みか、譲渡済み、またはお断り済みです。'
     end
@@ -68,6 +72,8 @@ class Public::CandidatesController < ApplicationController
       # チャットルームを論理削除
       chatroom.update(deleted_flag: true)
       flash[:notice] = '里親応募をお断りしました。'
+      # 応募者に里親お断り通知を送信
+      decline_notice(candidate)
       # チャットルーム一覧ページへリダイレクト
       redirect_to chatrooms_path
     else
@@ -81,8 +87,8 @@ class Public::CandidatesController < ApplicationController
 
   # 応募可能か確認
   def can_candidate?(cat)
-    # 掲載ステータスが「公開」かどうか
-    if !cat.published?
+    # 掲載ステータスが「相談中」かどうか
+    if !cat.publication_status == 'in_consultation'
       flash[:danger] = '先ほどの掲載は現在、里親募集を行なっておりません。'
       redirect_to cats_path
       return false
@@ -122,7 +128,7 @@ class Public::CandidatesController < ApplicationController
             ・応募に至った経緯など
             ・猫を迎えるに至っての準備など
             
-            里親決定に向けて、飼い主と話し合いを行いましょう！"
+            里親決定に向けて話し合いましょう！"
     )
   end
 
@@ -144,9 +150,57 @@ class Public::CandidatesController < ApplicationController
             ・譲渡場所への集合時間
             ・その他連絡事項や必要な物など
 
-            上記の話し合いを行いましょう！
+            上記の件にて話し合いましょう！
 
             また、後日無事に#{cat_name}の譲渡が終わりましたら、#{candidate_user_name}さんは「受け取り完了ボタン」を押してください。"
+    )
+  end
+  
+  # 掲載者に通知を送信
+  def candidate_notice(candidate)
+    publishe_user = candidate.cat.user #里親募集掲載者
+    candidate_user = candidate.user #里親応募者
+    chatroom = candidate.chatroom #チャットルーム
+    cat = candidate.cat #里親募集の猫
+    # 通知を作成
+    Notice.create(
+      user_id: publishe_user.id,
+      title: "#{candidate_user.name}さんが#{cat.name}の里親に応募しました",
+      body: "#{candidate_user.name}さんが#{cat.name}の里親に応募されたので、リンク先にて#{candidate_user.name}さんとのチャットルームが作成されました。
+            これから里親決定に向けて、チャットルームで#{candidate_user.name}さんと話し合いをしましょう。",
+      url: chatroom_path(chatroom.id)
+    )
+  end
+
+  # 応募者に里親決定通知を送信
+  def decide_notice(candidate)
+    publishe_user = candidate.cat.user #里親募集掲載者
+    candidate_user = candidate.user #里親応募者
+    chatroom = candidate.chatroom #チャットルーム
+    cat = candidate.cat #里親募集の猫
+    # 通知を作成
+    Notice.create(
+      user_id: candidate_user.id,
+      title: "おめでとうございます！あなたを#{cat.name}の里親に決定しました。",
+      body: "#{cat.name}の飼い主の#{publishe_user.name}さんが、あなたを#{cat.name}の里親に決定しました。
+            今後#{cat.name}の譲渡を無事に行えるよう、リンク先のチャットルームにて#{publishe_user.name}さんと話し合いをしましょう。",
+      url: chatroom_path(chatroom.id)
+    )
+  end
+
+  # 応募者に里親お断り通知を送信
+  def decline_notice(candidate)
+    publishe_user = candidate.cat.user #里親募集掲載者
+    candidate_user = candidate.user #里親応募者
+    chatroom = candidate.chatroom #チャットルーム
+    cat = candidate.cat #里親募集の猫
+    # 通知を作成
+    Notice.create(
+      user_id: candidate_user.id,
+      title: "お気の毒ですが、#{cat.name}の里親応募がキャンセルされました。",
+      body: "#{cat.name}の飼い主の#{publishe_user.name}さんが、あなたの#{cat.name}の里親応募をキャンセルしました。
+            また機会がある事をお祈りしております。",
+      url: chatroom_path(chatroom.id)
     )
   end
 end

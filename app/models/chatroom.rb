@@ -3,6 +3,11 @@ class Chatroom < ApplicationRecord
   has_many :chatroom_users
   belongs_to :candidate
 
+  # チャット相手のユーザーを取得
+  def chat_partner(current_user)
+    ChatroomUser.where(chatroom_id: self.id).where.not(user_id: current_user.id)[0].user
+  end
+
   # 最後に送信されたメッセージを取得
   def last_message
     if messages.any?

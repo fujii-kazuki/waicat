@@ -4,7 +4,6 @@
 <h2>チャットルーム一覧</h2>
 
 <% if @chatrooms.any? %>
-
   <div>
     <% if @active_chatrooms.any? %>
       <%= render 'list', chatrooms: @active_chatrooms %>

@@ -1,0 +1,1 @@
+document.querySelector('#notice-<%= @notice.id %>').innerHTML = '<%= j(render 'public/notices/content', notice: @notice) %>';

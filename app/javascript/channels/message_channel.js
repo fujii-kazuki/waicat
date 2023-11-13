@@ -12,6 +12,7 @@ consumer.subscriptions.create("MessageChannel", {
   received(data) {
     // Called when there's incoming data on the websocket for this channel
     const messageList = document.querySelector('#message-list');
+    if (!messageList) return;
     const message = document.createElement('li');
     message.setAttribute('user-id', data.user.id)
     message.innerHTML = data.message.body
