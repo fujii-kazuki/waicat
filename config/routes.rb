@@ -106,9 +106,6 @@ Rails.application.routes.draw do
       patch 'leave'
     end
 
-    # admin/animal_printsコントローラー
-    resources :animal_prints, only: [:index, :create, :destroy]
-
     # admin/noticesコントローラー
     resources :notices, only: [:index, :create] do
       patch 'leave'
