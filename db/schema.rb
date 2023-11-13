@@ -156,6 +156,7 @@ ActiveRecord::Schema.define(version: 2023_11_09_060440) do
     t.integer "user_id", null: false
     t.string "title", default: "", null: false
     t.text "body", default: "", null: false
+    t.string "url", default: ""
     t.boolean "readed_flag", default: false, null: false
     t.boolean "deleted_flag", default: false, null: false
     t.datetime "created_at", precision: 6, null: false
