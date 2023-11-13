@@ -1,2 +1,20 @@
 <h1>Admin::Chatrooms#index</h1>
 <p>Find me in app/views/admin/chatrooms/index.html.erb</p>
+
+<h2>チャットルーム一覧</h2>
+
+<% if @chatrooms.any? %>
+  <ul>
+    <% @chatrooms.each do |chatroom| %>
+      <li>
+        <p>ルームID：<%= chatroom.id %></p>
+        <p>里親募集者：<%= chatroom.candidate.cat.user.name %></p>
+        <p>里親応募者：<%= chatroom.candidate.user.name %></p>
+        <p>作成日時：<%= chatroom.created_at %></p>
+        <p>最終メッセージ：<%= chatroom.messages.last.created_at %></p>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>チャットルームが見つかりませんでした</p>
+<% end %>
