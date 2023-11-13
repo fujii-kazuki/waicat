@@ -12,6 +12,7 @@
         <p>里親応募者：<%= chatroom.candidate.user.name %></p>
         <p>作成日時：<%= chatroom.created_at %></p>
         <p>最終メッセージ：<%= chatroom.messages.last.created_at %></p>
+        <%= link_to '入る', admin_chatroom_path(chatroom.id) %>
       </li>
     <% end %>
   </ul>

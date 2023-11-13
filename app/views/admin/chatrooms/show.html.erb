@@ -1,2 +1,16 @@
 <h1>Admin::Chatrooms#show</h1>
 <p>Find me in app/views/admin/chatrooms/show.html.erb</p>
+
+<%= link_to '戻る', 'javascript:history.back()' %>
+
+<p>掲載：<%= link_to @cat.publication_title, admin_cat_path(@cat.id) %></p>
+<p>里親募集者：<%= @recruiter.name %></p>
+<p>里親応募者：<%= @candidater.name %></p>
+
+<ul>
+  <% @messages.each do |message| %>
+    <li user-id="<%= message.user.id %>">
+      <%= safe_join(message.body.split("\n"),tag(:br)) %>
+    </li>
+  <% end %>
+</ul>

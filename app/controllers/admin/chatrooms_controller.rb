@@ -10,5 +10,10 @@ class Admin::ChatroomsController < ApplicationController
   end
 
   def show
+    @chatroom = Chatroom.find(params[:id])
+    @messages = @chatroom.messages
+    @candidater = @chatroom.candidate.user #里親立候補者
+    @recruiter = @chatroom.chat_partner(@candidater) #里親募集者
+    @cat = @chatroom.candidate.cat
   end
 end
