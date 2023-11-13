@@ -65,6 +65,11 @@ Rails.application.routes.draw do
         patch 'update', as: 'infomation_update'
       end
     end
+
+    # public/contactsコントローラー
+    resources :contacts, only: [:new, :create] do
+      get 'confirm', on: :collection
+    end
   end
 
 
