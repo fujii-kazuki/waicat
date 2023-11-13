@@ -5,6 +5,8 @@
   <%= link_to 'この会員を削除', admin_user_leave_path(@user.id), method: :patch, data: { confirm: 'この会員を削除します。よろしいですか？' } %>
 <% end %>
 
+<%= link_to 'この会員のコメント一覧', admin_user_comments_path(user_id: @user.id) %>
+
 <h2>会員詳細</h2>
 
 <p>名前：<%= @user.name %></p>
