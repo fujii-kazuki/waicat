@@ -11,6 +11,7 @@
         <p>掲載日：<%= cat.publication_date %></p>
         <p>掲載期限：<%= cat.publication_deadline %></p>
         <p>投稿ステータス：<%= cat.publication_status_i18n %></p>
+        <%= link_to '詳細へ', admin_cat_path(cat.id) %>
       </li>
     <% end %>
   </ul>
