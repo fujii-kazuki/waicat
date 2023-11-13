@@ -23,6 +23,7 @@ class CreateCats < ActiveRecord::Migration[6.1]
       t.date :publication_date
       t.date :publication_deadline
       t.integer :publication_status,    null: false
+      t.boolean :deleted_flag,          null: false, default: false
 
       t.timestamps
     end
