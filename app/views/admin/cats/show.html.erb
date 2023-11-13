@@ -2,6 +2,7 @@
 <p>Find me in app/views/admin/cats/show.html.erb</p>
 
 <%= link_to 'この掲載を削除', admin_cat_leave_path(@cat.id), method: :patch, data: { confirm: 'この掲載を削除します。よろしいですか？' } %>
+<%= link_to 'この掲載のコメント一覧', admin_cat_comments_path(cat_id: @cat.id) %>
 
 <p>猫ID：<%= @cat.id %></p>
 <p>会員ID：<%= @cat.user_id %></p>

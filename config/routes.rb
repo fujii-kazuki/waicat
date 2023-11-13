@@ -85,6 +85,9 @@ Rails.application.routes.draw do
     # admin/usersコントローラー
     resources :users, only: [:index, :show] do
       patch 'leave'
+
+      # admin/commentsコントローラー
+      resources :comments, only: [:index]
     end
 
     # admin/catsコントローラー
@@ -92,10 +95,11 @@ Rails.application.routes.draw do
       patch 'leave'
 
       # admin/commentsコントローラー
-      resources :comments, only: [:index, :show] do
-        patch 'leave'
-      end
+      resources :comments, only: [:index]
     end
+
+    # admin/commentsコントローラー
+    patch 'comments/:comment_id/leave' => 'comments#leave', as: 'comments_leave'
 
     # admin/chatroomsコントローラー
     resources :chatrooms, only: [:index, :show, :destroy] do
