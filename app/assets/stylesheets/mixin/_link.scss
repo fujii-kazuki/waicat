@@ -1,0 +1,21 @@
+@mixin link($color: $black) {
+  color: $color;
+  text-decoration: none;
+  position: relative;
+
+  &::after {
+    content: '';
+    background-color: $color;
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    transform: rotateY(90deg);
+    transition: transform .5s;
+    height: 2px;
+    width: 100%;
+  }
+
+  &:hover::after {
+    transform: rotateY(0);
+  }
+}

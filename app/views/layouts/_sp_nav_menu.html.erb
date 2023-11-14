@@ -1,0 +1,52 @@
+ <nav id="sp-nav-menu" class="sp-nav-menu">
+  <div class="container sp-nav-menu__container">
+    <ul class="sp-nav-menu__list">
+      <li class="sp-nav-menu__item">
+        <%= link_to 'はじめての方へ', about_path, class: 'sp-nav-menu__item-link' %>
+      </li>
+      <li class="sp-nav-menu__item">
+        <%= link_to 'ペットを探す', cats_path, class: 'sp-nav-menu__item-link' %>
+      </li>
+      <li class="sp-nav-menu__item">
+        <%= link_to 'お問い合わせ', new_contact_path, class: 'sp-nav-menu__item-link' %>
+      </li>
+    </ul>
+
+    <ul class="sp-nav-menu__list">
+      <% if user_signed_in? && !admin_url? %>
+        <%# 会員ログイン済 %>
+        <li class="sp-nav-menu__item">
+          <%= link_to 'マイページ', users_my_page_path, class: 'sp-nav-menu__item-link' %>
+        </li>
+        <li class="sp-nav-menu__item">
+          <%= link_to 'ブックマーク', bookmarks_path, class: 'sp-nav-menu__item-link' %>
+        </li>
+        <li class="sp-nav-menu__item">
+          <%= link_to 'チャットルーム', chatrooms_path, class: 'sp-nav-menu__item-link' %>
+        </li>
+        <li class="sp-nav-menu__item">
+          <%= link_to '通知', notices_path, class: 'sp-nav-menu__item-link' %>
+        </li>
+        <li class="sp-nav-menu__item">
+          <%= link_to 'ログアウト', destroy_user_session_path, method: :delete, class: 'sp-nav-menu__item-link' %>
+        </li>
+      <% elsif admin_signed_in? && admin_url? %>
+        <%# 管理者ログイン済かつ管理者ページ %>
+        <li class="header__sub-menu-item">
+          <%= link_to '管理者ログアウト', destroy_admin_session_path, method: :delete, class: 'sp-nav-menu__item-link' %>
+        </li>
+      <% else %>
+        <%# 未ログイン %>
+        <li class="sp-nav-menu__item">
+          <%= link_to 'ゲストログイン', guest_session_path, method: :post, class: 'sp-nav-menu__item-link' %>
+        </li>
+        <li class="sp-nav-menu__item">
+          <%= link_to 'ログイン', new_user_session_path, class: 'sp-nav-menu__item-link' %>
+        </li>
+        <li class="sp-nav-menu__item">
+          <%= link_to '新規登録', new_user_registration_path, class: 'sp-nav-menu__item-link' %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+ </nav> 

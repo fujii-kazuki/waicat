@@ -2,6 +2,8 @@ class ApplicationController < ActionController::Base
   before_action :authenticate_admin!, if: :admin_url?
   before_action :check_publication_period
 
+  helper_method :admin_url?
+
   private
 
   # URLにadminが含まれているか判定

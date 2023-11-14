@@ -1,0 +1,108 @@
+.header {
+  background-color: $waicat-main;
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  position: fixed;
+  top: 0;
+  height: 120px;
+  width: 100%;
+  z-index: 2;
+
+  @include media-breakpoint-down(md) {
+    height: 70px;
+  }
+
+  &__container-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+    padding-top: .5em;
+    padding-bottom: .5em;
+  }
+
+  &__sub-menu {
+    font-size: 1.4rem;
+
+    @include media-breakpoint-down(md) {
+      display: none;
+    }
+
+    &-list {
+      display: flex;
+      list-style: none;
+    }
+
+    &-item {
+      border-right: 1px solid $white;
+      padding: 0 2vw;
+
+      &:last-child {
+        border-right: none;
+      }
+
+      &-link {
+        @include link($white);
+      }
+    }
+  }
+
+  &__container-bottom {
+    border-top: 1px solid $white;
+    
+    @include media-breakpoint-down(md) {
+      display: none;
+    }
+  }
+
+  &__menu {
+    font-size: 1.4rem;
+
+    &-list {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      list-style: none;
+      height: 3em;
+      width: 100%;
+    }
+
+    &-item {
+      border-left: 1px solid $white;
+      height: 100%;
+      width: 100%;
+
+      &:last-child {
+        border-right: 1px solid $white;
+      }
+
+      &-link {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: $white;
+        position: relative;
+        text-decoration: none;
+        height: 100%;
+        width: 100%;
+
+        &::after {
+          content: '';
+          background-color: $white;
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          opacity: 0;
+          transition: opacity .5s;
+          height: 100%;
+          width: 100%;
+        }
+      
+        &:hover::after {
+          opacity: .2;
+        }
+      }
+    }
+  }
+}

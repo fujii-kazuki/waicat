@@ -28,6 +28,9 @@ $success:       $green !default;
 $warning:       $yellow !default;
 $danger:        $red !default;
 
+$waicat-main: #6dbec8;
+$waicat-accent: $orange;
+
 // 変数プレフィックス
 $variable-prefix:             bs- !default; // Deprecated in v5.2.0 for the shorter `$prefix`
 $prefix:                      $variable-prefix !default;
