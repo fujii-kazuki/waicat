@@ -1,0 +1,9 @@
+#header {
+  transition: opacity .5s, transform .5s;
+
+  &.js-hidden {
+    opacity: 0;
+    transform: translateY(-50%);
+    pointer-events: none;
+  }
+}

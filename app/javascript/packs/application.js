@@ -15,3 +15,4 @@ Rails.start()
 ActiveStorage.start()
 
 import '../features/hamburger-toggle'
+import '../features/header-scroll-trigger'
