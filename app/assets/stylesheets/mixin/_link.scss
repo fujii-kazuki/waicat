@@ -1,4 +1,4 @@
-@mixin link($color: $black) {
+@mixin link($color: $black, $default-bar: false) {
   color: $color;
   text-decoration: none;
   position: relative;
@@ -9,13 +9,24 @@
     position: absolute;
     bottom: -5px;
     left: 0;
-    transform: rotateY(90deg);
     transition: transform .5s;
     height: 2px;
     width: 100%;
   }
 
+  &::after {
+    @if $default-bar {
+      transform: rotateY(0);
+    } @else {
+      transform: rotateY(90deg);
+    }
+  }
+
   &:hover::after {
-    transform: rotateY(0);
+    @if $default-bar {
+      transform: rotateY(90deg);
+    } @else {
+      transform: rotateY(0);
+    }
   }
 }

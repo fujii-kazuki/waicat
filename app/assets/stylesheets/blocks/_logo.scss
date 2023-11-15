@@ -1,4 +1,5 @@
 .logo {
+  box-sizing: content-box;
   width: 100px;
 
   &__root-link {
@@ -13,6 +14,7 @@
   
   &__title {
     font-size: 24px;
+    font-weight: bold;
     text-align: center;
   }
 

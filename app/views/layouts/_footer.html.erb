@@ -1,0 +1,82 @@
+<footer id="footer" class="footer">
+  <div class="container footer__container">
+    <nav class="footer__nav">
+      <ul class="footer__nav-list">
+        <li class="footer__nav-item">
+          <%= link_to 'はじめての方へ', about_path, class: 'footer__nav-item-link' %>
+        </li>
+        <li class="footer__nav-item">
+          <%= link_to 'ペットを探す', cats_path, class: 'footer__nav-item-link' %>
+        </li>
+        <li class="footer__nav-item">
+          <%= link_to 'お問い合わせ', new_contact_path, class: 'footer__nav-item-link' %>
+        </li>
+      </ul>
+    </nav>
+
+    <nav class="footer__nav">
+      <ul class="footer__nav-list">
+        <% if user_signed_in? && !admin_url? %>
+          <%# 会員ログイン済 %>
+          <li class="footer__nav-item">
+            <%= link_to 'マイページ', users_my_page_path, class: 'footer__nav-item-link' %>
+          </li>
+          <li class="footer__nav-item">
+            <%= link_to 'ブックマーク', bookmarks_path, class: 'footer__nav-item-link' %>
+          </li>
+          <li class="footer__nav-item">
+            <%= link_to 'チャットルーム', chatrooms_path, class: 'footer__nav-item-link' %>
+          </li>
+          <li class="footer__nav-item">
+            <%= link_to '通知', notices_path, class: 'footer__nav-item-link' %>
+          </li>
+          <li class="footer__nav-item">
+            <%= link_to 'ログアウト', destroy_user_session_path, method: :delete, class: 'footer__nav-item-link' %>
+          </li>
+        <% elsif admin_signed_in? && admin_url? %>
+          <%# 管理者ログイン済かつ管理者ページ %>
+          <li class="header__sub-menu-item">
+            <%= link_to '管理者ログアウト', destroy_admin_session_path, method: :delete, class: 'footer__nav-item-link' %>
+          </li>
+        <% else %>
+          <%# 未ログイン %>
+          <li class="footer__nav-item">
+            <%= link_to 'ゲストログイン', guest_session_path, method: :post, class: 'footer__nav-item-link' %>
+          </li>
+          <li class="footer__nav-item">
+            <%= link_to 'ログイン', new_user_session_path, class: 'footer__nav-item-link' %>
+          </li>
+          <li class="footer__nav-item">
+            <%= link_to '新規登録', new_user_registration_path, class: 'footer__nav-item-link' %>
+          </li>
+        <% end %>
+      </ul>
+    </nav>
+
+    <div class="footer__logo-wrap">
+      <div class="logo">
+        <%= link_to root_path, class: 'logo__root-link' do %>
+          <p class="logo__title">
+            待ちねこ
+          </p>
+          <p class="logo__ruby">
+            <span class="logo__ruby-chara">w</span>
+            <span class="logo__ruby-chara">a</span>
+            <span class="logo__ruby-chara">i</span>
+            <span class="logo__ruby-chara">c</span>
+            <span class="logo__ruby-chara">a</span>
+            <span class="logo__ruby-chara">t</span>
+          </p>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <p class="footer__copyright">
+    <small class="footer__copyright-text">&copy; 2023 
+      <a class="footer__copyright-link" href="https://github.com/fujii-kazuki" target="_blank" rel="noopener noreferrer">
+        Fujii Kazuki
+      </a>
+    </small>
+  </p>
+</footer>
