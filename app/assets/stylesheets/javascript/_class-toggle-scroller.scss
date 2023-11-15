@@ -7,3 +7,14 @@
     pointer-events: none;
   }
 }
+
+#page-top-button {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .5s;
+
+  &.js-show {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
