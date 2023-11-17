@@ -9,7 +9,7 @@ class Public::SessionsController < Devise::SessionsController
     user = User.guest
     sign_in user
     flash[:notice] = 'ゲストユーザーとしてログインしました。'
-    redirect_to cats_path
+    redirect_to root_path
   end
   
   # GET /resource/sign_in
@@ -29,10 +29,9 @@ class Public::SessionsController < Devise::SessionsController
 
   protected
 
-  # ログイン後にマイページへリダイレクト
-  def after_sign_in_path_for(resource)
-    users_my_page_path
-  end
+  # def after_sign_in_path_for(resource)
+  #   users_my_page_path
+  # end
 
   # ログアウト後にトップページへリダイレクト
   def after_sign_out_path_for(resource)
