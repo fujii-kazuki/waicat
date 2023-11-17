@@ -1,11 +1,25 @@
-<h1>Public::Homes#top</h1>
-<p>Find me in app/views/public/homes/top.html.erb</p>
+<div class="main-visual <%= 'main-visual--signed-in' if user_signed_in? %>">
+  <div class="container main-visual__container">
+    <div class="main-visual__logo">
+      <%= render 'layouts/logo' %>
+    </div>
+    <p class="main-visual__text">
+    「あなたの優しさ」と「猫ちゃんとの出会い」のお手伝い。
+    </p>
 
-<% if user_signed_in? %>
-  <%= link_to 'ログアウト', destroy_user_session_path, method: :delete %>
-  <%= link_to '会員退会', user_registration_path, method: :delete %>
-<% else %>
-  <%= link_to '新規登録', new_user_registration_path %>
-  <%= link_to 'ログイン', new_user_session_path %>
-  <%= link_to 'ゲストログイン', guest_session_path, method: :post %>
-<% end %>
+    <% if !user_signed_in? %>
+      <div class="main-visual__links">
+        <%= link_to '新規登録', new_user_registration_path, class: 'main-visual__link main-visual__link--sign-up' %>
+        <%= link_to 'ログイン', new_user_session_path, class: 'main-visual__link main-visual__link--log-in' %>
+        <p class="main-visual__text">
+        ----- お試しの方はこちら -----
+        </p>
+        <%= link_to 'ゲストログイン', guest_session_path, method: :post, class: 'main-visual__link main-visual__link--guest-log-in' %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="main-visual__img-wrap">
+    <%= image_tag 'main-visual/img-1.jpg', class: 'main-visual__img' %>
+  </div>
+</div>
