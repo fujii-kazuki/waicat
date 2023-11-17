@@ -13,7 +13,7 @@ function header() {
   window.addEventListener('scroll', () => {
     if (!hamburgerMenu.classList.contains('js-active')) {
       if (currentPosition < document.documentElement.scrollTop) {
-        if (currentPosition > 100) {
+        if (currentPosition > 120) {
           header.classList.add('js-hidden');
         }
       } else {
@@ -31,7 +31,7 @@ function pageTopButton() {
 
   window.addEventListener('scroll', () => {
     if (currentPosition < document.documentElement.scrollTop) {
-      if (currentPosition > 100) {
+      if (currentPosition > 120) {
         pageTopButton.classList.add('js-show');
       }
     } else {

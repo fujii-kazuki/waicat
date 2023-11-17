@@ -1,0 +1,73 @@
+.flash-message {
+  animation: hidden 5s forwards;
+  position: fixed;
+  bottom: 20px;
+  left: 0;
+  transform: translateY(100%);
+  opacity: 0;
+  width: 100%;
+
+  @keyframes hidden {
+    0% {
+      transform: translateY(100%);
+      opacity: 0;
+    }
+    10% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+    90% {
+      transform: translateY(0);
+      opacity: 1
+    }
+    100% {
+      display: none;
+      transform: translateY(100%);
+      opacity: 0;
+    }
+  }
+
+  @include media-breakpoint-down(sm) {
+    bottom: 15px;
+  }
+
+  &__text {
+    color: $white;
+    border-radius: 5px;
+    padding: 1em 1.5em;
+    width: calc(100% - 80px);
+
+    @include media-breakpoint-down(md) {
+      font-size: 1.4rem;
+    }
+
+    &::before {
+      font-family: "Font Awesome 6 Free";
+      font-weight: 900;
+    }
+  }
+
+  &--notice &__text {
+    background-color: $primary;
+
+    &::before {
+      content: '\f05a'
+    }
+  }
+
+  &--success &__text {
+    background-color: $success;
+
+    &::before {
+      content: '\f058'
+    }
+  }
+
+  &--alert &__text {
+    background-color: $danger;
+
+    &::before {
+      content: '\f057'
+    }
+  }
+}
