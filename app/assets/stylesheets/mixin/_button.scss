@@ -1,0 +1,40 @@
+@mixin button($color: $waicat-main, $size: 'md') {
+  background-color: $color;
+  color: white;
+  display: inline-block;
+  border-radius: 5px;
+  display: inline-block;
+  padding: .5em 1em;
+  text-align: center;
+  text-decoration: none;
+  
+  position: relative;
+  overflow: hidden;
+
+  @if $size == 'sm' {
+    font-size: 1.4rem;
+  } @else if $size == 'md' {
+    font-size: 1.6rem;
+  } @else if $size == 'lg' {
+    font-size: 1.8rem;
+  }
+
+  &::before {
+    content: '';
+    background-color: $white;
+    border-radius: 50%;
+    opacity: 0.4;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    width: 100%;
+    padding-top: 100%;
+    transition: all 0.5s cubic-bezier(0, 0, 0.2, 1);
+  }
+
+  &:hover::before {
+    transform: translate(-50%, -50%) scale(1.5);
+    opacity: 0.1;
+  }
+}
