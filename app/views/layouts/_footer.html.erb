@@ -54,21 +54,7 @@
     </nav>
 
     <div class="footer__logo-wrap">
-      <div class="logo">
-        <%= link_to root_path, class: 'logo__root-link' do %>
-          <p class="logo__title">
-            待ちねこ
-          </p>
-          <p class="logo__ruby">
-            <span class="logo__ruby-chara">w</span>
-            <span class="logo__ruby-chara">a</span>
-            <span class="logo__ruby-chara">i</span>
-            <span class="logo__ruby-chara">c</span>
-            <span class="logo__ruby-chara">a</span>
-            <span class="logo__ruby-chara">t</span>
-          </p>
-        <% end %>
-      </div>
+      <%= render 'layouts/logo' %>
     </div>
   </div>
 

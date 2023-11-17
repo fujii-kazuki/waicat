@@ -1,20 +1,6 @@
 <header id="header" class="header">
   <div class="container header__container-top">
-    <div class="logo">
-      <%= link_to root_path, class: 'logo__root-link' do %>
-        <h1 class="logo__title">
-          待ちねこ
-        </h1>
-        <p class="logo__ruby">
-          <span class="logo__ruby-chara">w</span>
-          <span class="logo__ruby-chara">a</span>
-          <span class="logo__ruby-chara">i</span>
-          <span class="logo__ruby-chara">c</span>
-          <span class="logo__ruby-chara">a</span>
-          <span class="logo__ruby-chara">t</span>
-        </p>
-      <% end %>
-    </div>
+    <%= render 'layouts/logo' %>
 
     <div id="hamburger-menu" class="hamburger-menu">
       <span></span>
