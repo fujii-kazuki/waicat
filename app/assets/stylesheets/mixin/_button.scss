@@ -1,25 +1,37 @@
-@mixin button($color: $waicat-main, $size: 'md') {
+@mixin button($color: $waicat-main, $size: 'md', $type: 'square', $centerd: false) {
   background-color: $color;
   color: white;
   display: inline-block;
-  border-radius: 5px;
   display: inline-block;
-  padding: .5em 1em;
   text-align: center;
   text-decoration: none;
   
-  position: relative;
-  overflow: hidden;
-
+  @if $type == 'square' {
+    border-radius: 5px;
+    padding: .5em 1em;
+  } @else if $type == 'round'  {
+    border-radius: 30px;
+    padding: .5em 1.5em;
+  }
+  
   @if $size == 'sm' {
-    font-size: 1.4rem;
+    font-size: 1.2rem;
   } @else if $size == 'md' {
     font-size: 1.6rem;
   } @else if $size == 'lg' {
-    font-size: 1.8rem;
+    font-size: 2rem;
   }
 
-  &::before {
+  @if $centerd {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  
+  position: relative;
+  overflow: hidden;
+  z-index: 0;
+
+  &::after {
     content: '';
     background-color: $white;
     border-radius: 50%;
@@ -31,9 +43,10 @@
     width: 100%;
     padding-top: 100%;
     transition: all 0.5s cubic-bezier(0, 0, 0.2, 1);
+    z-index: -1;
   }
 
-  &:hover::before {
+  &:hover::after {
     transform: translate(-50%, -50%) scale(1.5);
     opacity: 0.1;
   }

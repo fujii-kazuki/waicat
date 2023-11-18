@@ -1,16 +1,54 @@
-<ul>
+<ul class="publish-list site-top-sections__featured-publish-list">
   <% cats.each do |cat| %>
-    <li>
-      <p>ID：<%= cat.id %></p>
-      <p>お名前：<%= cat.name %></p>
-      <p>年齢：<%= cat.age %></p>
-      <p>性別：<%= cat.gender_i18n %></p>
-      <p>種類：<%= cat.breed %></p>
-      <p>所在地：<%= cat.prefecture + cat.city %></p>
-      <p>掲載日：<%= cat.publication_date %></p>
-      <p>掲載期限：<%= cat.publication_deadline %></p>
-      <p>投稿ステータス：<%= cat.publication_status_i18n %></p>
-      <%= link_to '詳細へ', cat_path(cat.id) %>
+    <li class="publish-list__item">
+      <%= link_to cat_path(cat.id), class: 'publish-list__item-link' do %>
+        <div class="publish-list__item-wrap-top">
+          <p class="publish-list__item-publication-status publish-list__item-publication-status--<%= cat.publication_status %>">
+            <%= cat.publication_status_i18n %><%= "：#{cat.get_remaining_period_string}" if cat.publication_status == 'public' %>
+          </p>
+          <%= image_tag cat.photos[0], class: 'publish-list__item-img' %>
+        </div>
+      <% end %>
+
+      <div class="publish-list__item-wrap-bottom">
+        <h3 class="publish-list__item-publication-title">
+          <%= link_to truncate(cat.publication_title, length: 60), cat_path(cat.id), class: 'publish-list__item-link' %>
+        </h3>
+        <table class="publish-list__item-table">
+          <tbody class="publish-list__item-tbody">
+            <tr>
+              <th>お名前</th>
+              <td><%= cat.name %></td>
+            </tr>
+            <tr>
+              <th>年齢</th>
+              <td><%= cat.age %>歳</td>
+            </tr>
+            <tr>
+              <th>性別</th>
+              <td class="publish-list__item-gender publish-list__item-gender--<%= cat.gender %>"><%= cat.gender_i18n %></td>
+            </tr>
+          </tbody>
+          <tbody class="publish-list__item-tbody">
+            <tr>
+              <th>種類</th>
+              <td><%= cat.breed %></td>
+            </tr>
+            <tr>
+              <th>毛の柄</th>
+              <td><%= cat.animal_print %></td>
+            </tr>
+            <tr>
+              <th>所在地</th>
+              <td><%= cat.prefecture %><%= cat.city %></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div id=<%="bookmark-#{cat.id}"%> class="publish-list__item-bookmark-wrap">
+        <%= render 'public/bookmarks/button', cat_id: cat.id %>
+      </div>
     </li>
   <% end %>
 </ul>

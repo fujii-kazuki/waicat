@@ -4,7 +4,7 @@
       <%= render 'layouts/logo' %>
     </div>
     <p class="main-visual__text">
-    「あなたの優しさ」と「猫ちゃんとの出会い」のお手伝い。
+    「あなたの優しさ」と「出会い」をお手伝い。
     </p>
 
     <% if !user_signed_in? %>
@@ -23,3 +23,43 @@
     <%= image_tag 'main-visual/img-1.jpg', class: 'main-visual__img' %>
   </div>
 </div>
+
+<% if user_signed_in? %>
+  <div class="site-top-sections">
+    <div class="container site-top-sections__container">
+      <section class="site-top-sections__select-usage">
+        <h2 class="heading heading--2">
+          ご利用用途を選択
+        </h2>
+        <div class="site-top-sections__select-usage-types">
+          <div class="site-top-sections__select-usage-type">
+            <p class="site-top-sections__select-usage-text">里親になりたい方はこちら</p>
+            <%= link_to '里親募集中の猫を探す', cats_path, class: 'site-top-sections__select-usage-button site-top-sections__select-usage-button--search' %>
+          </div>
+          <div class="site-top-sections__select-usage-type">
+            <p class="site-top-sections__select-usage-text">里親を募集したい方はこちら</p>
+            <%= link_to '里親募集の掲載を作成', new_cat_path, class: 'site-top-sections__select-usage-button site-top-sections__select-usage-button--create' %>
+            <p class="site-top-sections__select-usage-text site-top-sections__select-usage-text--small">
+              ゲストユーザーはご利用できません。ご利用には
+              <%= link_to '新規登録', new_user_registration_path, class: 'site-top-sections__select-usage-link' %>
+              が必要です。
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="site-top-sections__featured-publish">
+        <h2 class="heading heading--2">
+          注目の里親募集掲載
+        </h2>
+        <% if @featured_cats.any? %>
+          <%= render 'public/cats/list', cats: @featured_cats %>
+        <% else %>
+          <p>現在注目の掲載はありません。</p>
+        <% end %>
+
+        <%= link_to '里親募集掲載をもっと見る', cats_path, class: 'site-top-sections__featured-publish-see-more-button' %>
+      </section>
+    </div>
+  </div>
+<% end %>

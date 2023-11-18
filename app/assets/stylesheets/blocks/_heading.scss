@@ -1,0 +1,17 @@
+.heading {
+  font-weight: normal;
+  margin-top: 1.5em;
+  margin-bottom: 1em;
+  padding: .25em .5em;
+
+  &--2 {
+    border-left: 6px solid $waicat-main;
+    border-bottom: 1px solid $waicat-main;
+    font-size: 2rem;
+  }
+
+  &--3 {
+    border-bottom: 1px solid $waicat-main;
+    font-size: 1.8rem;
+  }
+}

@@ -47,6 +47,16 @@ class Cat < ApplicationRecord
     publication_status == 'public'
   end
 
+  # 掲載の残り期間の文字列を返す
+  def get_remaining_period_string
+    remaining_period = (publication_deadline - Date.current - 1).to_i
+    if remaining_period == 0
+      return '本日中'
+    else
+      return '残り' + remaining_period.to_s + '日'
+    end
+  end
+
   private
 
   # Gem「ransack」の検索対象カラムをホワイトリストに登録
