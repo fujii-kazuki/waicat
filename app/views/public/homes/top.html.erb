@@ -25,41 +25,41 @@
 </div>
 
 <% if user_signed_in? %>
-  <div class="site-top-sections">
-    <div class="container site-top-sections__container">
-      <section class="site-top-sections__select-usage">
-        <h2 class="heading heading--2">
-          ご利用用途を選択
-        </h2>
-        <div class="site-top-sections__select-usage-types">
-          <div class="site-top-sections__select-usage-type">
-            <p class="site-top-sections__select-usage-text">里親になりたい方はこちら</p>
-            <%= link_to '里親募集中の猫を探す', cats_path, class: 'site-top-sections__select-usage-button site-top-sections__select-usage-button--search' %>
-          </div>
-          <div class="site-top-sections__select-usage-type">
-            <p class="site-top-sections__select-usage-text">里親を募集したい方はこちら</p>
-            <%= link_to '里親募集の掲載を作成', new_cat_path, class: 'site-top-sections__select-usage-button site-top-sections__select-usage-button--create' %>
-            <p class="site-top-sections__select-usage-text site-top-sections__select-usage-text--small">
-              ゲストユーザーはご利用できません。ご利用には
-              <%= link_to '新規登録', new_user_registration_path, class: 'site-top-sections__select-usage-link' %>
-              が必要です。
-            </p>
-          </div>
+  <section class="select-usage-section">
+    <div class="container">
+      <h2 class="heading heading--2">
+        ご利用用途を選択
+      </h2>
+      <div class="select-usage-section__types">
+        <div class="select-usage-section__type">
+          <p class="select-usage-section__text">里親になりたい方はこちら</p>
+          <%= link_to '里親募集中の猫を探す', cats_path, class: 'select-usage-section__button select-usage-section__button--search' %>
         </div>
-      </section>
-
-      <section class="site-top-sections__featured-publish">
-        <h2 class="heading heading--2">
-          注目の里親募集掲載
-        </h2>
-        <% if @featured_cats.any? %>
-          <%= render 'public/cats/list', cats: @featured_cats %>
-        <% else %>
-          <p>現在注目の掲載はありません。</p>
-        <% end %>
-
-        <%= link_to '里親募集掲載をもっと見る', cats_path, class: 'site-top-sections__featured-publish-see-more-button' %>
-      </section>
+        <div class="select-usage-section__type">
+          <p class="select-usage-section__text">里親を募集したい方はこちら</p>
+          <%= link_to '里親募集の掲載を作成', new_cat_path, class: 'select-usage-section__button select-usage-section__button--create' %>
+          <p class="select-usage-section__text select-usage-section__text--small">
+            ゲストユーザーはご利用できません。ご利用には
+            <%= link_to '新規登録', new_user_registration_path, class: 'select-usage-section__link' %>
+            が必要です。
+          </p>
+        </div>
+      </div>
     </div>
-  </div>
+  </section>
+
+  <section class="featured-publish-section">
+    <div class="container">
+      <h2 class="heading heading--2">
+        注目の里親募集掲載
+      </h2>
+      <% if @featured_cats.any? %>
+        <%= render 'public/cats/list', cats: @featured_cats %>
+      <% else %>
+        <p>現在注目の掲載はありません。</p>
+      <% end %>
+
+      <%= link_to '掲載をもっと見る', cats_path, class: 'featured-publish-section__see-more-button' %>
+    </div>
+  </section>
 <% end %>

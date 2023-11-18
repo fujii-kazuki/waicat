@@ -1,4 +1,4 @@
-<footer id="footer" class="footer">
+<footer id="footer" class="footer<%= ' footer--margin-top' if !current_page?(root_path) || user_signed_in? %>">
   <div class="container footer__container">
     <nav class="footer__nav">
       <ul class="footer__nav-list">
