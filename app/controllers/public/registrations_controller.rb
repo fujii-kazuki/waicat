@@ -60,7 +60,7 @@ class Public::RegistrationsController < Devise::RegistrationsController
 
   # 新規登録後にマイページへリダイレクト
   def after_sign_up_path_for(resource)
-    users_my_page_path
+    root_path
   end
   
   # 更新後にマイページへリダイレクト
