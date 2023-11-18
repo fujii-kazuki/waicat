@@ -73,6 +73,34 @@
     border-color: $danger;
   }
 
+  &__check {
+    width: 1em;
+    height: 1em;
+    margin-top: .25em;
+    vertical-align: top;
+    background-image: image-url('check.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    border: 1px solid $gray-500;
+    border-radius: 0.25em;
+    appearance: none;
+    -webkit-print-color-adjust: exact;
+    color-adjust: exact;
+    print-color-adjust: exact;
+
+    &:focus {
+      border-color: #86b7fe;
+      outline: 0;
+      box-shadow: 0 0 0 .25rem rgba(13,110,253,.25);
+    }
+
+    &:checked {
+      background-color: #0d6efd;
+      border-color: #0d6efd;
+    }
+  }
+
   &__text {
     color: $gray-600;
     font-size: 1.2rem;
