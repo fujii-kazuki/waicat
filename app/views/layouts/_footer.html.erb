@@ -41,13 +41,13 @@
         <% else %>
           <%# 未ログイン %>
           <li class="footer__nav-item">
-            <%= link_to 'ゲストログイン', guest_session_path, method: :post, class: 'footer__nav-item-link' %>
+            <%= link_to '新規登録', new_user_registration_path, class: 'footer__nav-item-link' %>
           </li>
           <li class="footer__nav-item">
             <%= link_to 'ログイン', new_user_session_path, class: 'footer__nav-item-link' %>
           </li>
           <li class="footer__nav-item">
-            <%= link_to '新規登録', new_user_registration_path, class: 'footer__nav-item-link' %>
+            <%= link_to 'ゲストログイン', guest_session_path, method: :post, class: 'footer__nav-item-link' %>
           </li>
         <% end %>
       </ul>
