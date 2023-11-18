@@ -1,0 +1,103 @@
+.form {
+  &__container {
+    margin: 0 auto 50px;
+    max-width: 600px;
+  }
+
+  &__wrap {
+    &:not(:last-of-type) {
+      margin-bottom: 1em;
+    }
+
+    &--center {
+      display: flex;
+      justify-content: center;
+      gap: 1em;
+    }
+  }
+
+  .field_with_errors > &__label {
+    color: $danger;;
+
+    &::before {
+      content: '\f06a';
+      font-family: "Font Awesome 6 Free";
+      font-weight: 900;
+      padding-right: .25em;
+    }
+  }
+
+  &__control {
+    display: block;
+    width: 100%;
+    padding: 0.375rem 0.75rem;
+    line-height: 1.5;
+    background-clip: padding-box;
+    border: 1px solid $gray-500;
+    appearance: none;
+    border-radius: 5px;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+
+    &:focus {
+      border-color: $primary;
+      outline: 0;
+      box-shadow: 0 0 0 0.25rem rgba(13,110,253,.25);
+    }
+  }
+
+  &__select {
+    word-wrap: normal;
+    text-transform: none;
+    display: block;
+    padding: .375rem 2.25rem .375rem .75rem;
+    font-weight: 400;
+    line-height: 1.5;
+    background-image: image-url('select-arrow.svg');
+    background-repeat: no-repeat;
+    background-position: right .75rem center;
+    background-size: 16px 12px;
+    border: 1px solid $gray-500;
+    border-radius: 5px;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    appearance: none;
+    
+    &:focus {
+      border-color: $primary;
+      outline: 0;
+      box-shadow: 0 0 0 0.25rem rgba(13,110,253,.25);
+    }
+  }
+
+  .field_with_errors > &__control,
+  .field_with_errors > &__select {
+    border-color: $danger;
+  }
+
+  &__text {
+    color: $gray-600;
+    font-size: 1.2rem;
+
+    &--error {
+      color: $warning;
+      display: none;
+
+      &::before {
+        content: '\f071';
+        font-family: "Font Awesome 6 Free";
+        font-weight: 900;
+      }
+    }
+  }
+
+  &__link {
+    @include link($primary, true);
+  }
+  
+  &__submit {
+    @include button($primary);
+  }
+
+  &__search-address-button {
+    @include button($success, 'sm');
+  }
+}

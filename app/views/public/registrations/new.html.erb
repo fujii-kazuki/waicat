@@ -1,58 +1,67 @@
-<h2>Sign up</h2>
+<div class="container">
+  <h2 class="heading heading--2">新規登録</h2>
 
-<%= form_with model: @user, url: user_registration_path do |f| %>
-  <%= render "public/shared/error_messages", resource: @user %>
+  <%= form_with model: @user, url: user_registration_path, class: 'form' do |f| %>
+    <div class="form__container">
+      <%= render "layouts/error_messages", obj: @user %>
 
-  <div class="field">
-    <%= f.label :name %><br />
-    <%= f.text_field :name, autocomplete: 'name', autofocus: true, placeholder: '例）猫山太郎', required: true %>
-  </div>
+      <div class="form__wrap">
+        <p class="form__text">アカウントをお持ちの方は<%= link_to 'こちら', new_user_session_path, required: true, class: 'form__link' %></p>
+      </div>
 
-  <div class="field">
-    <%= f.label :postal_code %><br />
-    <%= f.text_field :postal_code, autocomplete: 'postal_code', placeholder: '例）1234567', required: true %>
-  </div>
+      <div class="form__wrap">
+        <%= f.label :name, class: 'form__label' %>
+        <%= f.text_field :name, autocomplete: 'name', autofocus: true, placeholder: '例）猫山太郎', required: true, class: 'form__control' %>
+      </div>
 
-  <button type="button" id="search_address_button">住所検索</button>
+      <div class="form__wrap">
+        <%= f.label :postal_code, class: 'form__label' %>
+        <%= f.text_field :postal_code, autocomplete: 'postal_code', placeholder: '例）1234567', required: true, class: 'form__control' %>
+      </div>
 
-  <div class="field">
-    <%= f.label :prefecture %><br />
-    <%= f.collection_select :prefecture, Prefecture.all, :name, :name, include_blank: true, required: true %>
-  </div>
-  
-  <div class="field">
-    <%= f.label :city %><br />
-    <%= f.text_field :city, autocomplete: 'city', placeholder: '例）新宿区', required: true %>
-  </div>
+      <div class="form__wrap">
+        <p id="search_address_error_text" class="form__text form__text--error">
+          郵便番号に間違いがないか確認し、再度お試しするか手入力してください
+        </p>
+        <button type="button" id="search_address_button" class="form__search-address-button">住所検索</button>
+      </div>
 
-  <div class="field">
-    <%= f.label :telephone_number %><br />
-    <%= f.telephone_field :telephone_number, autocomplete: 'telephone_number', placeholder: '例）09012345678', required: true %>
-  </div>
+      <div class="form__wrap">
+        <%= f.label :prefecture, class: 'form__label' %>
+        <%= f.collection_select :prefecture, Prefecture.all, :name, :name, { include_blank: true }, class: 'form__select' %>
+      </div>
+      
+      <div class="form__wrap">
+        <%= f.label :city, class: 'form__label' %>
+        <%= f.text_field :city, autocomplete: 'city', placeholder: '例）新宿区', required: true, class: 'form__control' %>
+      </div>
 
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autocomplete: "email", placeholder: '例）sample@sample.jp', required: true %>
-  </div>
+      <div class="form__wrap">
+        <%= f.label :telephone_number, class: 'form__label' %>
+        <%= f.telephone_field :telephone_number, autocomplete: 'telephone_number', placeholder: '例）09012345678', required: true, class: 'form__control' %>
+      </div>
 
-  <div class="field">
-    <%= f.label :password %>
-    <% if @minimum_password_length %>
-      <em>（<%= @minimum_password_length %>文字以上）</em>
-    <% end %><br />
-    <%= f.password_field :password, autocomplete: "new-password", required: true %>
-  </div>
+      <div class="form__wrap">
+        <%= f.label :email, class: 'form__label' %>
+        <%= f.email_field :email, autocomplete: "email", placeholder: '例）sample@sample.jp', required: true, class: 'form__control' %>
+      </div>
 
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "new-password", required: true %>
-  </div>
+      <div class="form__wrap">
+        <%= f.label :password, class: 'form__label' %>
+        <% if @minimum_password_length %>
+          <p class="form__text"><%= @minimum_password_length %>文字以上のパスワードを入力してください</p>
+        <% end %>
+        <%= f.password_field :password, autocomplete: "new-password", required: true, class: 'form__control' %>
+      </div>
 
-  <div class="actions">
-    <%= f.submit "確定" %>
-  </div>
-<% end %>
+      <div class="form__wrap">
+        <%= f.label :password_confirmation, class: 'form__label' %>
+        <%= f.password_field :password_confirmation, autocomplete: "new-password", required: true, class: 'form__control' %>
+      </div>
 
-<p>アカウントをお持ちの方は<%= link_to 'こちら', new_user_session_path %></p>
-
-<%= javascript_pack_tag 'search-address' %>
+      <div class="form__wrap form__wrap--center">
+        <%= f.submit '確定', class: 'form__submit' %>
+      </div>
+    </div>
+  <% end %>
+</div>

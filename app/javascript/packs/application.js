@@ -17,3 +17,4 @@ ActiveStorage.start()
 import '../features/hamburger-toggle'
 import '../features/class-toggle-scroller'
 import '../features/page-top-smooth-scroll'
+import '../features/search-address'

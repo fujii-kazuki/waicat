@@ -1,17 +1,15 @@
-@mixin button($color: $waicat-main, $size: 'md', $type: 'square', $centerd: false) {
+@mixin button($color: $waicat-main, $size: 'md', $type: 'square', $position: 'left') {
   background-color: $color;
   color: white;
   display: inline-block;
-  display: inline-block;
+  padding: .5em 2em;
   text-align: center;
   text-decoration: none;
   
   @if $type == 'square' {
     border-radius: 5px;
-    padding: .5em 1em;
   } @else if $type == 'round'  {
     border-radius: 30px;
-    padding: .5em 1.5em;
   }
   
   @if $size == 'sm' {
@@ -22,9 +20,11 @@
     font-size: 2rem;
   }
 
-  @if $centerd {
+  @if $position == 'center' {
     left: 50%;
     transform: translateX(-50%);
+  } @else if $position == 'right' {
+    right: 0;
   }
   
   position: relative;
