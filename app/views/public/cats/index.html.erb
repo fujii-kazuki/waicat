@@ -1,12 +1,26 @@
-<h1>Public::Cats#index</h1>
-<p>Find me in app/views/public/cats/index.html.erb</p>
+<section>
+  <div class="container">
+    <h2 class="heading heading--2">里親募集の猫を探す</h2>
 
-<%= render 'public/searches/categories_form' %>
+    <section>
+      <h3 class="heading heading--3">キーワード検索</h3>
+      <%= render 'public/searches/keywords_form' %>
+    </section>
 
-<%= link_to '里親を募集する', new_cat_path %>
+    <section>
+      <h3 class="heading heading--3">条件を指定して探す</h3>
+      <%= render 'public/searches/categories_form' %>
+    </section>
 
-<% if @cats.any? %>
-  <%= render 'list', cats: @cats %>
-<% else %>
-  <p>現在里親募集中の猫ちゃんはいないよ！</p>
-<% end %>
+    <section>
+      <h3 class="heading heading--3">掲載一覧<small>（全<%= @total_count %>件・<%= @current_page %>/<%= @total_pages %>ページ目）</small></h3>
+
+      <% if @cats.any? %>
+        <%= render 'list', cats: @cats %>
+        <%= paginate @cats %>
+      <% else %>
+        <p>現在里親募集中の猫はいません。</p>
+      <% end %>
+    </section>
+  </div>
+</section>

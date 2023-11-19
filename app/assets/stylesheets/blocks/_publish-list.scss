@@ -1,7 +1,7 @@
 .publish-list {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: center;
   gap: 20px;
   list-style: none;
   width: 100%;
@@ -42,7 +42,29 @@
       padding: .5em 1.5em;
       z-index: 1;
 
+      // 下書き、非公開
+      &--draft, &--private {
+        background-color: $secondary;
+      }
+
+      // 公開
       &--public {
+        background-color: $waicat-accent;
+      }
+
+      // 相談中
+      &--in_consultation {
+        background-color: $primary;
+      }
+
+      // 里親決定
+      &--foster_parents_decided {
+        background-color: $success;
+      }
+
+      // 募集終了、掲載締め切り
+      &--recruitment_closed,
+      &--publication_deadline {
         background-color: $waicat-main;
       }
     }

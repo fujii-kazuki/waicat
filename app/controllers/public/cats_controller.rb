@@ -2,7 +2,13 @@ class Public::CatsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @cats = Cat.all
+    @cats = Cat.where(
+      publication_status: ['public', 'in_consultation', 'foster_parents_decided', 'recruitment_closed'],
+      deleted_flag: false
+    ).order(created_at: :desc).page(params[:page]).per(12)
+    @current_page = @cats.current_page
+    @total_pages = @cats.total_pages
+    @total_count = @cats.total_count
   end
 
   def show
