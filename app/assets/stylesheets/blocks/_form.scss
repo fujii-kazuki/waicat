@@ -96,7 +96,8 @@
   }
 }
 
-.sign-in__form {
+.sign-in__form, 
+.admin-sign-in__form {
   &-grid {
     display: grid;
     gap: 1.5em;
