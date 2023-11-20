@@ -194,3 +194,13 @@
     @include button($primary);
   }
 }
+
+.publish-confirm__form {
+  &-back-button {
+    @include button($secondary);
+  }
+
+  &-ok-button {
+    @include button($primary);
+  }
+}

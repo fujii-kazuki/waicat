@@ -40,7 +40,7 @@ class Public::CatsController < ApplicationController
       @cat.publication_status = 'public'
       @cat.publication_date = Time.zone.now
       if @cat.save
-        flash[:notice] = '掲載が完了しました。'
+        flash[:success] = '掲載が完了しました。'
         redirect_to cat_path(@cat.id)
       else
         render :new
@@ -72,7 +72,7 @@ class Public::CatsController < ApplicationController
       @cat.video = nil if params[:cat][:video].nil?
       @cat.publication_status = 'public'
       if @cat.save
-        flash[:notice] = '掲載の更新が完了しました。'
+        flash[:success] = '掲載の更新が完了しました。'
         redirect_to cat_path(@cat.id)
       else
         render :edit
@@ -90,7 +90,7 @@ class Public::CatsController < ApplicationController
         render :new
       else
         @cat.save
-        flash[:notice] = '下書き保存が完了しました。'
+        flash[:success] = '下書き保存が完了しました。'
         redirect_to cats_path
       end
 
@@ -101,6 +101,8 @@ class Public::CatsController < ApplicationController
       @cat.publication_status = 'public'
       if @cat.invalid?
         render :new
+      else
+        flash[:warn] = '掲載内容を確認してください。'
       end
 
     # 掲載編集フォームからの下書き保存の場合
@@ -113,7 +115,7 @@ class Public::CatsController < ApplicationController
         @cat.photos = nil if params[:cat][:photos].nil?
         @cat.video = nil if params[:cat][:video].nil?
         @cat.save
-        flash[:notice] = '下書き保存が完了しました。'
+        flash[:success] = '下書き保存が完了しました。'
         redirect_to cats_path
       end
 
@@ -124,6 +126,8 @@ class Public::CatsController < ApplicationController
       @cat.publication_status = 'public'
       if @cat.invalid?
         render :edit
+      else
+        flash[:warn] = '掲載内容を確認してください。'
       end
     end
   end

@@ -63,6 +63,14 @@
     }
   }
 
+  &--warn &__text {
+    background-color: $warning;
+
+    &::before {
+      content: '\f071'
+    }
+  }
+
   &--alert &__text {
     background-color: $danger;
 
