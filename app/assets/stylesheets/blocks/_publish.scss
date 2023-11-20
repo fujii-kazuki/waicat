@@ -76,103 +76,94 @@
     }
   }
 
-  &__table {
-    width: 100%;
-
-    &--detail {
-      td {
-        font-size: 1.4rem;
-      }
-    }
-
-    @include media-breakpoint-down(md) {
-      tr {
-        display: flex;
-        flex-wrap: wrap;
-      }
-
-      th {
-        align-self: center;
-        width: 20% !important;
-      }
-
-      td {
-        width: 80%;
-      }
-    }
-
-    th, td {
-      padding: 1em .25em;
-      border-bottom: 1px solid $waicat-main;
-      margin-bottom: 2px;
-    }
-
-    th {
-      padding: 1em .25em;
+  &__grid {
+    display: grid;
+    row-gap: .5em;
+    
+    & > dt {
       background-color: $waicat-main;
-      color: $white;
       border-radius: 5px;
-      width: 150px;
+      border-bottom-right-radius: 0;
+      color: $white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1em .5em;
+      text-align: center;
+    }
+    
+    & > dd {
+      border-bottom: 1px solid $waicat-main;
+      padding: 1em;
+    }
+    
+    &--1 {
+      grid-template-columns: 1fr 3fr 1fr 3fr;
+
+      @include media-breakpoint-down(lg) {
+        grid-template-columns: 1fr 3fr;
+      }
+
+      dd {
+        &.publish__status {
+          font-weight: bold;
+  
+          // 下書き、非公開
+          &--draft, &--private {
+            color: $secondary;
+          }
+    
+          // 公開
+          &--public {
+            color: $waicat-accent;
+          }
+    
+          // 相談中
+          &--in_consultation {
+            color: $primary;
+          }
+    
+          // 里親決定
+          &--foster_parents_decided {
+            color: $success;
+          }
+    
+          // 募集終了、掲載締め切り
+          &--recruitment_closed,
+          &--publication_deadline {
+            color: $waicat-main;
+          }
+        }
+        
+        &.publish__gender {
+          font-weight: bold;
+        
+          &::before {
+            font-family: "Font Awesome 6 Free";
+            padding-right: .25em;
+          }
+        
+          &--female {
+            color: $red;
+        
+            &::before {
+              content: '\f221';
+            }
+          }
+        
+          &--male {
+            color: $blue;
+        
+            &::before {
+              content: '\f222';
+            }
+          }
+        }
+      }
     }
 
-    td {
-      padding: 1em;
-
-      &.publish__status {
-        font-weight: bold;
-
-        // 下書き、非公開
-        &--draft, &--private {
-          color: $secondary;
-        }
-  
-        // 公開
-        &--public {
-          color: $waicat-accent;
-        }
-  
-        // 相談中
-        &--in_consultation {
-          color: $primary;
-        }
-  
-        // 里親決定
-        &--foster_parents_decided {
-          color: $success;
-        }
-  
-        // 募集終了、掲載締め切り
-        &--recruitment_closed,
-        &--publication_deadline {
-          color: $waicat-main;
-        }
-      }
-
-      
-      &.publish__gender {
-        font-weight: bold;
-      
-        &::before {
-          font-family: "Font Awesome 6 Free";
-          padding-right: .25em;
-        }
-      
-        &--female {
-          color: $red;
-      
-          &::before {
-            content: '\f221';
-          }
-        }
-      
-        &--male {
-          color: $blue;
-      
-          &::before {
-            content: '\f222';
-          }
-        }
-      }
+    &--2 {
+      grid-template-columns: 1fr 3fr;
     }
   }
 
