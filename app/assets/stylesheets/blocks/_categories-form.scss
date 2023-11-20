@@ -11,27 +11,7 @@
   }
 
   &__select {
-    word-wrap: normal;
-    text-transform: none;
-    display: block;
-    padding: .375rem 2.25rem .375rem .75rem;
-    font-weight: 400;
-    line-height: 1.5;
-    background-image: image-url('select-arrow.svg');
-    background-repeat: no-repeat;
-    background-position: right .75rem center;
-    background-size: 16px 12px;
-    border: 1px solid $gray-500;
-    border-radius: 5px;
-    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
-    appearance: none;
-    width: 100%;
-    
-    &:focus {
-      border-color: $primary;
-      outline: 0;
-      box-shadow: 0 0 0 0.25rem rgba(13,110,253,.25);
-    }
+    @include select;
   }
 
   &__submit {

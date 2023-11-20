@@ -43,7 +43,7 @@ class Public::SessionsController < Devise::SessionsController
     user = User.find_by(email: params[:user][:email])
     if user
       if user.valid_password?(params[:user][:password]) && user.deleted_flag
-        flash[:danger] = 'お客様は退会済みです。申し訳ございませんが、再度新規登録をお願いします。'
+        flash[:alert] = 'お客様は退会済みです。申し訳ございませんが、再度新規登録をお願いします。'
         redirect_to new_user_registration_path
       end
     end

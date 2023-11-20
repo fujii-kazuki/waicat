@@ -1,5 +1,6 @@
 class Public::CatsController < ApplicationController
   before_action :authenticate_user!
+  before_action :guest_signed_in?, except: [:index, :show], if: :user_signed_in?
 
   def index
     @cats = Cat.where(
@@ -35,6 +36,7 @@ class Public::CatsController < ApplicationController
     if params[:back_new]
       render :new
     else
+      @cat.video = nil if params[:cat][:video].nil?
       @cat.publication_status = 'public'
       @cat.publication_date = Time.zone.now
       if @cat.save
@@ -67,6 +69,7 @@ class Public::CatsController < ApplicationController
     if params[:back_edit]
       render :edit
     else
+      @cat.video = nil if params[:cat][:video].nil?
       @cat.publication_status = 'public'
       if @cat.save
         flash[:notice] = '掲載の更新が完了しました。'
@@ -104,10 +107,11 @@ class Public::CatsController < ApplicationController
     elsif params[:edit_draft]
       @cat = Cat.find(params[:cat][:id])
       @cat.assign_attributes(cat_params) # attributeを変更（DBへの保存は行われない）
-      @cat.publication_status = 'draft'
       if @cat.invalid?
         render :edit
       else
+        @cat.photos = nil if params[:cat][:photos].nil?
+        @cat.video = nil if params[:cat][:video].nil?
         @cat.save
         flash[:notice] = '下書き保存が完了しました。'
         redirect_to cats_path

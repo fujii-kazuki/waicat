@@ -1,171 +1,171 @@
-<div class="publish">
+<section class="publish">
   <div class="container">
-    <section>
-      <h2 class="heading heading--2">
-        里親募集の掲載詳細
-      </h2>
+    <h2 class="heading heading--2">
+      里親募集掲載の詳細
+    </h2>
 
-      <h3 class="heading heading--3">
-        <%= @cat.publication_title %>
-      </h3>
+    <h3 class="heading heading--3">
+      <%= @cat.publication_title %>
+    </h3>
 
-      <% if current_user.id == @cat.user.id &&
-            @cat.publication_status != 'in_consultation' &&
-            @cat.publication_status != 'foster_parents_decided' &&
-            @cat.publication_status != 'recruitment_closed' %>
-        <div class="publish__flex-1">
-          <%= link_to '内容を編集する', edit_cat_path(@cat.id), class: 'publish__button publish__button--edit' %>
-          <%= link_to '掲載を削除', cat_path(@cat.id), method: :delete, class: 'publish__button publish__button--delete' %>
-        </div>
-      <% end %>
-
-      <% if @cat.photos.attached? %>
-        <div class="publish__photos">
-          <div id="publish-swiper" class="swiper publish__swiper">
-            <div class="swiper-wrapper">
-              <% @cat.photos.each do |photo| %>
-                <div class="swiper-slide">
-                  <%= image_tag photo %>
-                </div>
-              <% end %>
-            </div>
-            <div class="swiper-button-prev"></div>
-            <div class="swiper-button-next"></div>
-          </div>
-
-          <div id="publish-thumbs-slider" class="swiper publish__thumbs-slider">
-            <div class="swiper-wrapper">
-              <% @cat.photos.each do |photo| %>
-                <div class="swiper-slide">
-                  <%= image_tag photo %> 
-                </div>
-              <% end %>
-            </div>
-          </div>
-        </div>
-      <% end %>
-
-      <% if @cat.video.attached? %>
-        <h3 class="heading heading--3">映像</h3>
-        <div class="publish__video">
-          <%= video_tag rails_blob_path(@cat.video), controls: true %>
-        </div>
-      <% end %>
-
-      <div id=<%="bookmark-#{@cat.id}"%>>
-        <%= render 'public/bookmarks/button', cat_id: @cat.id %>
+    <% if current_user.id == @cat.user.id &&
+          @cat.publication_status != 'in_consultation' &&
+          @cat.publication_status != 'foster_parents_decided' &&
+          @cat.publication_status != 'recruitment_closed' %>
+      <div class="publish__flex-1">
+        <%= link_to '内容を編集する', edit_cat_path(@cat.id), class: 'publish__button publish__button--edit' %>
+        <%= link_to '掲載を削除', cat_path(@cat.id), method: :delete, class: 'publish__button publish__button--delete' %>
       </div>
+    <% end %>
 
-      <section>
-        <h3 class="heading heading--3">基本情報</h3>
-        <table class="publish__table">
-          <tbody>
-            <tr>
-              <th>掲載状況</th>
-              <td class="publish__status publish__status--<%= @cat.publication_status %>"><%= @cat.publication_status_i18n %></td>
-              <th>所在地</th>
-              <td><%= @cat.prefecture %><%= @cat.city %></td>
-            </tr>
-            <tr>
-              <th>掲載日</th>
-              <td><%= @cat.publication_date %></td>
-              <th>掲載期限</th>
-              <td><%= @cat.publication_deadline %></td>
-            </tr>
-            <tr>
-              <th>名前</th>
-              <td><%= @cat.name %></td>
-              <th>性別</th>
-              <td class="publish__gender publish__gender--<%= @cat.gender %>"><%= @cat.gender_i18n %></td>
-            </tr>
-            <tr>
-              <th>年齢</th>
-              <td><%= @cat.age %>歳</td>
-              <th>体重</th>
-              <td><%= @cat.weight %>kg</td>
-            </tr>
-            <tr>
-              <th>毛の柄・長さ</th>
-              <td><%= @cat.animal_print %>・<%= @cat.hair_length_i18n %></td>
-              <th>種類</th>
-              <td><%= @cat.breed %></td>
-            </tr>
-            <tr>
-              <th>去勢・避妊</th>
-              <% if @cat.castration_flag %>
-                <td>去勢済み</td>
-              <% else %>
-                <td>未手術</td>
-              <% end %>
-              <th>ワクチン</th>
-              <% if @cat.vaccine_flag %>
-                <td>接種済み</td>
-              <% else %>
-                <td>未接種</td>
-              <% end %>
-            </tr>
-          </tbody>
-        </table>
-      </section>
-
-      <section>
-        <h3 class="heading heading--3">詳細情報</h3>
-        <table class="publish__table publish__table--detail">
-          <tbody>
-            <tr>
-              <th>経緯</th>
-              <td><%= show_text @cat.background %></td>
-            </tr>
-            <tr>
-              <th>性格</th>
-              <td><%= show_text @cat.personality %></td>
-            </tr>
-            <tr>
-              <th>健康状態</th>
-              <td><%= show_text @cat.health %></td>
-            </tr>
-            <tr>
-              <th>譲渡場所</th>
-              <td><%= show_text @cat.delivery_place %></td>
-            </tr>
-            <tr>
-              <th>備考</th>
-              <td><%= show_text @cat.remarks %></td>
-            </tr>
-          </tbody>
-        </table>
-      </section>
-
-      <section>
-        <h3 class="heading heading--3">質問・コメント</h3>
-
-        <% if @cat.comments.any? %>
-          <ul class="publish__comment-list">
-            <% @cat.comments.each_with_index do |comment, i| %>
-              <% break if i == 5 %>
-              <li class="publish__comment-item<%= ' publish__comment-item--publisher' if @cat.user.id == comment.user.id %>">
-                <p class="publish__comment-user-name">
-                  <%= '掲載者本人：' if @cat.user.id == comment.user.id %><%= comment.user.name %>
-                </p>
-                <p class="publish__comment-body">
-                  <%= show_text comment.body %>
-                </p>
-              </li>
+    <% if @cat.photos.attached? %>
+      <div class="publish__photos">
+        <div id="publish-swiper" class="publish-swiper">
+          <div class="swiper-wrapper">
+            <% @cat.photos.each do |photo| %>
+              <div class="swiper-slide">
+                <%= image_tag photo %>
+              </div>
             <% end %>
-          </ul>
-        <% else %>
-          <p class="publish__text">
-            質問・コメントはまだありません。
-          </p>
-        <% end %>
+          </div>
+          <div class="swiper-button-prev"></div>
+          <div class="swiper-button-next"></div>
+        </div>
 
-        <%= link_to '質問・コメントページへ', cat_comments_path(@cat.id), class: 'publish__comment-button' %>
-      </section>
-      
-      <div class="publish__flex-2">
-        <%= link_to '一覧に戻る', cats_path, class: 'publish__page-back-button' %>
-        <%= link_to '里親応募', confirm_cat_candidates_path(@cat.id), class: 'publish__candidate-button' %>
+        <div id="publish-thumbs-slider" class="publish-swiper publish-swiper--thumbs">
+          <div class="swiper-wrapper">
+            <% @cat.photos.each do |photo| %>
+              <div class="swiper-slide">
+                <%= image_tag photo %> 
+              </div>
+            <% end %>
+          </div>
+        </div>
       </div>
+    <% end %>
+
+    <% if @cat.video.attached? %>
+      <h3 class="heading heading--3">映像</h3>
+      <div class="publish__video">
+        <%= video_tag rails_blob_path(@cat.video), controls: true %>
+      </div>
+    <% end %>
+
+    <div id=<%="bookmark-#{@cat.id}"%>>
+      <%= render 'public/bookmarks/button', cat_id: @cat.id %>
+    </div>
+
+    <section>
+      <h3 class="heading heading--3">基本情報</h3>
+      <table class="publish__table">
+        <tbody>
+          <tr>
+            <th>掲載状況</th>
+            <td class="publish__status publish__status--<%= @cat.publication_status %>"><%= @cat.publication_status_i18n %></td>
+            <th>所在地</th>
+            <td><%= @cat.prefecture %><%= @cat.city %></td>
+          </tr>
+          <tr>
+            <th>掲載日</th>
+            <td><%= @cat.publication_date %></td>
+            <th>掲載期限</th>
+            <td><%= @cat.publication_deadline %></td>
+          </tr>
+          <tr>
+            <th>名前</th>
+            <td><%= @cat.name %></td>
+            <th>性別</th>
+            <td class="publish__gender publish__gender--<%= @cat.gender %>"><%= @cat.gender_i18n %></td>
+          </tr>
+          <tr>
+            <th>年齢</th>
+            <td><%= @cat.age %>歳</td>
+            <th>体重</th>
+            <td><%= @cat.weight %>kg</td>
+          </tr>
+          <tr>
+            <th>毛の柄・長さ</th>
+            <td><%= @cat.animal_print %>・<%= @cat.hair_length_i18n %></td>
+            <th>種類</th>
+            <td><%= @cat.breed %></td>
+          </tr>
+          <tr>
+            <th>去勢・避妊</th>
+            <% if @cat.castration_flag %>
+              <td>去勢済み</td>
+            <% else %>
+              <td>未手術</td>
+            <% end %>
+            <th>ワクチン</th>
+            <% if @cat.vaccine_flag %>
+              <td>接種済み</td>
+            <% else %>
+              <td>未接種</td>
+            <% end %>
+          </tr>
+        </tbody>
+      </table>
     </section>
+
+    <section>
+      <h3 class="heading heading--3">詳細情報</h3>
+      <table class="publish__table publish__table--detail">
+        <tbody>
+          <tr>
+            <th>経緯</th>
+            <td><%= show_text @cat.background %></td>
+          </tr>
+          <tr>
+            <th>性格</th>
+            <td><%= show_text @cat.personality %></td>
+          </tr>
+          <tr>
+            <th>健康状態</th>
+            <td><%= show_text @cat.health %></td>
+          </tr>
+          <tr>
+            <th>譲渡場所</th>
+            <td><%= show_text @cat.delivery_place %></td>
+          </tr>
+          <tr>
+            <th>備考</th>
+            <td><%= show_text @cat.remarks %></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h3 class="heading heading--3">質問・コメント</h3>
+
+      <% if @cat.comments.any? %>
+        <ul class="publish__comment-list">
+          <% @cat.comments.each_with_index do |comment, i| %>
+            <% break if i == 5 %>
+            <li class="publish__comment-item<%= ' publish__comment-item--publisher' if @cat.user.id == comment.user.id %>">
+              <p class="publish__comment-user-name">
+                <%= '掲載者本人：' if @cat.user.id == comment.user.id %><%= comment.user.name %>
+              </p>
+              <p class="publish__comment-body">
+                <%= show_text comment.body %>
+              </p>
+            </li>
+          <% end %>
+        </ul>
+      <% else %>
+        <p class="publish__text">
+          質問・コメントはまだありません。
+        </p>
+      <% end %>
+
+      <%= link_to '質問・コメントページへ', cat_comments_path(@cat.id), class: 'publish__comment-button' %>
+    </section>
+    
+    <div class="publish__flex-2">
+      <%= link_to '一覧に戻る', cats_path, class: 'publish__page-back-button' %>
+      <% if current_user.id != @cat.user.id %>
+        <%= link_to '里親応募', confirm_cat_candidates_path(@cat.id), class: 'publish__candidate-button' %>
+      <% end %>
+    </div>
   </div>
-</div>
+</section>

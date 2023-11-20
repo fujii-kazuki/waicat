@@ -10,7 +10,8 @@ class Cat < ApplicationRecord
 
   validates :photos, content_type: [:jpg, :jpeg, :png], size: { less_than: 5.megabytes }
   validate :photos_check # ここでバリデーションエラー対象の写真を削除
-  validates :photos, limit: { min: 3, max: 10, message: 'は最低でも3枚アップロードしてください' }, if: :published?
+  validates :photos, limit: { max: 10, message: 'は10枚以上アップロードできません' }
+  validates :photos, limit: { min: 3, message: 'は最低でも3枚アップロードしてください' }, if: :published?
   
   validates :video, content_type: [:mp4, :mov], size: { less_than: 30.megabytes }
   validate :video_check # ここでバリデーションエラー対象の映像を削除
@@ -61,10 +62,10 @@ class Cat < ApplicationRecord
 
   # Gem「ransack」の検索対象カラムをホワイトリストに登録
   def self.ransackable_associations(auth_object = nil)
-    ['publication_title', 'name', 'breed', 'animal_print', 'prefecture', 'city']
+    ['publication_title', 'breed', 'animal_print', 'prefecture', 'city']
   end
   def self.ransackable_attributes(auth_object = nil)
-    ['publication_title', 'name', 'breed', 'animal_print', 'prefecture', 'city']
+    ['publication_title', 'breed', 'animal_print', 'prefecture', 'city']
   end
 
   # 掲載期間が今日の日付以降か確認

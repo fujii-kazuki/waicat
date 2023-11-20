@@ -51,7 +51,7 @@ class User < ApplicationRecord
   end
 
   # 掲載者本人か確認
-  def is_cat_publisher?(cat_id)
-    id == cat_id
+  def is_cat_publisher?(cat)
+    id == cat.user.id
   end
 end

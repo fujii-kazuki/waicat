@@ -5,7 +5,7 @@ class Public::SearchesController < ApplicationController
     when 'keywords' then
       @search_words = params[:publication_title_or_breed_or_animal_print_or_prefecture_or_city_cont].gsub(/　/," ").strip # 前後のスペースを削除
       if @search_words.blank? # 空検索判定
-        flash[:danger] = '検索キーワードを入力してください。'
+        flash[:alert] = '検索キーワードを入力してください。'
         redirect_back fallback_location: root_path
       else
         key_words = @search_words.split(/[\p{blank}\s]+/)

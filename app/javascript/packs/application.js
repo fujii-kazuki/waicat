@@ -19,3 +19,4 @@ import '../features/class-toggle-scroller' //スクロールによる要素の�
 import '../features/page-top-smooth-scroll' //ページトップボタン機能
 import '../features/search-address' //住所検索機能
 import '../features/carousel' //カルーセル機能
+import '../features/file-uploader' //ファイルアップロード機能

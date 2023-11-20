@@ -1,0 +1,38 @@
+.publish-swiper {
+  background-color: $gray-200;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  position: relative;
+  overflow: hidden;
+  
+  .swiper-slide {
+    height: 40vh;
+    overflow: hidden;
+
+    & > img {
+      object-fit: contain;
+      height: 100%;
+      width: 100%;
+    }
+  }
+
+  &--thumbs {
+    overflow: hidden;
+
+    .swiper-slide {
+      height: 120px;
+      overflow: hidden;
+      transition: opacity .25s;
+
+      &.swiper-slide-thumb-active {
+        opacity: .4;
+      }
+
+      & > img {
+        object-fit: cover;
+        height: 100%;
+        width: 100%;
+      }
+    }
+  }
+}
