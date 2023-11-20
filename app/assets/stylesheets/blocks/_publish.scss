@@ -16,6 +16,52 @@
     }
   }
 
+  &__photos {
+    margin-bottom: .5em;
+  }
+
+  &__swiper {
+    background-color: $gray-200;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    overflow: hidden;
+
+    .swiper-wrapper {
+      height: 40vh;
+    }
+
+    .swiper-slide {
+      overflow: hidden;
+
+      & > img {
+        object-fit: contain;
+        height: 100%;
+        width: 100%;
+      }
+    }
+  }
+
+  &__thumbs-slider {
+    .swiper-wrapper {
+      height: 100px;
+    }
+
+    .swiper-slide {
+      overflow: hidden;
+      transition: opacity .25s;
+
+      &.swiper-slide-thumb-active {
+        opacity: .4;
+      }
+
+      & > img {
+        object-fit: cover;
+        height: 100%;
+        width: 100%;
+      }
+    }
+  }
+
   &__video {
     background-color: $gray-200;
     border-radius: 10px;

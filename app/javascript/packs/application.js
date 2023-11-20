@@ -14,7 +14,8 @@ Rails.start()
 // Turbolinks.start() #Turbolinksを無効にする
 ActiveStorage.start()
 
-import '../features/hamburger-toggle'
-import '../features/class-toggle-scroller'
-import '../features/page-top-smooth-scroll'
-import '../features/search-address'
+import '../features/hamburger-toggle' //ハンバーガーメニューによる開閉機能
+import '../features/class-toggle-scroller' //スクロールによる要素のクラス名の切り替え
+import '../features/page-top-smooth-scroll' //ページトップボタン機能
+import '../features/search-address' //住所検索機能
+import '../features/carousel' //カルーセル機能
