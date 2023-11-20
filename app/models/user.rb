@@ -4,15 +4,15 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable
 
-  has_many :cats
+  has_many :cats, -> { where(deleted_flag: false).order(created_at: :desc) }
   has_many :candidates
-  has_many :comments
-  has_many :notices
-  has_many :bookmarks
-  has_many :messages
-  has_many :activities
-  has_many :chatroom_users
-  has_many :contacts
+  has_many :comments, -> { where(deleted_flag: false).order(created_at: :desc) }
+  has_many :notices, -> { where(deleted_flag: false).order(created_at: :desc) }
+  has_many :bookmarks, -> { order(created_at: :desc) }
+  has_many :messages, -> { order(created_at: :desc) }
+  has_many :activities, -> { order(created_at: :desc) }
+  has_many :chatroom_users, -> { order(created_at: :desc) }
+  has_many :contacts, -> { order(created_at: :desc) }
 
   validates :name, presence: true
   validates :postal_code, presence: true, numericality: { only_integer: true }, length: { is: 7 }

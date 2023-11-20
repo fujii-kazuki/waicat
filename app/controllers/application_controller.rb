@@ -1,15 +1,10 @@
 class ApplicationController < ActionController::Base
+  include ApplicationHelper
+
   before_action :authenticate_admin!, if: :admin_url?
   before_action :check_publication_period
 
-  helper_method :admin_url?
-
   private
-
-  # URLにadminが含まれているか判定
-  def admin_url?
-    request.fullpath.include?("/admin")
-  end
 
   # 掲載期間を確認
   def check_publication_period

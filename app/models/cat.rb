@@ -1,9 +1,9 @@
 class Cat < ApplicationRecord
   belongs_to :user
 
-  has_many :bookmarks
+  has_many :bookmarks, -> { order(created_at: :desc) }
   has_many :candidates
-  has_many :comments
+  has_many :comments, -> { where(deleted_flag: false).order(created_at: :desc) }
 
   has_many_attached :photos
   has_one_attached :video

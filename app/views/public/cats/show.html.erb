@@ -1,49 +1,171 @@
-<h1>Public::Cats#show</h1>
-<p>Find me in app/views/public/cats/show.html.erb</p>
+<div class="publish">
+  <div class="container">
+    <section>
+      <h2 class="heading heading--2">
+        里親募集の掲載詳細
+      </h2>
 
-<%= link_to '一覧に戻る', cats_path %>
-<%= link_to '内容を編集する', edit_cat_path(@cat.id) %>
-<%= link_to '掲載を削除', cat_path(@cat.id), method: :delete %>
-<%= link_to 'コメント一覧', cat_comments_path(@cat.id) %>
-<div id=<%="bookmark-#{@cat.id}"%>>
-  <%= render 'public/bookmarks/button', cat_id: @cat.id %>
+      <h3 class="heading heading--3">
+        <%= @cat.publication_title %>
+      </h3>
+
+      <% if current_user.id == @cat.user.id &&
+            @cat.publication_status != 'in_consultation' &&
+            @cat.publication_status != 'foster_parents_decided' &&
+            @cat.publication_status != 'recruitment_closed' %>
+        <div class="publish__flex-1">
+          <%= link_to '内容を編集する', edit_cat_path(@cat.id), class: 'publish__button publish__button--edit' %>
+          <%= link_to '掲載を削除', cat_path(@cat.id), method: :delete, class: 'publish__button publish__button--delete' %>
+        </div>
+      <% end %>
+
+      <% if @cat.photos.attached? %>
+        <div class="publish__photos">
+          <div id="publish-swiper" class="swiper publish__swiper">
+            <div class="swiper-wrapper">
+              <% @cat.photos.each do |photo| %>
+                <div class="swiper-slide">
+                  <%= image_tag photo %>
+                </div>
+              <% end %>
+            </div>
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-button-next"></div>
+          </div>
+
+          <div id="publish-thumbs-slider" class="swiper publish__thumbs-slider">
+            <div class="swiper-wrapper">
+              <% @cat.photos.each do |photo| %>
+                <div class="swiper-slide">
+                  <%= image_tag photo %> 
+                </div>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+
+      <% if @cat.video.attached? %>
+        <h3 class="heading heading--3">映像</h3>
+        <div class="publish__video">
+          <%= video_tag rails_blob_path(@cat.video), controls: true %>
+        </div>
+      <% end %>
+
+      <div id=<%="bookmark-#{@cat.id}"%>>
+        <%= render 'public/bookmarks/button', cat_id: @cat.id %>
+      </div>
+
+      <section>
+        <h3 class="heading heading--3">基本情報</h3>
+        <table class="publish__table">
+          <tbody>
+            <tr>
+              <th>掲載状況</th>
+              <td class="publish__status publish__status--<%= @cat.publication_status %>"><%= @cat.publication_status_i18n %></td>
+              <th>所在地</th>
+              <td><%= @cat.prefecture %><%= @cat.city %></td>
+            </tr>
+            <tr>
+              <th>掲載日</th>
+              <td><%= @cat.publication_date %></td>
+              <th>掲載期限</th>
+              <td><%= @cat.publication_deadline %></td>
+            </tr>
+            <tr>
+              <th>名前</th>
+              <td><%= @cat.name %></td>
+              <th>性別</th>
+              <td class="publish__gender publish__gender--<%= @cat.gender %>"><%= @cat.gender_i18n %></td>
+            </tr>
+            <tr>
+              <th>年齢</th>
+              <td><%= @cat.age %>歳</td>
+              <th>体重</th>
+              <td><%= @cat.weight %>kg</td>
+            </tr>
+            <tr>
+              <th>毛の柄・長さ</th>
+              <td><%= @cat.animal_print %>・<%= @cat.hair_length_i18n %></td>
+              <th>種類</th>
+              <td><%= @cat.breed %></td>
+            </tr>
+            <tr>
+              <th>去勢・避妊</th>
+              <% if @cat.castration_flag %>
+                <td>去勢済み</td>
+              <% else %>
+                <td>未手術</td>
+              <% end %>
+              <th>ワクチン</th>
+              <% if @cat.vaccine_flag %>
+                <td>接種済み</td>
+              <% else %>
+                <td>未接種</td>
+              <% end %>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section>
+        <h3 class="heading heading--3">詳細情報</h3>
+        <table class="publish__table publish__table--detail">
+          <tbody>
+            <tr>
+              <th>経緯</th>
+              <td><%= show_text @cat.background %></td>
+            </tr>
+            <tr>
+              <th>性格</th>
+              <td><%= show_text @cat.personality %></td>
+            </tr>
+            <tr>
+              <th>健康状態</th>
+              <td><%= show_text @cat.health %></td>
+            </tr>
+            <tr>
+              <th>譲渡場所</th>
+              <td><%= show_text @cat.delivery_place %></td>
+            </tr>
+            <tr>
+              <th>備考</th>
+              <td><%= show_text @cat.remarks %></td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section>
+        <h3 class="heading heading--3">質問・コメント</h3>
+
+        <% if @cat.comments.any? %>
+          <ul class="publish__comment-list">
+            <% @cat.comments.each_with_index do |comment, i| %>
+              <% break if i == 5 %>
+              <li class="publish__comment-item<%= ' publish__comment-item--publisher' if @cat.user.id == comment.user.id %>">
+                <p class="publish__comment-user-name">
+                  <%= '掲載者本人：' if @cat.user.id == comment.user.id %><%= comment.user.name %>
+                </p>
+                <p class="publish__comment-body">
+                  <%= show_text comment.body %>
+                </p>
+              </li>
+            <% end %>
+          </ul>
+        <% else %>
+          <p class="publish__text">
+            質問・コメントはまだありません。
+          </p>
+        <% end %>
+
+        <%= link_to '質問・コメントページへ', cat_comments_path(@cat.id), class: 'publish__comment-button' %>
+      </section>
+      
+      <div class="publish__flex-2">
+        <%= link_to '一覧に戻る', cats_path, class: 'publish__page-back-button' %>
+        <%= link_to '里親応募', confirm_cat_candidates_path(@cat.id), class: 'publish__candidate-button' %>
+      </div>
+    </section>
+  </div>
 </div>
-<%= link_to '里親応募', confirm_cat_candidates_path(@cat.id) %>
-
-<p>猫ID：<%= @cat.id %></p>
-<p>会員ID：<%= @cat.user_id %></p>
-<% if @cat.photos.attached? %>
-  <div>
-    <% @cat.photos.each do |photo| %>
-      <%= image_tag photo %>
-    <% end %>
-  </div>
-<% end %>
-<% if @cat.video.attached? %>
-  <div>
-    <%= video_tag rails_blob_path(@cat.video), controls: true %>
-  </div>
-<% end %>
-<p>掲載タイトル：<%= @cat.publication_title %></p>
-<p>名前：<%= @cat.name %></p>
-<p>年齢：<%= @cat.age %></p>
-<p>性別：<%= @cat.gender_i18n %></p>
-<p>体重：<%= @cat.weight %></p>
-<p>種類：<%= @cat.breed %></p>
-<p>毛の柄：<%= @cat.animal_print %></p>
-<p>毛の長さ：<%= @cat.hair_length_i18n %></p>
-<p>去勢・避妊フラグ：<%= @cat.castration_flag %></p>
-<p>ワクチン接種フラグ：<%= @cat.vaccine_flag %></p>
-<p>郵便番号：<%= @cat.postal_code %></p>
-<p>都道府県：<%= @cat.prefecture %></p>
-<p>市区町村：<%= @cat.city %></p>
-<p>経緯：<%= @cat.background %></p>
-<p>性格：<%= @cat.personality %></p>
-<p>健康状態：<%= @cat.health %></p>
-<p>譲渡場所：<%= @cat.delivery_place %></p>
-<p>備考：<%= @cat.remarks %></p>
-<p>掲載日：<%= @cat.publication_date %></p>
-<p>掲載期限：<%= @cat.publication_deadline %></p>
-<p>掲載ステータス：<%= @cat.publication_status_i18n %></p>
-<p>登録日時：<%= @cat.created_at %></p>
-<p>更新日時：<%= @cat.updated_at %></p>

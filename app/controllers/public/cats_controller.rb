@@ -13,6 +13,15 @@ class Public::CatsController < ApplicationController
 
   def show
     @cat = Cat.find(params[:id])
+
+    # 掲載が表示可能か判定
+    if @cat.deleted_flag ||
+       @cat.publication_status == 'draft' ||
+       @cat.publication_status == 'private'
+
+      flash[:alert] = '指定の掲載は非表示か、削除された可能性があります。'
+      redirect_to cats_path
+    end
   end
 
   def new
@@ -28,14 +37,26 @@ class Public::CatsController < ApplicationController
     else
       @cat.publication_status = 'public'
       @cat.publication_date = Time.zone.now
-      @cat.save
-      flash[:notice] = '掲載が完了しました。'
-      redirect_to cat_path(@cat.id)
+      if @cat.save
+        flash[:notice] = '掲載が完了しました。'
+        redirect_to cat_path(@cat.id)
+      else
+        render :new
+      end
     end
   end
 
   def edit
     @cat = Cat.find(params[:id])
+
+    # 掲載が編集可能か判定
+    if @cat.user.id != current_user.id ||
+       @cat.publication_status == 'in_consultation' ||
+       @cat.publication_status == 'foster_parents_decided' ||
+       @cat.publication_status == 'recruitment_closed' 
+
+      redirect_to cat_path(@cat.id)
+    end
   end
 
   def update
@@ -47,9 +68,12 @@ class Public::CatsController < ApplicationController
       render :edit
     else
       @cat.publication_status = 'public'
-      @cat.save
-      flash[:notice] = '掲載の更新が完了しました。'
-      redirect_to cat_path(@cat.id)
+      if @cat.save
+        flash[:notice] = '掲載の更新が完了しました。'
+        redirect_to cat_path(@cat.id)
+      else
+        render :edit
+      end
     end
   end
 
@@ -101,7 +125,7 @@ class Public::CatsController < ApplicationController
   end
 
   def destroy
-    Cat.find(params[:id]).destroy
+    Cat.find(params[:id]).update(deleted_flag: true)
     flash[:notice] = '掲載を削除しました。'
     redirect_to cats_path
   end

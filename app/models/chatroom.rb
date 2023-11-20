@@ -1,5 +1,5 @@
 class Chatroom < ApplicationRecord
-  has_many :messages
+  has_many :messages, -> { order(created_at: :desc) }
   has_many :chatroom_users
   belongs_to :candidate
 
