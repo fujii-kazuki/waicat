@@ -96,6 +96,18 @@
   }
 }
 
+.sign-in__form {
+  &-grid {
+    display: grid;
+    gap: 1.5em;
+    grid-template-columns: 1fr;
+  }
+
+  &-log-in-button {
+    @include button($primary);
+  }
+}
+
 .publish-edit__form {
   &-grid {
     display: grid;
