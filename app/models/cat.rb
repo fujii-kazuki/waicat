@@ -29,6 +29,10 @@ class Cat < ApplicationRecord
     validates :postal_code, presence: true, numericality: { only_integer: true }, length: { is: 7 }
     validates :prefecture, presence: { message: 'を選択してください' }
     validates :city, presence: true
+    validates :background, presence: true
+    validates :personality, presence: true
+    validates :health, presence: true
+    validates :delivery_place, presence: true
     validates :publication_date, presence: true
     validates :publication_deadline, presence: true
     validate :confirm_publication_deadline
