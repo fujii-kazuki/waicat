@@ -129,25 +129,7 @@
     <section>
       <h3 class="heading heading--3">質問・コメント</h3>
 
-      <% if @cat.comments.any? %>
-        <ul class="publish__comment-list">
-          <% @cat.comments.each_with_index do |comment, i| %>
-            <% break if i == 5 %>
-            <li class="publish__comment-item<%= ' publish__comment-item--publisher' if @cat.user.id == comment.user.id %>">
-              <p class="publish__comment-user-name">
-                <%= '掲載者本人：' if @cat.user.id == comment.user.id %><%= comment.user.name %>
-              </p>
-              <p class="publish__comment-body">
-                <%= show_text comment.body %>
-              </p>
-            </li>
-          <% end %>
-        </ul>
-      <% else %>
-        <p class="publish__text">
-          質問・コメントはまだありません。
-        </p>
-      <% end %>
+      <%= render 'public/comments/list', comments: @cat.comments.limit(5) %>
 
       <%= link_to '質問・コメントページへ', cat_comments_path(@cat.id), class: 'publish__comment-button' %>
     </section>

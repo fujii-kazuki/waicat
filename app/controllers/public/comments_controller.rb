@@ -1,4 +1,7 @@
 class Public::CommentsController < ApplicationController
+  before_action :authenticate_user!
+  before_action :guest_signed_in?, if: :user_signed_in?
+
   def index
     @cat = Cat.find(params[:cat_id])
     @comments = @cat.comments
@@ -7,7 +10,6 @@ class Public::CommentsController < ApplicationController
 
   def create
     @cat = Cat.find(params[:cat_id])
-    @comments = @cat.comments
     @comment = Comment.new(comment_params)
     @comment.cat_id = @cat.id
     @comment.user_id = current_user.id
@@ -19,10 +21,10 @@ class Public::CommentsController < ApplicationController
         sender: current_user, #送信者
         recipients_id: @cat.comments.where.not(user_id: current_user.id).pluck(:user_id).uniq, #受信者ID（一意なユーザーIDの配列）
         comment: @comment #コメント
-      ) #
-    else
-      flash[:notice] = ''
+      )
     end
+
+    @comments = @cat.comments
   end
 
   def destroy

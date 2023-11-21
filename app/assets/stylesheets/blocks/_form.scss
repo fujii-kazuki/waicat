@@ -204,3 +204,19 @@
     @include button($primary);
   }
 }
+
+.comments__form {
+  margin: 40px auto 0;
+  max-width: 800px;
+
+  &-grid {
+    display: grid;
+    grid-template-columns: 1fr 100px;
+    gap: 1em;
+  }
+
+  &-submit-button {
+    @include button($primary);
+    align-self: end;
+  }
+}
