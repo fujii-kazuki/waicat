@@ -18,18 +18,20 @@
     <ul class="sp-nav-menu__list">
       <% if user_signed_in? && !admin_url? %>
         <%# 会員ログイン済 %>
-        <li class="sp-nav-menu__item">
-          <%= link_to 'マイページ', user_path(current_user.id), class: 'sp-nav-menu__item-link' %>
-        </li>
-        <li class="sp-nav-menu__item">
-          <%= link_to 'ブックマーク', bookmarks_path, class: 'sp-nav-menu__item-link' %>
-        </li>
-        <li class="sp-nav-menu__item">
-          <%= link_to 'チャットルーム', chatrooms_path, class: 'sp-nav-menu__item-link' %>
-        </li>
-        <li class="sp-nav-menu__item">
-          <%= link_to '通知', notices_path, class: 'sp-nav-menu__item-link' %>
-        </li>
+        <% if !current_user.is_guest_user? %>
+          <li class="sp-nav-menu__item">
+            <%= link_to 'マイページ', user_path(current_user.id), class: 'sp-nav-menu__item-link' %>
+          </li>
+          <li class="sp-nav-menu__item">
+            <%= link_to 'ブックマーク', bookmarks_path, class: 'sp-nav-menu__item-link' %>
+          </li>
+          <li class="sp-nav-menu__item">
+            <%= link_to 'チャットルーム', chatrooms_path, class: 'sp-nav-menu__item-link' %>
+          </li>
+          <li class="sp-nav-menu__item">
+            <%= link_to '通知', notices_path, class: 'sp-nav-menu__item-link' %>
+          </li>
+        <% end %>
         <li class="sp-nav-menu__item">
           <%= link_to 'ログアウト', destroy_user_session_path, method: :delete, class: 'sp-nav-menu__item-link' %>
         </li>

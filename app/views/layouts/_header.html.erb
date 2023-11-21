@@ -12,18 +12,20 @@
       <ul class="header__sub-menu-list">
         <% if user_signed_in? && !admin_url? %>
           <%# 会員ログイン済 %>
-          <li class="header__sub-menu-item">
-            <%= link_to 'マイページ', user_path(current_user.id), class: 'header__sub-menu-item-link' %>
-          </li>
-          <li class="header__sub-menu-item">
-            <%= link_to 'ブックマーク', bookmarks_path, class: 'header__sub-menu-item-link' %>
-          </li>
-          <li class="header__sub-menu-item">
-            <%= link_to 'チャットルーム', chatrooms_path, class: 'header__sub-menu-item-link' %>
-          </li>
-          <li class="header__sub-menu-item">
-            <%= link_to '通知', notices_path, class: 'header__sub-menu-item-link' %>
-          </li>
+          <% if !current_user.is_guest_user? %>
+            <li class="header__sub-menu-item">
+              <%= link_to 'マイページ', user_path(current_user.id), class: 'header__sub-menu-item-link' %>
+            </li>
+            <li class="header__sub-menu-item">
+              <%= link_to 'ブックマーク', bookmarks_path, class: 'header__sub-menu-item-link' %>
+            </li>
+            <li class="header__sub-menu-item">
+              <%= link_to 'チャットルーム', chatrooms_path, class: 'header__sub-menu-item-link' %>
+            </li>
+            <li class="header__sub-menu-item">
+              <%= link_to '通知', notices_path, class: 'header__sub-menu-item-link' %>
+            </li>
+          <% end %>
           <li class="header__sub-menu-item">
             <%= link_to 'ログアウト', destroy_user_session_path, method: :delete, class: 'header__sub-menu-item-link' %>
           </li>
