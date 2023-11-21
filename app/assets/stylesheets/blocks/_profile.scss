@@ -1,0 +1,71 @@
+.profile {
+  &__edit-user-button {
+    @include button($success, 'sm', 'square', 'right');
+  }
+
+  &__grid {
+    display: grid;
+    
+    &--1 {
+      grid-template-columns: auto 1fr;
+      gap: 30px;
+      margin: 30px auto 0;
+      max-width: 800px;
+
+      @include media-breakpoint-down(md) {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    &--2 {
+      grid-template-columns: auto 1fr;
+      row-gap: .5em;
+      align-self: center;
+      
+      & > dt {
+        background-color: $waicat-main;
+        border-radius: 5px;
+        border-bottom-right-radius: 0;
+        color: $white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 1em 2em;
+        text-align: center;
+        white-space: nowrap;
+      }
+      
+      & > dd {
+        border-bottom: 1px solid $waicat-main;
+        display: flex;
+        align-items: center;
+        padding: 1em;
+      }
+    }
+  }
+
+  &__avatar-image-wrap {
+    background-color: $gray-200;
+    border-radius: 50%;
+    margin: 0 auto;
+    text-align: center;
+    height: 220px;
+    width: 220px;
+
+    img {
+      object-fit: cover;
+      height: 100%;
+      width: 100%;
+    }
+  }
+
+  &__avatar-setting-link {
+    @include link($primary, true);
+    font-size: 1.2rem;
+  }
+
+  &__profile-setting-link {
+    @include link($primary, true);
+  }
+
+}

@@ -8,17 +8,17 @@ class Public::CatsController < ApplicationController
       deleted_flag: false
     ).order(created_at: :desc).page(params[:page]).per(12)
     @current_page = @cats.current_page
-    @total_pages = @cats.total_pages
+    @total_pages = @cats.total_pages == 0 ? 1 : @cats.total_pages
     @total_count = @cats.total_count
   end
 
   def show
     @cat = Cat.find(params[:id])
-
     # 掲載が表示可能か判定
-    if @cat.deleted_flag ||
+    if !current_user?(@cat.user) &&
+       ( @cat.deleted_flag ||
        @cat.publication_status == 'draft' ||
-       @cat.publication_status == 'private'
+       @cat.publication_status == 'private' )
 
       flash[:alert] = '指定の掲載は非表示か、削除された可能性があります。'
       redirect_to cats_path
@@ -91,7 +91,7 @@ class Public::CatsController < ApplicationController
       else
         @cat.save
         flash[:success] = '下書き保存が完了しました。'
-        redirect_to cats_path
+        redirect_to cat_path(@cat.id)
       end
 
     # 新規掲載フォームからの確認の場合
@@ -116,7 +116,7 @@ class Public::CatsController < ApplicationController
         @cat.video = nil if params[:cat][:video].nil?
         @cat.save
         flash[:success] = '下書き保存が完了しました。'
-        redirect_to cats_path
+        redirect_to cat_path(@cat.id)
       end
 
     # 掲載編集フォームからの確認の場合
@@ -135,7 +135,7 @@ class Public::CatsController < ApplicationController
   def destroy
     Cat.find(params[:id]).update(deleted_flag: true)
     flash[:notice] = '掲載を削除しました。'
-    redirect_to cats_path
+    redirect_to user_path(current_user.id)
   end
 
   private

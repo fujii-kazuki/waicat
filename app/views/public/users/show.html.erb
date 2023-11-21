@@ -1,20 +1,63 @@
-<h1>Public::Users#show</h1>
-<p>Find me in app/views/public/users/show.html.erb</p>
+<section class="profile">
+  <div class="container">
+    <h2 class="heading heading--2">
+      <% if current_user? @user %>
+        マイページ
+      <% else %>
+        <%= @user.name %>の詳細
+      <% end %>
+    </h2>
 
-<%= link_to 'チャットルーム', chatrooms_path %>
+    <% if current_user? @user %>
+      <%= link_to '会員情報を編集', edit_user_path(@user.id), class: 'profile__edit-user-button' %>
+    <% end %>
 
-<h2>マイページ</h2>
+    <div class="profile__grid profile__grid--1">
+      <div class="profile__avatar-image-wrap">
+        <% if @user.avatar.attached? %>
+          <%= image_tag @user.avatar %>
+        <% else %>
+          <%= image_tag  'avatar-default.png' %>
+          <% if current_user? @user %>
+            <%= link_to 'プロフィール画像を設定', edit_user_path(@user.id), class: 'profile__avatar-setting-link' %>
+          <% end %>
+        <% end %>
+      </div>
 
-<p>名前：<%= @user.name %></p>
+      <dl class="profile__grid profile__grid--2">
+        <dt>名前</dt>
+        <dd><%= @user.name %></dd>
+        <dt>所在地</dt>
+        <dd><%= @user.prefecture + @user.city %></dd>
+        <dt>登録日</dt>
+        <dd><%= @user.created_at.strftime('%Y/%m/%d') %></dd>
+      </dl>
+    </div>
 
-<p>電話番号：<%= @user.telephone_number %></p>
+      <section>
+        <h3 class="heading heading--3">プロフィール</h3>
+        <p class="profile__profile-text">
+          <% if !@user.profile.blank? %>
+            <%= show_text @user.profile %></p>
+          <% else %>
+              プロフィール文は設定されていません
+              <% if current_user? @user %>
+                <%= link_to '設定する', edit_user_path(@user.id), class: 'profile__profile-setting-link' %>
+              <% end %>
+          <% end %>
+        </p>
+      </section>
 
-<p>メールアドレス：<%= @user.email %></p>
-
-<p>郵便番号：<%= @user.postal_code %></p>
-
-<p>都道府県：<%= @user.prefecture %></p>
-
-<p>市区町村：<%= @user.city %></p>
-
-<%= link_to '会員情報編集', edit_user_registration_path %>
+    <section>
+      <h3 class="heading heading--3">
+        <%= @user.name %>の掲載一覧<small>（全<%= @total_count %>件・<%= @current_page %>/<%= @total_pages %>ページ目）</small>
+      </h3>
+      <% if @cats.any? %>
+        <%= render 'public/cats/list', cats: @cats %>
+        <%= paginate @cats %>
+      <% else %>
+        <p>現在里親募集中の猫はいません</p>
+      <% end %>
+    </section>
+  </div>
+</section>

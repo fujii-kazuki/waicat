@@ -6,7 +6,11 @@
           <p class="publish-list__item-publication-status publish-list__item-publication-status--<%= cat.publication_status %>">
             <%= cat.publication_status_i18n %><%= "：#{cat.get_remaining_period_string}" if cat.publication_status == 'public' %>
           </p>
-          <%= image_tag cat.photos[0], class: 'publish-list__item-img' %>
+          <% if cat.photos.attached? %>
+            <%= image_tag cat.photos[0], class: 'publish-list__item-img' %>
+          <% else %>
+            <%= image_tag 'no-image.png', class: 'publish-list__item-img' %>
+          <% end %>
         </div>
       <% end %>
 
@@ -46,8 +50,12 @@
         </table>
       </div>
 
-      <div id=<%="bookmark-#{cat.id}"%> class="publish-list__item-bookmark-wrap">
-        <%= render 'public/bookmarks/button', cat_id: cat.id %>
+      <div id=<%="bookmark-#{cat.id}"%> class="publish-list__item-button-wrap">
+        <% if cat.publication_status == 'draft' %>
+          <%= link_to '掲載を編集', edit_cat_path(cat.id), class: 'publish-list__item-edit-cat-button' %>
+        <% else %>
+          <%= render 'public/bookmarks/button', cat_id: cat.id %>
+        <% end%>
       </div>
     </li>
   <% end %>

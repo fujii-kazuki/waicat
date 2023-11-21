@@ -4,6 +4,8 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable
 
+  has_one_attached :avatar
+
   has_many :cats, -> { where(deleted_flag: false).order(created_at: :desc) }
   has_many :candidates
   has_many :comments, -> { where(deleted_flag: false).order(created_at: :desc) }

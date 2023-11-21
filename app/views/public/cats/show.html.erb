@@ -14,7 +14,7 @@
           @cat.publication_status != 'recruitment_closed' %>
       <div class="publish__flex-1">
         <%= link_to '内容を編集する', edit_cat_path(@cat.id), class: 'publish__button publish__button--edit' %>
-        <%= link_to '掲載を削除', cat_path(@cat.id), method: :delete, class: 'publish__button publish__button--delete' %>
+        <%= link_to '掲載を削除', cat_path(@cat.id), method: :delete, class: 'publish__button publish__button--delete', data: { confirm: 'この掲載を削除します。よろしいですか？' } %>
       </div>
     <% end %>
 
@@ -51,9 +51,11 @@
       </div>
     <% end %>
 
-    <div id=<%="bookmark-#{@cat.id}"%>>
-      <%= render 'public/bookmarks/button', cat_id: @cat.id %>
-    </div>
+    <% if @cat.publication_status != 'draft' && @cat.publication_status != 'private'%>
+      <div id=<%="bookmark-#{@cat.id}"%>>
+        <%= render 'public/bookmarks/button', cat_id: @cat.id %>
+      </div>
+    <% end %>
 
     <section>
       <h3 class="heading heading--3">基本情報</h3>
@@ -131,12 +133,16 @@
 
       <%= render 'public/comments/list', comments: @cat.comments.limit(5) %>
 
-      <%= link_to '質問・コメントページへ', cat_comments_path(@cat.id), class: 'publish__comment-button' %>
+      <% if @cat.publication_status == 'public' || @cat.publication_status == 'in_consultation' %>
+        <%= link_to '質問・コメントページへ', cat_comments_path(@cat.id), class: 'publish__comment-button' %>
+      <% end %>
     </section>
     
     <div class="publish__flex-2">
-      <%= link_to '一覧に戻る', cats_path, class: 'publish__page-back-button' %>
-      <% if current_user.id != @cat.user.id %>
+      <%= link_to '掲載一覧ページに戻る', cats_path , class: 'publish__page-back-button' %>
+      <% if current_user?(@cat.user) %>
+        <%= link_to 'マイページに戻る', user_path(@cat.user), class: 'publish__candidate-button' %>
+      <% else %>
         <%= link_to '里親応募', confirm_cat_candidates_path(@cat.id), class: 'publish__candidate-button' %>
       <% end %>
     </div>

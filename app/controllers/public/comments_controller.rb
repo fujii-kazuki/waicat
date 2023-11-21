@@ -4,6 +4,11 @@ class Public::CommentsController < ApplicationController
 
   def index
     @cat = Cat.find(params[:cat_id])
+    # 掲載ステータスが公開、相談中でなければ詳細ページへリダイレクト
+    if @cat.publication_status != 'public' && @cat.publication_status != 'in_consultation'
+      flash[:alert] = '現在そちらの掲載へコメントはできません。'
+      redirect_to cat_path(@cat.id)
+    end
     @comments = @cat.comments
     @comment = Comment.new
   end

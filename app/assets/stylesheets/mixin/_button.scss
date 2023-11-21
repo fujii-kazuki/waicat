@@ -24,7 +24,8 @@
     left: 50%;
     transform: translateX(-50%);
   } @else if $position == 'right' {
-    right: 0;
+    left: 100%;
+    transform: translateX(-100%);
   }
   
   position: relative;

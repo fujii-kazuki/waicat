@@ -102,6 +102,7 @@
       
       th {
         background-color: $waicat-main;
+        border-radius: 5px;
         color: $white;
         text-align: center;
         padding: .5em;
@@ -140,10 +141,14 @@
       }
     }
 
-    &-bookmark-wrap {
+    &-button-wrap {
       position: absolute;
       bottom: 15px;
       left: 15px;
+    }
+
+    &-edit-cat-button {
+      @include button($success, 'sm');
     }
   }
 }
