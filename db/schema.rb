@@ -173,6 +173,7 @@ ActiveRecord::Schema.define(version: 2023_11_09_060440) do
 
   create_table "users", force: :cascade do |t|
     t.string "name", null: false
+    t.text "profile"
     t.string "telephone_number", null: false
     t.string "email", null: false
     t.string "postal_code", null: false
