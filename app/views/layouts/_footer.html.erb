@@ -22,7 +22,7 @@
         <% if user_signed_in? && !admin_url? %>
           <%# 会員ログイン済 %>
           <li class="footer__nav-item">
-            <%= link_to 'マイページ', users_my_page_path, class: 'footer__nav-item-link' %>
+            <%= link_to 'マイページ', user_path(current_user.id), class: 'footer__nav-item-link' %>
           </li>
           <li class="footer__nav-item">
             <%= link_to 'ブックマーク', bookmarks_path, class: 'footer__nav-item-link' %>

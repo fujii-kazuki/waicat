@@ -3,5 +3,5 @@
 
 本当に退会しますか？
 
-<%= link_to 'マイページへ', users_my_page_path %>
+<%= link_to 'マイページへ', user_path(current_user.id) %>
 <%= link_to '退会する', user_registration_path, method: :delete, data: { confirm: 'アカウントを削除します。よろしいですか？' } %>

@@ -13,7 +13,7 @@
         <% if user_signed_in? && !admin_url? %>
           <%# 会員ログイン済 %>
           <li class="header__sub-menu-item">
-            <%= link_to 'マイページ', users_my_page_path, class: 'header__sub-menu-item-link' %>
+            <%= link_to 'マイページ', user_path(current_user.id), class: 'header__sub-menu-item-link' %>
           </li>
           <li class="header__sub-menu-item">
             <%= link_to 'ブックマーク', bookmarks_path, class: 'header__sub-menu-item-link' %>
