@@ -1,0 +1,211 @@
+<%= render 'layouts/error_messages', obj: cat %>
+
+<%= form_with model: cat, url: confirm_cats_path, method: :post, class: 'form publish-edit__form' do |f| %>
+  <%= f.hidden_field :id %>
+  
+  <section>
+    <h3 class="heading heading--3">写真</h3>
+
+    <div class="publish-edit__photos">
+      <h4 class="heading heading--4">アップロード済み</h4>
+      <% if cat.photos.attached? %>
+        <div id="publish-edit-swiper" class="publish-swiper">
+          <div class="swiper-wrapper">
+            <% cat.photos.each do |photo| %>
+              <div class="swiper-slide">
+                <button type="button" class="publish-edit__slide-delete-button">
+                  削除
+                </button>
+                <%= image_tag photo %>
+                <%= f.hidden_field :photos, multiple: true, value: photo.signed_id %>
+              </div>
+            <% end %>
+          </div>
+          <div class="swiper-button-prev"></div>
+          <div class="swiper-button-next"></div>
+        </div>
+
+        <div id="publish-edit-thumbs-slider" class="publish-swiper publish-swiper--thumbs">
+          <div class="swiper-wrapper">
+            <% cat.photos.each do |photo| %>
+              <div class="swiper-slide">
+                <%= image_tag photo %> 
+              </div>
+            <% end %>
+          </div>
+        </div>
+      <% else %>
+        <p class="form__text">アップロード済みの画像はありません</p>
+      <% end %>
+
+      <h4 class="heading heading--4">新たにアップロードする写真</h4>
+      <div id="new-photos-preview" class="publish-edit__new-photos-preview"></div>
+      <div>
+        <%= f.file_field :photos, accept: 'image/jpg, image/jpeg, image/png', multiple: true, direct_upload: true, id: 'photo-uploader' %>
+        <p class="form__text">3~10枚の写真をアップロードしてください（ファイル形式：jpg, png）（ファイルサイズ：1枚5MBまで）</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h3 class="heading heading--3">映像</h3>
+
+    <div class="publish-edit__video">
+      <div id="video-preview" class="publish-edit__video-preview">
+        <% if cat.video.attached? %>
+          <div class="publish-edit__video-wrap">
+            <%= video_tag rails_blob_path(cat.video), controls: true %>
+            <%= f.hidden_field :video, value: cat.video.signed_id %>
+            <button type="button" id="video-delete-button" class="publish-edit__video-delete-button">
+              削除
+            </button>
+          </div>
+        <% end %>
+      </div>
+
+      <div>
+        <%= f.file_field :video, accept: 'video/*', direct_upload: true, id: 'video-uploader' %>
+        <p class="form__text">映像は必須ではありません（ファイル形式：mp4, mov）（ファイルサイズ：30MBまで）</p>
+        <p class="form__text">新たに映像をアップロードし掲載を更新すると、古い映像は削除されます</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h3 class="heading heading--3">基本情報</h3>
+
+    <div class="publish-edit__form-grid publish-edit__form-grid--1">
+      <div>
+        <%= f.label :publication_title, class: 'form__label' %>
+        <%= f.text_field :publication_title, autocomplete: 'publication_title', class: 'text-field' %>
+      </div>
+
+      <div>
+        <%= f.label :name, class: 'form__label' %>
+        <%= f.text_field :name, autocomplete: 'name', placeholder: '例）タマちゃん', class: 'text-field' %>
+      </div>
+
+      <div>
+        <%= f.label :age, class: 'form__label' %>
+        <%= f.number_field :age, autocomplete: 'age', placeholder: '例）1.5', step: '0.1', min: '0', class: 'text-field' %>
+      </div>
+
+      <div>
+        <%= f.label :weight, class: 'form__label' %>
+        <span class="form__text">単位：キログラム(kg)</span>
+        <%= f.number_field :weight, autocomplete: 'weight', placeholder: '例）4.5', step: '0.1', min: '0.1', class: 'text-field' %>
+      </div>
+
+      <div>
+        <%= f.label :gender, class: 'form__label' %>
+        <%= f.radio_button :gender, 'male', checked: true %>
+        <%= f.label :gender, Cat.genders_i18n[:male], value: 'male', class: 'form__label' %>
+        <%= f.radio_button :gender, 'female' %>
+        <%= f.label :gender, Cat.genders_i18n[:female], value: 'female', class: 'form__label' %>
+      </div>
+
+      <div>
+        <%= f.label :hair_length, class: 'form__label' %>
+        <%= f.radio_button :hair_length, 'short', checked: true %>
+        <%= f.label :hair_length, Cat.hair_lengths_i18n[:short], value: 'short', class: 'form__label' %>
+        <%= f.radio_button :hair_length, 'long' %>
+        <%= f.label :hair_length, Cat.hair_lengths_i18n[:long], value: 'long', class: 'form__label' %>
+      </div>
+
+      <div>
+        <%= f.label :breed, class: 'form__label' %>
+        <%= f.collection_select :breed, Breed.all, :name, :name, { include_blank: '選択してください' }, class: 'selectbox' %>
+      </div>
+
+      <div>
+        <%= f.label :animal_print, class: 'form__label' %>
+        <%= f.collection_select :animal_print, AnimalPrint.all, :name, :name, { include_blank: '選択してください' }, class: 'selectbox' %>
+      </div>
+
+      <div>
+        <%= f.check_box :castration_flag, { class: 'form__check' }, 'true', 'false' %>
+        <%= f.label :castration_flag, '去勢・避妊済み', class: 'form__label' %>
+      </div>
+
+      <div>
+        <%= f.check_box :vaccine_flag, { class: 'form__check' }, 'true', 'false' %>
+        <%= f.label :vaccine_flag, 'ワクチン接種済み', class: 'form__label' %>
+      </div>
+
+      <div>
+        <%= f.label :postal_code, class: 'form__label' %>
+        <%= f.text_field :postal_code, autocomplete: 'postal_code', placeholder: '例）1234567', class: 'text-field' %>
+      </div>
+
+      <div>
+        <p id="search_address_error_text" class="form__text form__text--error">
+          郵便番号に間違いがないか確認し、再度お試しするか手入力してください
+        </p>
+        <button type="button" id="search_address_button" class="form__search-address-button">住所検索</button>
+      </div>
+
+      <div>
+        <%= f.label :prefecture, class: 'form__label' %>
+        <%= f.collection_select :prefecture, Prefecture.all, :name, :name, { include_blank: true }, class: 'selectbox' %>
+      </div>
+
+      <div>
+        <%= f.label :city, class: 'form__label' %>
+        <%= f.text_field :city, autocomplete: 'city', placeholder: '例）大阪市中央区', class: 'text-field' %>
+      </div>
+
+      <div>
+        <%= f.label :publication_deadline, class: 'form__label' %>
+        <%= f.date_field :publication_deadline, class: 'date-field' %>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h3 class="heading heading--3">詳細情報</h3>
+
+    <div class="publish-edit__form-grid publish-edit__form-grid--2">
+      <div>
+        <%= f.label :background, class: 'form__label' %>
+        <span class="form__text">里親募集に至った経緯、経験など</span>
+        <%= f.text_area :background, autocomplete: 'background', placeholder: 'できるだけ内容を詳細に記入して下さい', class: 'text-area' %>
+      </div>
+
+      <div>
+        <%= f.label :personality, class: 'form__label' %>
+        <span class="form__text">里親募集に掲載する猫ちゃんの性格、特徴など</span>
+        <%= f.text_area :personality, autocomplete: 'personality', placeholder: 'できるだけ内容を詳細に記入して下さい', class: 'text-area' %>
+      </div>
+
+      <div>
+        <%= f.label :health, class: 'form__label' %>
+        <span class="form__text">里親募集に掲載する猫ちゃんの健康状態</span>
+        <%= f.text_area :health, autocomplete: 'health', placeholder: 'できるだけ内容を詳細に記入して下さい', class: 'text-area' %>
+      </div>
+
+      <div>
+        <%= f.label :delivery_place, class: 'form__label' %>
+        <span class="form__text">里親決定に至った場合の希望譲渡場所</span>
+        <%= f.text_area :delivery_place, autocomplete: 'delivery_place', placeholder: 'できるだけ内容を詳細に記入して下さい', class: 'text-area' %>
+      </div>
+
+      <div>
+        <%= f.label :remarks, class: 'form__label' %>
+        <span class="form__text">他にも伝えたい内容がありましたら、ここへ記述してください</span>
+        <%= f.text_area :remarks, autocomplete: 'remarks', placeholder: 'できるだけ内容を詳細に記入して下さい', class: 'text-area' %>
+      </div>
+    </div>
+  </section>
+
+  <div class="form__flex">
+    <% if action_name == 'new' || params[:new] %>
+      <%= link_to '新規作成を中止', cats_path, class: 'publish-edit__form-cancel-button', data: { confirm: '掲載の新規作成を中止します。よろしいですか？' } %>
+      <%= button_tag '下書き保存', name: :new_draft, class: 'publish-edit__form-draft-button' %>
+      <%= button_tag '入力内容の確認画面へ', name: :new, class: 'publish-edit__form-confirm-button' %>
+    <% elsif action_name == 'edit' || params[:edit] %>
+      <%= link_to '変更内容を取り消す', cat_path(cat.id), class: 'publish-edit__form-cancel-button', data: { confirm: '変更内容を取り消します。よろしいですか？' } %>
+      <%= button_tag '下書き保存', name: :edit_draft, class: 'publish-edit__form-draft-button'%>
+      <%= button_tag '入力内容の確認画面へ', name: :edit, class: 'publish-edit__form-confirm-button' %>
+    <% end %>
+  </div>
+<% end %>
