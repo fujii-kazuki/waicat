@@ -6,7 +6,9 @@ class Public::CandidatesController < ApplicationController
     @cat = Cat.find(params[:cat_id])
     
     # 応募可能か確認
-    can_candidate?(@cat)
+    if can_candidate?(@cat)
+      flash.now[:warn] = 'まだ里親応募は完了していません。再度掲載内容の確認をお願いします。'
+    end
   end
 
   def create
@@ -34,8 +36,8 @@ class Public::CandidatesController < ApplicationController
         redirect_to chatroom_path(chatroom.id)
       end
     else
-      flash[:alert] = '「里親募集の掲載、条件等を全て確認しました。」にチェックをしてください。'
-      redirect_to confirm_cat_candidates_path(@cat.id)
+      flash.now[:alert] = '確認ができましたら「里親募集の掲載、条件等を全て確認しました。」にチェックを入れてください。'
+      render :confirm
     end
   end
 
@@ -90,22 +92,22 @@ class Public::CandidatesController < ApplicationController
 
   # 応募可能か確認
   def can_candidate?(cat)
-    # 掲載ステータスが「相談中」かどうか
-    if !cat.publication_status == 'in_consultation'
-      flash[:alert] = '先ほどの掲載は現在、里親募集を行なっておりません。'
-      redirect_to cats_path
-      return false
-
     # 既に応募済みか確認
-    elsif current_user.candidated_foster_parent?(cat.id)
-      flash[:alert] = '既に応募済みです。'
-      redirect_to cat_path(cat.id)
-      return false
-
+    if current_user.candidated_foster_parent?(cat.id)
+    flash[:alert] = '既に応募済みです。'
+    redirect_to cat_path(cat.id)
+    return false
+    
     # 掲載者本人か確認
     elsif current_user.is_cat_publisher?(cat)
-      flash[:alert] = '掲載者本人は里親に応募できません。'
-      redirect_to cat_path(cat.id)
+    flash[:alert] = '掲載者本人は里親に応募できません。'
+    redirect_to cat_path(cat.id)
+    return false
+    
+    # 掲載ステータスが「公開」かどうか
+    elsif !cat.published?
+      flash[:alert] = '先ほどの掲載は現在、里親募集を行なっておりません。'
+      redirect_to cats_path
       return false
 
     else

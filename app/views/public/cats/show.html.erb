@@ -146,7 +146,7 @@
       <%= link_to '掲載一覧ページに戻る', cats_path , class: 'publish__page-back-button' %>
       <% if current_user?(@cat.user) %>
         <%= link_to 'マイページに戻る', user_path(@cat.user), class: 'publish__candidate-button' %>
-      <% else %>
+      <% elsif @cat.published? %>
         <%= link_to '里親応募', confirm_cat_candidates_path(@cat.id), class: 'publish__candidate-button' %>
       <% end %>
     </div>

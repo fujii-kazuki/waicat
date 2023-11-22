@@ -299,3 +299,20 @@
     align-self: end;
   }
 }
+
+.candidate__form {
+  margin-top: 50px;
+
+  &-container {
+    margin: 30px 0;
+    text-align: center;
+  }
+
+  &-back-button {
+    @include button($secondary)
+  }
+
+  &-candidate-button {
+    @include button($primary)
+  }
+}
