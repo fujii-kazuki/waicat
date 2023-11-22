@@ -5,6 +5,10 @@ window.addEventListener('DOMContentLoaded', () => {
   addVideoInputEvent();
   // 映像削除ボタンにイベントを追加
   addDeleteVideoButtonEvent();
+  // アバター画像をアップロードするinput要素にイベントを追加
+  addAvatarInputEvent();
+  // アバター削除ボタンにイベントを追加
+  addDeleteAvatarButtonEvent();
 });
 
 // 写真をアップロードするinput要素にイベントを追加
@@ -44,9 +48,7 @@ function addPhotoInputEvent() {
         event.target.value = ''; //inputの中身をリセット
         newPhotosPreview.innerHTML = ''; // 写真のプレビューを全て削除
         return;
-      }
-
-      if (files[i].size > photoSizeLimit) {
+      } else if (files[i].size > photoSizeLimit) {
         // ファイルサイズが制限以上
         alert('サイズが5MBを超えているファイルが含まれています'); //エラーメッセージを表示
         event.target.value = ''; //inputの中身をリセット
@@ -90,19 +92,17 @@ function addVideoInputEvent() {
     videoPreviewElem.innerHTML = '';
 
     const file = event.target.files[0];
+    if (!file) return;
+
     if (!videoAcceptFormats.includes(file.type)) {
       // ファイル形式が非対応
       alert('映像ファイルの形式が非対応です。'); //エラーメッセージを表示
       event.target.value = ''; //inputの中身をリセット
-      videoPreviewElem.innerHTML = ''; // 映像のプレビューを削除
       return;
-    }
-
-    if (file.size > videoSizeLimit) {
+    } else if (file.size > videoSizeLimit) {
       // ファイルサイズが制限以上
       alert('映像ファイルのサイズが30MBを超えています'); //エラーメッセージを表示
       event.target.value = ''; //inputの中身をリセット
-      videoPreviewElem.innerHTML = ''; // 映像のプレビューを削除
       return;
     }
 
@@ -124,6 +124,16 @@ function addVideoInputEvent() {
     createDeleteVideoButton(videoWrap);
     addDeleteVideoButtonEvent();
   }
+
+  // 映像削除ボタンを作成
+  function createDeleteVideoButton(paremtElem) {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.id = 'video-delete-button';
+    button.className = 'publish-edit__video-delete-button';
+    button.innerHTML = '削除';
+    paremtElem.appendChild(button);
+  }
 }
 
 // 映像削除ボタンにイベントを追加
@@ -143,12 +153,63 @@ function addDeleteVideoButtonEvent() {
   });
 }
 
-// 映像削除ボタンを作成
-function createDeleteVideoButton(paremtElem) {
-  const button = document.createElement('button');
-  button.type = 'button';
-  button.id = 'video-delete-button';
-  button.className = 'publish-edit__video-delete-button';
-  button.innerHTML = '削除';
-  paremtElem.appendChild(button);
+// アバター画像をアップロードするinput要素にイベントを追加
+function addAvatarInputEvent() {
+  const avatarInput = document.querySelector('#avatar-uploader');
+  // ページに要素がなければここで処理を終了
+  if (!avatarInput) return;
+
+  // アバター削除ボタン
+  const deleteAvatarButton = document.querySelector('#avatar-delete-button');
+  // 画像を表示する要素
+  const avatarWrap = document.querySelector('#avatar-wrap');
+  // 画像の指定ファイル形式
+  const avatarImageAcceptFormats = ['image/jpeg', 'image/png'];
+  // 画像の制限サイズ
+  const avatarImageSizeLimit = 1024 * 1024 * 5; //5MB
+
+  avatarInput.addEventListener('change', (event) => {
+    // 要素内の画像を削除する（デフォルト画像に戻す）
+    avatarWrap.innerHTML = '<img src="/assets/avatar-default.png">';
+
+    const file = event.target.files[0];
+    if (!file) return;
+
+    if (!avatarImageAcceptFormats.includes(file.type)) {
+      // ファイル形式が非対応
+      alert('画像のファイル形式が非対応です。'); //エラーメッセージを表示
+      event.target.value = ''; //inputの中身をリセット
+      deleteAvatarButton.classList.add('user-edit__form-avatar-delete-button--hidden');
+    } else if (file.size > avatarImageSizeLimit) {
+      // ファイルサイズが制限以上
+      alert('画像のファイルサイズが5MBを超えています'); //エラーメッセージを表示
+      event.target.value = ''; //inputの中身をリセット
+      deleteAvatarButton.classList.add('user-edit__form-avatar-delete-button--hidden');
+    } else {
+      // アップロードしたアバター画像を表示
+      avatarWrap.innerHTML = `<img src="${URL.createObjectURL(file)}">`;
+      // アバター削除ボタンを表示
+      deleteAvatarButton.classList.remove('user-edit__form-avatar-delete-button--hidden');
+    }
+  });
+}
+
+// アバター削除ボタンにイベントを追加
+function addDeleteAvatarButtonEvent() {
+  const deleteAvatarButton = document.querySelector('#avatar-delete-button');
+  // ページに要素がなければここで処理を終了
+  if (!deleteAvatarButton) return;
+  // アバター画像をアップロードするinput要素
+  const avatarInput = document.querySelector('#avatar-uploader');
+
+  // 画像を表示する要素
+  const avatarWrap = document.querySelector('#avatar-wrap');
+
+  deleteAvatarButton.addEventListener('click', () => {
+    // 要素内の画像を削除する（デフォルト画像に戻す）
+    avatarWrap.innerHTML = '<img src="/assets/avatar-default.png">';
+    // アバター削除ボタンを非表示
+    deleteAvatarButton.classList.add('user-edit__form-avatar-delete-button--hidden');
+    avatarInput.value = ''; //inputの中身をリセット
+  });
 }

@@ -50,6 +50,7 @@ ja:
         unlock_token: ロック解除用トークン
         updated_at: 更新日
         name: 名前
+        profile: プロフィール
         telephone_number: 電話番号
         postal_code: 郵便番号
         prefecture: '都道府県'

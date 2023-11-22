@@ -36,6 +36,16 @@
             </div>
 
             <div>
+              <%= f.label :profile, class: 'form__label' %>
+              <%= f.text_area :profile, autocomplete: 'name',
+                placeholder: '例）はじめまして。
+      個人で活動をしています。
+      保護した猫たちの『新しい家族探し』のお手伝いをさせてもらっています。
+      どうぞよろしくお願いします。',
+                class: 'text-area' %>
+            </div>
+
+            <div>
               <%= f.label :postal_code, class: 'form__label' %>
               <%= f.text_field :postal_code, autocomplete: 'postal_code', placeholder: '例）1234567', required: true, class: 'text-field' %>
             </div>

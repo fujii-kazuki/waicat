@@ -1,8 +1,8 @@
 class Public::UsersController < ApplicationController
   before_action :authenticate_user!
-  before_action :check_guest_user, only: [:edit, :confirm], if: :user_signed_in?
-  before_action :check_current_user, only: [:edit, :confirm], if: :user_signed_in?
   before_action :check_deleted_user, if: :user_signed_in?
+  before_action :check_guest_user, only: [:edit, :update, :confirm], if: :user_signed_in?
+  before_action :check_current_user, only: [:edit, :update, :confirm], if: :user_signed_in?
 
   def show
     @user = User.find(params[:id])
@@ -24,22 +24,39 @@ class Public::UsersController < ApplicationController
     @user = User.find(params[:id])
   end
 
+  def update
+    @user = User.find(params[:id])
+    if @user.update(user_params)
+      @user.update(avatar: nil) if params[:user][:avatar].nil? #プロフィール画像が設定されていないなら削除
+      flash[:success] = '会員情報の更新が完了しました。'
+      redirect_to user_path(@user.id)
+    else
+      render :edit
+    end
+  end
+
   def confirm
   end
 
   private
+
+  # ストロングパラメーター
+  def user_params
+    params.require(:user).permit(:avatar, :name, :profile, :telephone_number, :email, :postal_code, :prefecture, :city)
+  end
   
   # 退会済みの会員か確認
   def check_deleted_user
     user = User.find(params[:id])
-    redirect_back(fallback_location: root_path) if user.deleted_flag
+    if user.deleted_flag
+      flash[:alert] = '指定の会員は退会されていませす。'
+      redirect_back(fallback_location: root_path) 
+    end
   end
 
   # ログインユーザーか確認
   def check_current_user
     user = User.find(params[:id])
-    if !current_user?(user)
-      redirect_back(fallback_location: root_path)
-    end
+    redirect_back(fallback_location: root_path) if !current_user?(user)
   end
 end

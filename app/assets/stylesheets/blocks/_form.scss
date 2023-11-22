@@ -146,28 +146,30 @@
     gap: 1.5em;
     grid-template-columns: repeat(3, 1fr);
     grid-template-areas:
-      "item1 item1 ."
-      "item2 . ."
-      "item3 item3 item3"
-      "item4 item5 item5"
-      "item6 . ."
-      "item7 item7 ."
-      "item8 item8 item8";
+      "item1 item1 item1"
+      "item2 item2 item2"
+      "item3 . ."
+      "item4 item4 item4"
+      "item5 item6 item6"
+      "item7 . ."
+      "item8 item8 ."
+      "item9 item9 item9";
 
     @include media-breakpoint-down(sm) {
       grid-template-columns: repeat(2, 1fr);
       grid-template-areas:
         "item1 item1"
-        "item2 . "
-        "item3 item3"
-        "item4 ."
-        "item5 item5"
-        "item6 ."
-        "item7 item7"
-        "item8 item8";
+        "item2 item2"
+        "item3 . "
+        "item4 item4"
+        "item5 ."
+        "item6 item6"
+        "item7 ."
+        "item8 item8"
+        "item9 item9";
     }
 
-    @for $i from 1 through 8 {
+    @for $i from 1 through 9 {
       & > :nth-child(#{$i}) {
         grid-area: item#{$i};
       }
