@@ -44,6 +44,18 @@ class Public::UsersController < ApplicationController
     end
   end
 
+  def leave
+    user = current_user
+    # 公開中の里親募集の掲載を募集終了にする
+    user.cats.where(publication_status: 'public').each do |cat|
+      cat.update(publication_status: 'recruitment_closed')
+    end
+    user.update(deleted_flag: true) # 論理削除
+    reset_session #ログアウト
+    flash[:success] = '退会が完了しました。ご利用ありがとうございました。'
+    redirect_to root_path
+  end
+
   private
 
   # ストロングパラメーター
