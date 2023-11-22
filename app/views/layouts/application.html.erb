@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
+    <script src="https://kit.fontawesome.com/92a2ba56c2.js" crossorigin="anonymous"></script>
     <%= stylesheet_link_tag 'application', media: 'all' %>
     <%= javascript_pack_tag 'application' %>
   </head>
@@ -13,8 +13,19 @@
   <body>
     <%= render 'layouts/header' %>
 
-    <div id="flash-message"><%= render 'layouts/flash_message' %></div>
+    <%= render 'layouts/sp_nav_menu' %>
 
-    <%= yield %>
+    <main id="main" class="main">
+      <%= yield %>
+    </main>
+
+    <div id="page-top-button" class="page-top-button">
+      <i class="page-top-button__icon fa-solid fa-angle-up"></i>
+      <span class="page-top-button__text">TOP</span>
+    </div>
+
+    <%= render 'layouts/footer' %>
+
+    <div id="flash-message"><%= render 'layouts/flash_message' %></div>
   </body>
 </html>

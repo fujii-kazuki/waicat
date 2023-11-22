@@ -4,16 +4,19 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable
 
-  has_many :cats
+  has_one_attached :avatar
+  
+  has_many :cats, -> { where(deleted_flag: false).order(created_at: :desc) }
   has_many :candidates
-  has_many :comments
-  has_many :notices
-  has_many :bookmarks
-  has_many :messages
-  has_many :activities
-  has_many :chatroom_users
-  has_many :contacts
-
+  has_many :comments, -> { where(deleted_flag: false).order(created_at: :desc) }
+  has_many :notices, -> { where(deleted_flag: false).order(created_at: :desc) }
+  has_many :bookmarks, -> { order(created_at: :desc) }
+  has_many :messages, -> { order(created_at: :desc) }
+  has_many :activities, -> { order(created_at: :desc) }
+  has_many :chatroom_users, -> { order(created_at: :desc) }
+  has_many :contacts, -> { order(created_at: :desc) }
+  
+  validates :avatar, content_type: [:jpg, :jpeg, :png], size: { less_than: 5.megabytes }
   validates :name, presence: true
   validates :postal_code, presence: true, numericality: { only_integer: true }, length: { is: 7 }
   validates :prefecture, presence: { message: 'を選択してください' }
@@ -40,7 +43,16 @@ class User < ApplicationRecord
     email == 'guest@example.com' ? true : false
   end
 
-  # 猫のブックマーク判定
+  # 会員のプロフィール画像のパスを返す
+  def profile_image
+    if avatar.attached?
+      avatar
+    else
+      'avatar-default.png'
+    end
+  end
+
+  # 猫がブックマーク済みか判定
   def bookmarked_cat?(cat_id)
     bookmarks.exists?(cat_id: cat_id)
   end
@@ -51,7 +63,7 @@ class User < ApplicationRecord
   end
 
   # 掲載者本人か確認
-  def is_cat_publisher?(cat_id)
-    id == cat_id
+  def is_cat_publisher?(cat)
+    id == cat.user.id
   end
 end

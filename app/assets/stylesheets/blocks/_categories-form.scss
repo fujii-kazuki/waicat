@@ -1,0 +1,21 @@
+.categories-form {
+  &__container {
+    margin: 0 auto;
+    max-width: 600px;
+  }
+
+  &__row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5em;
+  }
+
+  &__select {
+    @include select;
+  }
+
+  &__submit {
+    @include button($primary, 'sm', 'square', 'center');
+    margin-top: 1em;
+  }
+}

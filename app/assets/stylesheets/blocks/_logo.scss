@@ -1,0 +1,27 @@
+.logo {
+  box-sizing: content-box;
+  width: 100px;
+
+  &__root-link {
+    color: $white;
+    text-decoration: none;
+    transition: color .2s;
+
+    &:hover {
+      color: $gray-300;
+    }
+  }
+  
+  &__title {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+  }
+
+  &__ruby {
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+}

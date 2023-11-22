@@ -1,0 +1,32 @@
+@mixin link($color: $black, $default-bar: false) {
+  color: $color;
+  text-decoration: none;
+  position: relative;
+
+  &::after {
+    content: '';
+    background-color: $color;
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    transition: transform .5s;
+    height: 2px;
+    width: 100%;
+  }
+
+  &::after {
+    @if $default-bar {
+      transform: rotateY(0);
+    } @else {
+      transform: rotateY(90deg);
+    }
+  }
+
+  &:hover::after {
+    @if $default-bar {
+      transform: rotateY(90deg);
+    } @else {
+      transform: rotateY(0);
+    }
+  }
+}

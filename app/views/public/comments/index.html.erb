@@ -1,23 +1,26 @@
-<h1>Public::Comments#index</h1>
-<p>Find me in app/views/public/comments/index.html.erb</p>
+<section class="comments">
+  <div class="container">
+    <dl class="comments__grid">
+      <dt>このコメントの里親募集掲載</dt>
+      <dd class="comments__grid-img-wrap"><%= image_tag @cat.photos[0] %></dd>
+      <dd><%= link_to @cat.publication_title, cat_path(@cat.id), class: 'comments__link' %></dd>
+    </dl>
+    
+    <h2 class="heading heading--2">コメント一覧</h2>
 
-<%= link_to @cat.publication_title, cat_path(@cat.id) %>
+    <div id="cat-comment-list">
+      <%= render 'list', comments: @comments %>
+    </div>
 
-<div>
-  <h2>コメント一覧</h2>
-  <div id="cat-comment-list">
-    <%= render 'list' %>
+    <%= form_with model: [@cat, @comment], local: false, class: 'comments__form' do |f| %>
+      <div id="comment-error-messages">
+        <%= render 'layouts/error_messages', obj: @comment %>
+      </div>
+
+      <div class="comments__form-grid">
+        <%= f.text_area :body, autocomplete: 'body', placeholder: 'コメントの内容', id: 'comment-text-area', class: 'text-area' %>
+        <%= button_tag '送信', class: 'comments__form-submit-button' %>
+      </div>
+    <% end %>
   </div>
-</div>
-
-<div>
-  <div id="comment-error-messages">
-    <%= render 'layouts/error_messages', obj: @comment %>
-  </div>
-  <h2>コメント</h2>
-  <%= form_with model: [@cat, @comment], local: false do |f| %>
-    <%= f.text_area :body, autocomplete: 'body', id: 'comment-text-area' %>
-    <%= f.submit '送信' %>
-  <% end %>
-</div>
-
+</section>

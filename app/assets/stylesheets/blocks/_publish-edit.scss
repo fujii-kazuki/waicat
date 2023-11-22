@@ -1,0 +1,56 @@
+.publish-edit {
+  .swiper-slide {
+    position: relative;
+  }
+
+  &__slide-delete-button {
+    @include button($danger, 'sm');
+    position: absolute;
+    top: 10px;
+    right: 10px;
+  }
+
+  &__new-photos-preview {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: .5em;
+  }
+
+  &__new-photo-wrap {
+    background-color: $gray-200;
+    height: 120px;
+    width: 120px;
+
+    & > img {
+      object-fit: contain;
+      height: 100%;
+      width: 100%;
+    }
+  }
+
+  &__video {
+    position: relative;
+
+    &-wrap {
+      background-color: $gray-200;
+      border-radius: 10px;
+      height: 50vh;
+      overflow: hidden;
+      margin-bottom: .5em;
+
+      & > video {
+        object-fit: contain;
+        height: 100%;
+        width: 100%;
+      }
+    }
+
+    &-delete-button {
+      @include button($danger, 'sm');
+      position: absolute;
+      top: 10px;
+      right: 10px;
+    }
+  }
+}

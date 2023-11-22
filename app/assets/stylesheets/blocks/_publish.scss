@@ -1,0 +1,223 @@
+.publish {
+  &__flex-1 {
+    display: flex;
+    justify-content: end;
+    gap: .5em;
+    margin-bottom: .5em;
+  }
+
+  &__button {
+    &--edit {
+      @include button($success, 'sm');
+    }
+
+    &--delete {
+      @include button($secondary, 'sm');
+    }
+  }
+
+  &__photos {
+    margin-bottom: .5em;
+  }
+
+  &__swiper {
+    background-color: $gray-200;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    overflow: hidden;
+
+    .swiper-wrapper {
+      height: 40vh;
+    }
+
+    .swiper-slide {
+      overflow: hidden;
+
+      & > img {
+        object-fit: contain;
+        height: 100%;
+        width: 100%;
+      }
+    }
+  }
+
+  &__thumbs-slider {
+    .swiper-wrapper {
+      height: 100px;
+    }
+
+    .swiper-slide {
+      overflow: hidden;
+      transition: opacity .25s;
+
+      &.swiper-slide-thumb-active {
+        opacity: .4;
+      }
+
+      & > img {
+        object-fit: cover;
+        height: 100%;
+        width: 100%;
+      }
+    }
+  }
+
+  &__video {
+    background-color: $gray-200;
+    border-radius: 10px;
+    height: 50vh;
+    overflow: hidden;
+    margin-bottom: .5em;
+
+    & > video {
+      object-fit: contain;
+      height: 100%;
+      width: 100%;
+    }
+  }
+
+  &__grid {
+    display: grid;
+    row-gap: .5em;
+    
+    & > dt {
+      background-color: $waicat-main;
+      border-radius: 5px;
+      border-bottom-right-radius: 0;
+      color: $white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1em .5em;
+      text-align: center;
+    }
+    
+    & > dd {
+      border-bottom: 1px solid $waicat-main;
+      padding: 1em;
+    }
+    
+    &--1 {
+      grid-template-columns: 1fr 3fr 1fr 3fr;
+
+      @include media-breakpoint-down(lg) {
+        grid-template-columns: 1fr 3fr;
+      }
+
+      dd {
+        &.publish__status {
+          font-weight: bold;
+  
+          // 下書き、非公開
+          &--draft, &--private {
+            color: $secondary;
+          }
+    
+          // 公開
+          &--public {
+            color: $waicat-accent;
+          }
+    
+          // 相談中
+          &--in_consultation {
+            color: $primary;
+          }
+    
+          // 里親決定
+          &--foster_parents_decided {
+            color: $success;
+          }
+    
+          // 募集終了、掲載締め切り
+          &--recruitment_closed,
+          &--publication_deadline {
+            color: $waicat-main;
+          }
+        }
+        
+        &.publish__gender {
+          font-weight: bold;
+        
+          &::before {
+            font-family: "Font Awesome 6 Free";
+            padding-right: .25em;
+          }
+        
+          &--female {
+            color: $red;
+        
+            &::before {
+              content: '\f221';
+            }
+          }
+        
+          &--male {
+            color: $blue;
+        
+            &::before {
+              content: '\f222';
+            }
+          }
+        }
+      }
+    }
+
+    &--2 {
+      grid-template-columns: 1fr 3fr;
+    }
+  }
+
+  &__comment-list {
+    font-size: 1.4rem;
+    list-style: none;
+    margin: 0 auto;
+    max-width: 800px;
+  }
+
+  &__comment-item {
+    margin-bottom: 1em;
+    padding-right: 10vw;
+
+    &--publisher {
+      text-align: right;
+      padding-right: 0;
+      padding-left: 10vw;
+    }
+  }
+
+  &__comment-body {
+    background-color: $gray-300;
+    border-radius: 5px;
+    display: inline-block;
+    padding: 1em;
+  }
+
+  &__comment-item--publisher &__comment-body {
+    background-color: $waicat-main;
+    color: $white;
+  }
+
+  &__comment-button {
+    @include button($waicat-accent, 'md', 'round', 'center');
+  }
+
+  &__flex-2 {
+    display: flex;
+    justify-content: center;
+    gap: 5em;
+    margin-top: 50px;
+
+    @include media-breakpoint-down(md) {
+      flex-direction: column;
+      gap: 1em;
+    }
+  }
+
+  &__page-back-button {
+    @include button($secondary, 'lg');
+  }
+
+  &__candidate-button {
+    @include button($primary, 'lg');
+  }
+}

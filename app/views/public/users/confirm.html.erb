@@ -1,7 +1,20 @@
-<h1>Public::Users#confirm</h1>
-<p>Find me in app/views/public/users/confirm.html.erb</p>
+<section class="user-confirm">
+  <div class="container">
+    <h2 class="heading heading--2">退会確認</h2>
+    <p class="user-confirm__text">
+      一度退会すると、再度ご利用の際は再度新規登録が必要になります。
+    </p>
+    <div class="user-confirm__text">
+      本当に退会しますか？
+    </div>
 
-本当に退会しますか？
-
-<%= link_to 'マイページへ', users_my_page_path %>
-<%= link_to '退会する', user_registration_path, method: :delete, data: { confirm: 'アカウントを削除します。よろしいですか？' } %>
+    <div class="user-confirm__flex">
+      <%= link_to 'マイページへ', user_path(current_user.id), class: 'user-confirm__my-page-button' %>
+      <%= link_to '退会する',
+        leave_user_path,
+        method: :patch,
+        class: 'user-confirm__leave-button',
+        data: { confirm: 'アカウントを削除します。よろしいですか？' }%>
+    </div>
+  </div>
+</section>

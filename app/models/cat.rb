@@ -1,16 +1,17 @@
 class Cat < ApplicationRecord
   belongs_to :user
 
-  has_many :bookmarks
+  has_many :bookmarks, -> { order(created_at: :desc) }
   has_many :candidates
-  has_many :comments
+  has_many :comments, -> { where(deleted_flag: false).order(created_at: :desc) }
 
   has_many_attached :photos
   has_one_attached :video
 
   validates :photos, content_type: [:jpg, :jpeg, :png], size: { less_than: 5.megabytes }
   validate :photos_check # ここでバリデーションエラー対象の写真を削除
-  validates :photos, limit: { min: 3, max: 10, message: 'は最低でも3枚アップロードしてください' }, if: :published?
+  validates :photos, limit: { max: 10, message: 'は10枚以上アップロードできません' }
+  validates :photos, limit: { min: 3, message: 'は最低でも3枚アップロードしてください' }, if: :published?
   
   validates :video, content_type: [:mp4, :mov], size: { less_than: 30.megabytes }
   validate :video_check # ここでバリデーションエラー対象の映像を削除
@@ -28,6 +29,10 @@ class Cat < ApplicationRecord
     validates :postal_code, presence: true, numericality: { only_integer: true }, length: { is: 7 }
     validates :prefecture, presence: { message: 'を選択してください' }
     validates :city, presence: true
+    validates :background, presence: true
+    validates :personality, presence: true
+    validates :health, presence: true
+    validates :delivery_place, presence: true
     validates :publication_date, presence: true
     validates :publication_deadline, presence: true
     validate :confirm_publication_deadline
@@ -47,14 +52,24 @@ class Cat < ApplicationRecord
     publication_status == 'public'
   end
 
+  # 掲載の残り期間の文字列を返す
+  def get_remaining_period_string
+    remaining_period = (publication_deadline - Date.current - 1).to_i
+    if remaining_period == 0
+      return '本日中'
+    else
+      return '残り' + remaining_period.to_s + '日'
+    end
+  end
+
   private
 
   # Gem「ransack」の検索対象カラムをホワイトリストに登録
   def self.ransackable_associations(auth_object = nil)
-    ['publication_title', 'name', 'breed', 'animal_print', 'prefecture', 'city']
+    ['publication_title', 'breed', 'animal_print', 'prefecture', 'city']
   end
   def self.ransackable_attributes(auth_object = nil)
-    ['publication_title', 'name', 'breed', 'animal_print', 'prefecture', 'city']
+    ['publication_title', 'breed', 'animal_print', 'prefecture', 'city']
   end
 
   # 掲載期間が今日の日付以降か確認

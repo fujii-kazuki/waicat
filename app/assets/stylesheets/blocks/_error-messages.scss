@@ -1,0 +1,21 @@
+.error-messages {
+  color: $danger;
+  margin-bottom: 1em;
+
+  @include media-breakpoint-down(md) {
+    font-size: 1.4rem;
+  }
+
+  &__list {
+    list-style: none;
+  }
+
+  &__item {
+    &::before {
+      content: '\f06a';
+      font-family: "Font Awesome 6 Free";
+      font-weight: 900;
+      padding-right: .25em;
+    }
+  }
+}

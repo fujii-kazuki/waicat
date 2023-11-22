@@ -57,12 +57,10 @@ Rails.application.routes.draw do
     end
 
     # public/usersコントローラー
-    namespace :users do
-      get 'my_page', action: 'show'
-      get 'confirm'
-      scope :infomation do
-        get 'edit', as: 'infomation_edit'
-        patch 'update', as: 'infomation_update'
+    resources :users, only: [:show, :edit, :update] do
+      member do
+        get 'confirm'
+        patch 'leave'
       end
     end
 

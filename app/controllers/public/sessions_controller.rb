@@ -9,7 +9,7 @@ class Public::SessionsController < Devise::SessionsController
     user = User.guest
     sign_in user
     flash[:notice] = 'ゲストユーザーとしてログインしました。'
-    redirect_to cats_path
+    redirect_to root_path
   end
   
   # GET /resource/sign_in
@@ -29,10 +29,9 @@ class Public::SessionsController < Devise::SessionsController
 
   protected
 
-  # ログイン後にマイページへリダイレクト
-  def after_sign_in_path_for(resource)
-    users_my_page_path
-  end
+  # def after_sign_in_path_for(resource)
+  #   user_path(current_user.id)
+  # end
 
   # ログアウト後にトップページへリダイレクト
   def after_sign_out_path_for(resource)
@@ -44,7 +43,7 @@ class Public::SessionsController < Devise::SessionsController
     user = User.find_by(email: params[:user][:email])
     if user
       if user.valid_password?(params[:user][:password]) && user.deleted_flag
-        flash[:danger] = 'お客様は退会済みです。申し訳ございませんが、再度新規登録をお願いします。'
+        flash[:alert] = 'お客様は退会済みです。申し訳ございませんが、再度新規登録をお願いします。'
         redirect_to new_user_registration_path
       end
     end

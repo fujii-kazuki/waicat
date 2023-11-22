@@ -1,0 +1,62 @@
+.footer {
+  background-color: $waicat-main;
+  color: $white;
+  padding: 50px 0;
+  position: sticky;
+  top: 100vh;
+  width: 100%;
+
+  &--margin-top {
+    margin-top: 50px;
+  }
+
+  &__container {
+    display: flex;
+    justify-content: center;
+    flex-flow: wrap;
+    margin-bottom: 50px;
+
+    & > * {
+      padding: 3em;
+      width: 350px;
+
+      @include media-breakpoint-down(sm) {
+        width: 300px;
+      }
+    }
+  }
+
+  &__nav {
+    font-size: 1.4rem;
+
+    &-list {
+      list-style: none;
+      
+      & > :not(:last-child) {
+        border-bottom: 1px solid $white;
+      }
+    }
+
+    &-item {
+      padding: 1em 1.5em;
+
+      &-link {
+        @include link($white);
+      }
+    }
+  }
+
+  &__logo-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  &__copyright {
+    text-align: center;
+    
+    &-link {
+      @include link($white, true);
+    }
+  }
+}

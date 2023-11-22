@@ -1,0 +1,12 @@
+#sp-nav-menu {
+  opacity: 0;
+  transform: translateY(-20%);
+  pointer-events: none;
+  transition: opacity .5s, transform .5s;
+
+  &.js-open {
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+  }
+}

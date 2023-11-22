@@ -1,4 +1,7 @@
 class Public::CandidatesController < ApplicationController
+  before_action :authenticate_user!
+  before_action :check_guest_user, if: :user_signed_in?
+
   def confirm
     @cat = Cat.find(params[:cat_id])
     
@@ -31,7 +34,7 @@ class Public::CandidatesController < ApplicationController
         redirect_to chatroom_path(chatroom.id)
       end
     else
-      flash[:danger] = '「里親募集の掲載、条件等を全て確認しました。」にチェックをしてください。'
+      flash[:alert] = '「里親募集の掲載、条件等を全て確認しました。」にチェックをしてください。'
       redirect_to confirm_cat_candidates_path(@cat.id)
     end
   end
@@ -52,7 +55,7 @@ class Public::CandidatesController < ApplicationController
       # 応募者に里親決定通知を送信
       decide_notice(candidate)
     else
-      flash[:danger] = '既に里親決定済みか、譲渡済み、またはお断り済みです。'
+      flash[:alert] = '既に里親決定済みか、譲渡済み、またはお断り済みです。'
     end
     # チャットルームページへリダイレクト
     redirect_to chatroom_path(candidate.chatroom.id)
@@ -77,7 +80,7 @@ class Public::CandidatesController < ApplicationController
       # チャットルーム一覧ページへリダイレクト
       redirect_to chatrooms_path
     else
-      flash[:danger] = '既に里親決定済みか、譲渡済み、またはお断り済みです。'
+      flash[:alert] = '既に里親決定済みか、譲渡済み、またはお断り済みです。'
       # チャットルームへリダイレクト
       redirect_to chatroom_path(candidate.chatroom.id)
     end
@@ -89,19 +92,19 @@ class Public::CandidatesController < ApplicationController
   def can_candidate?(cat)
     # 掲載ステータスが「相談中」かどうか
     if !cat.publication_status == 'in_consultation'
-      flash[:danger] = '先ほどの掲載は現在、里親募集を行なっておりません。'
+      flash[:alert] = '先ほどの掲載は現在、里親募集を行なっておりません。'
       redirect_to cats_path
       return false
 
     # 既に応募済みか確認
     elsif current_user.candidated_foster_parent?(cat.id)
-      flash[:danger] = '既に応募済みです。'
+      flash[:alert] = '既に応募済みです。'
       redirect_to cat_path(cat.id)
       return false
 
     # 掲載者本人か確認
-    elsif current_user.is_cat_publisher?(cat.id)
-      flash[:danger] = '掲載者本人は里親に応募できません。'
+    elsif current_user.is_cat_publisher?(cat)
+      flash[:alert] = '掲載者本人は里親に応募できません。'
       redirect_to cat_path(cat.id)
       return false
 

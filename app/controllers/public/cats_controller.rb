@@ -1,12 +1,28 @@
 class Public::CatsController < ApplicationController
   before_action :authenticate_user!
+  before_action :check_guest_user, except: [:index, :show], if: :user_signed_in?
 
   def index
-    @cats = Cat.all
+    @cats = Cat.where(
+      publication_status: ['public', 'in_consultation', 'foster_parents_decided', 'recruitment_closed'],
+      deleted_flag: false
+    ).order(created_at: :desc).page(params[:page]).per(12)
+    @current_page = @cats.current_page
+    @total_pages = @cats.total_pages == 0 ? 1 : @cats.total_pages
+    @total_count = @cats.total_count
   end
 
   def show
     @cat = Cat.find(params[:id])
+    # 掲載が表示可能か判定
+    if !current_user?(@cat.user) &&
+       ( @cat.deleted_flag ||
+       @cat.publication_status == 'draft' ||
+       @cat.publication_status == 'private' )
+
+      flash[:alert] = '指定の掲載は非表示か、削除された可能性があります。'
+      redirect_to cats_path
+    end
   end
 
   def new
@@ -20,16 +36,29 @@ class Public::CatsController < ApplicationController
     if params[:back_new]
       render :new
     else
+      @cat.video = nil if params[:cat][:video].nil?
       @cat.publication_status = 'public'
       @cat.publication_date = Time.zone.now
-      @cat.save
-      flash[:notice] = '掲載が完了しました。'
-      redirect_to cat_path(@cat.id)
+      if @cat.save
+        flash[:success] = '掲載が完了しました。'
+        redirect_to cat_path(@cat.id)
+      else
+        render :new
+      end
     end
   end
 
   def edit
     @cat = Cat.find(params[:id])
+
+    # 掲載が編集可能か判定
+    if @cat.user.id != current_user.id ||
+       @cat.publication_status == 'in_consultation' ||
+       @cat.publication_status == 'foster_parents_decided' ||
+       @cat.publication_status == 'recruitment_closed' 
+
+      redirect_to cat_path(@cat.id)
+    end
   end
 
   def update
@@ -40,10 +69,14 @@ class Public::CatsController < ApplicationController
     if params[:back_edit]
       render :edit
     else
+      @cat.video = nil if params[:cat][:video].nil?
       @cat.publication_status = 'public'
-      @cat.save
-      flash[:notice] = '掲載の更新が完了しました。'
-      redirect_to cat_path(@cat.id)
+      if @cat.save
+        flash[:success] = '掲載の更新が完了しました。'
+        redirect_to cat_path(@cat.id)
+      else
+        render :edit
+      end
     end
   end
 
@@ -57,8 +90,8 @@ class Public::CatsController < ApplicationController
         render :new
       else
         @cat.save
-        flash[:notice] = '下書き保存が完了しました。'
-        redirect_to cats_path
+        flash[:success] = '下書き保存が完了しました。'
+        redirect_to cat_path(@cat.id)
       end
 
     # 新規掲載フォームからの確認の場合
@@ -68,19 +101,22 @@ class Public::CatsController < ApplicationController
       @cat.publication_status = 'public'
       if @cat.invalid?
         render :new
+      else
+        flash[:warn] = '掲載内容を確認してください。'
       end
 
     # 掲載編集フォームからの下書き保存の場合
     elsif params[:edit_draft]
       @cat = Cat.find(params[:cat][:id])
       @cat.assign_attributes(cat_params) # attributeを変更（DBへの保存は行われない）
-      @cat.publication_status = 'draft'
       if @cat.invalid?
         render :edit
       else
+        @cat.photos = nil if params[:cat][:photos].nil?
+        @cat.video = nil if params[:cat][:video].nil?
         @cat.save
-        flash[:notice] = '下書き保存が完了しました。'
-        redirect_to cats_path
+        flash[:success] = '下書き保存が完了しました。'
+        redirect_to cat_path(@cat.id)
       end
 
     # 掲載編集フォームからの確認の場合
@@ -90,14 +126,16 @@ class Public::CatsController < ApplicationController
       @cat.publication_status = 'public'
       if @cat.invalid?
         render :edit
+      else
+        flash[:warn] = '掲載内容を確認してください。'
       end
     end
   end
 
   def destroy
-    Cat.find(params[:id]).destroy
+    Cat.find(params[:id]).update(deleted_flag: true)
     flash[:notice] = '掲載を削除しました。'
-    redirect_to cats_path
+    redirect_to user_path(current_user.id)
   end
 
   private

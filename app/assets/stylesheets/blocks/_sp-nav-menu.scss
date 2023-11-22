@@ -1,0 +1,44 @@
+.sp-nav-menu {
+  background-color: $waicat-main;
+  padding-top: 1em;
+  padding-bottom: 2em;
+  position: fixed;
+  top: 70px;
+  width: 100%;
+  z-index: 1;
+
+  @include media-breakpoint-up(md) {
+    display: none;
+  }
+  
+  &__container {
+    display: flex;
+    justify-content: space-around;
+    align-items: start;
+  
+    @include media-breakpoint-down(sm) {
+      flex-direction: column;
+      align-items: center;
+      gap: 2em;
+    }
+  }
+
+  &__list {
+    border-left: 4px solid $white;
+    padding: .25em 0 .25em 1em;
+    list-style: none;
+
+    @include media-breakpoint-down(sm) {
+      width: 200px;
+    }
+  }
+
+  &__item {
+    padding-top: .25em;
+    padding-bottom: .25em;
+
+    &-link {
+      @include link($white);
+    }
+  }
+}

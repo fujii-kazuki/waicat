@@ -1,0 +1,154 @@
+.publish-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  list-style: none;
+  width: 100%;
+
+  &__item {
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    position: relative;
+    overflow: hidden;
+    width: 31%;
+    z-index: 0;
+
+    @include media-breakpoint-down(lg) {
+      width: 48%;
+    }
+
+    @include media-breakpoint-down(md) {
+      width: 100%;
+    }
+
+    &-link {
+      color: $primary;
+      text-decoration: none;
+    }
+
+    &-wrap-top {
+      height: 260px;
+      overflow: hidden;
+    }
+
+    &-publication-status {
+      border-bottom-left-radius: 10px;
+      color: white;
+      font-size: 1.2rem;
+      position: absolute;
+      top: 0;
+      right: 0;
+      padding: .5em 1.5em;
+      z-index: 1;
+
+      // 下書き、非公開
+      &--draft, &--private {
+        background-color: $secondary;
+      }
+
+      // 公開
+      &--public {
+        background-color: $waicat-accent;
+      }
+
+      // 相談中
+      &--in_consultation {
+        background-color: $primary;
+      }
+
+      // 里親決定
+      &--foster_parents_decided {
+        background-color: $success;
+      }
+
+      // 募集終了、掲載締め切り
+      &--recruitment_closed,
+      &--publication_deadline {
+        background-color: $waicat-main;
+      }
+    }
+
+    &-img {
+      object-fit: cover;
+      transition: transform .5s;
+      height: 100%;
+      width: 100%;
+    }
+
+    &-link:hover &-img {
+      transform: scale(1.2);
+    }
+
+    &-wrap-bottom {
+      height: 100%;
+      padding: 15px 15px 60px 15px;
+      position: relative;
+    }
+
+    &-publication-title {
+      font-size: 1.6rem;
+      margin-bottom: 10px;
+    }
+
+    &-table {
+      font-size: 1.2rem;
+      display: flex;
+      gap: 1em;
+
+      tbody {
+        flex: 1 1 50%;
+      }
+      
+      th {
+        background-color: $waicat-main;
+        border-radius: 5px;
+        color: $white;
+        text-align: center;
+        padding: .5em;
+        white-space: nowrap;
+      }
+
+      td {
+        border-bottom: 1px solid $waicat-main;
+        padding-left: .5em;
+        width: 100%;
+      }
+    }
+
+    &-gender {
+      font-weight: bold;
+
+      &::before {
+        font-family: "Font Awesome 6 Free";
+        padding-right: .25em;
+      }
+
+      &--female {
+        color: $red;
+
+        &::before {
+          content: '\f221';
+        }
+      }
+
+      &--male {
+        color: $blue;
+
+        &::before {
+          content: '\f222';
+        }
+      }
+    }
+
+    &-button-wrap {
+      position: absolute;
+      bottom: 15px;
+      left: 15px;
+    }
+
+    &-edit-cat-button {
+      @include button($success, 'sm');
+    }
+  }
+}

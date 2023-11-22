@@ -1,0 +1,20 @@
+#header {
+  transition: opacity .5s, transform .5s;
+
+  &.js-hidden {
+    opacity: 0;
+    transform: translateY(-50%);
+    pointer-events: none;
+  }
+}
+
+#page-top-button {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .5s;
+
+  &.js-show {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}

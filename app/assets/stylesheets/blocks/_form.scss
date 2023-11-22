@@ -1,0 +1,301 @@
+.form {
+  &__container {
+    margin: 0 auto;
+    max-width: 600px;
+  }
+
+  &__flex {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2em;
+    margin-top: 50px;
+
+    @include media-breakpoint-down(md) {
+      flex-direction: column;
+    }
+  }
+
+  .field_with_errors > &__label {
+    color: $danger;;
+
+    &::before {
+      content: '\f06a';
+      font-family: "Font Awesome 6 Free";
+      font-weight: 900;
+      padding-right: .25em;
+    }
+  }
+
+  &__text {
+    color: $gray-600;
+    font-size: 1.2rem;
+
+    &--error {
+      color: $warning;
+      display: none;
+
+      &::before {
+        content: '\f071';
+        font-family: "Font Awesome 6 Free";
+        font-weight: 900;
+      }
+    }
+  }
+
+  &__link {
+    @include link($primary, true);
+  }
+
+  &__search-address-button {
+    @include button($success, 'sm');
+  }
+}
+
+.sign-up__form {
+  &-grid {
+    display: grid;
+    align-items: end;
+    gap: 1.5em;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-areas:
+      "item1 item1 item1"
+      "item2 item2 ."
+      "item3 . ."
+      "item4 item4 item4"
+      "item5 item6 item6"
+      "item7 . ."
+      "item8 item8 ."
+      "item9 item9 ."
+      "item10 item10 .";
+
+    @include media-breakpoint-down(sm) {
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-areas:
+        "item1 item1"
+        "item2 item2"
+        "item3 . "
+        "item4 item4"
+        "item5 ."
+        "item6 item6"
+        "item7 ."
+        "item8 item8"
+        "item9 item9"
+        "item10 item10";
+    }
+
+    @for $i from 1 through 10 {
+      & > :nth-child(#{$i}) {
+        grid-area: item#{$i};
+      }
+    }
+  }
+
+  &-confirm-button {
+    @include button($primary);
+  }
+}
+
+.sign-in__form, 
+.admin-sign-in__form {
+  &-grid {
+    display: grid;
+    gap: 1.5em;
+    grid-template-columns: 1fr;
+  }
+
+  &-log-in-button {
+    @include button($primary);
+  }
+}
+
+
+.user-edit__form {
+  &-avatar-wrap {
+    background-color: $gray-200;
+    border-radius: 50%;
+    margin: 0 auto 20px;
+    overflow: hidden;
+    height: 220px;
+    width: 220px;
+
+    img {
+      object-fit: cover;
+      height: 100%;
+      width: 100%;
+    }
+  }
+
+  &-avatar-delete-button-wrap {
+    text-align: right;
+  }
+
+  &-avatar-delete-button {
+    color: $danger;
+    font-size: 3rem;
+    margin-right: 1em;
+
+    &--hidden {
+      display: none;
+    }
+  }
+
+  &-grid {
+    display: grid;
+    align-items: end;
+    gap: 1.5em;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-areas:
+      "item1 item1 item1"
+      "item2 item2 item2"
+      "item3 . ."
+      "item4 item4 item4"
+      "item5 item6 item6"
+      "item7 . ."
+      "item8 item8 ."
+      "item9 item9 item9";
+
+    @include media-breakpoint-down(sm) {
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-areas:
+        "item1 item1"
+        "item2 item2"
+        "item3 . "
+        "item4 item4"
+        "item5 ."
+        "item6 item6"
+        "item7 ."
+        "item8 item8"
+        "item9 item9";
+    }
+
+    @for $i from 1 through 9 {
+      & > :nth-child(#{$i}) {
+        grid-area: item#{$i};
+      }
+    }
+  }
+
+  &-user-leave-link {
+    @include link($primary, true);
+  }
+
+  &-mypage-button {
+    @include button($secondary);
+  }
+  &-confirm-button {
+    @include button($primary);
+  }
+}
+
+.publish-edit__form {
+  &-grid {
+    display: grid;
+    align-items: end;
+    gap: 1.5em;
+    grid-template-columns: repeat(3, 1fr);
+
+    &--1 {
+      grid-template-areas:
+        "item1 item1 item1"
+        "item2 item3 item4"
+        "item5 item6 ."
+        "item7 item8 ."
+        "item9 item10 ."
+        "item11 item12 ."
+        "item13 item14 ."
+        "item15 . .";
+
+      @include media-breakpoint-down(md) {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-areas:
+          "item1 item1"
+          "item2 item2"
+          "item3 item4"
+          "item5 item6"
+          "item7 item8"
+          "item9 item10"
+          "item11 item12"
+          "item13 item14"
+          "item15 .";
+      }
+
+      @include media-breakpoint-down(sm) {
+        grid-template-areas:
+          "item1 item1"
+          "item2 item2"
+          "item3 ."
+          "item4 ."
+          "item5 item5"
+          "item6 item6"
+          "item7 item7"
+          "item8 item8"
+          "item9 item9"
+          "item10 item10"
+          "item11 item12"
+          "item13 ."
+          "item14 item14"
+          "item15 .";
+      }
+      
+      @for $i from 1 through 15 {
+        & > :nth-child(#{$i}) {
+          grid-area: item#{$i};
+        }
+      }
+    }
+
+    &--2 {
+      grid-template-areas:
+        "item1 item1 item1"
+        "item2 item2 item2"
+        "item3 item3 item3"
+        "item4 item4 item4"
+        "item5 item5 item5";
+
+      @for $i from 1 through 5 {
+        & > :nth-child(#{$i}) {
+          grid-area: item#{$i};
+        }
+      }
+    }
+  }
+
+  &-cancel-button {
+    @include button($secondary);
+  }
+
+  &-draft-button {
+    @include button($success);
+  }
+
+  &-confirm-button {
+    @include button($primary);
+  }
+}
+
+.publish-confirm__form {
+  &-back-button {
+    @include button($secondary);
+  }
+
+  &-ok-button {
+    @include button($primary);
+  }
+}
+
+.comments__form {
+  margin: 40px auto 0;
+  max-width: 800px;
+
+  &-grid {
+    display: grid;
+    grid-template-columns: 1fr 100px;
+    gap: 1em;
+  }
+
+  &-submit-button {
+    @include button($primary);
+    align-self: end;
+  }
+}
