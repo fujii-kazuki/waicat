@@ -5,7 +5,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable
 
   has_one_attached :avatar
-
+  
   has_many :cats, -> { where(deleted_flag: false).order(created_at: :desc) }
   has_many :candidates
   has_many :comments, -> { where(deleted_flag: false).order(created_at: :desc) }
@@ -15,7 +15,8 @@ class User < ApplicationRecord
   has_many :activities, -> { order(created_at: :desc) }
   has_many :chatroom_users, -> { order(created_at: :desc) }
   has_many :contacts, -> { order(created_at: :desc) }
-
+  
+  validates :avatar, content_type: [:jpg, :jpeg, :png], size: { less_than: 5.megabytes }
   validates :name, presence: true
   validates :postal_code, presence: true, numericality: { only_integer: true }, length: { is: 7 }
   validates :prefecture, presence: { message: 'を選択してください' }
@@ -42,7 +43,16 @@ class User < ApplicationRecord
     email == 'guest@example.com' ? true : false
   end
 
-  # 猫のブックマーク判定
+  # 会員のプロフィール画像のパスを返す
+  def profile_image
+    if avatar.attached?
+      avatar
+    else
+      'avatar-default.png'
+    end
+  end
+
+  # 猫がブックマーク済みか判定
   def bookmarked_cat?(cat_id)
     bookmarks.exists?(cat_id: cat_id)
   end

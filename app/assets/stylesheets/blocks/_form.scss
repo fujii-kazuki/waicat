@@ -109,6 +109,83 @@
   }
 }
 
+
+.user-edit__form {
+  &-avatar-wrap {
+    background-color: $gray-200;
+    border-radius: 50%;
+    margin: 0 auto 20px;
+    overflow: hidden;
+    height: 220px;
+    width: 220px;
+
+    img {
+      object-fit: cover;
+      height: 100%;
+      width: 100%;
+    }
+  }
+
+  &-avatar-delete-button-wrap {
+    text-align: right;
+  }
+
+  &-avatar-delete-button {
+    color: $danger;
+    font-size: 3rem;
+    margin-right: 1em;
+
+    &--hidden {
+      display: none;
+    }
+  }
+
+  &-grid {
+    display: grid;
+    align-items: end;
+    gap: 1.5em;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-areas:
+      "item1 item1 ."
+      "item2 . ."
+      "item3 item3 item3"
+      "item4 item5 item5"
+      "item6 . ."
+      "item7 item7 ."
+      "item8 item8 item8";
+
+    @include media-breakpoint-down(sm) {
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-areas:
+        "item1 item1"
+        "item2 . "
+        "item3 item3"
+        "item4 ."
+        "item5 item5"
+        "item6 ."
+        "item7 item7"
+        "item8 item8";
+    }
+
+    @for $i from 1 through 8 {
+      & > :nth-child(#{$i}) {
+        grid-area: item#{$i};
+      }
+    }
+  }
+
+  &-user-leave-link {
+    @include link($primary, true);
+  }
+
+  &-mypage-button {
+    @include button($secondary);
+  }
+  &-confirm-button {
+    @include button($primary);
+  }
+}
+
 .publish-edit__form {
   &-grid {
     display: grid;

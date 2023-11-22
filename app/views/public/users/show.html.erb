@@ -14,13 +14,9 @@
 
     <div class="profile__grid profile__grid--1">
       <div class="profile__avatar-image-wrap">
-        <% if @user.avatar.attached? %>
-          <%= image_tag @user.avatar %>
-        <% else %>
-          <%= image_tag  'avatar-default.png' %>
-          <% if current_user? @user %>
-            <%= link_to 'プロフィール画像を設定', edit_user_path(@user.id), class: 'profile__avatar-setting-link' %>
-          <% end %>
+        <%= image_tag @user.profile_image %>
+        <% if !@user.avatar.attached? && current_user?(@user) %>
+          <%= link_to 'プロフィール画像を設定', edit_user_path(@user.id), class: 'profile__avatar-setting-link' %>
         <% end %>
       </div>
 

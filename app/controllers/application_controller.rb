@@ -4,8 +4,8 @@ class ApplicationController < ActionController::Base
   before_action :authenticate_admin!, if: :admin_url?
   before_action :check_publication_period
   
-  # ゲストユーザー判定
-  def guest_signed_in?
+  # ゲストユーザーか確認
+  def check_guest_user
     if current_user.is_guest_user?
       # ゲストユーザーなら前のページへリダイレクト
       flash[:alert] = 'そちらの機能をご利用するには新規登録が必要です。'

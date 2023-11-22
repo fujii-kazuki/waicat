@@ -1,6 +1,6 @@
 class Public::CommentsController < ApplicationController
   before_action :authenticate_user!
-  before_action :guest_signed_in?, if: :user_signed_in?
+  before_action :check_guest_user, if: :user_signed_in?
 
   def index
     @cat = Cat.find(params[:cat_id])

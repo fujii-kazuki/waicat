@@ -1,6 +1,6 @@
 class Public::CatsController < ApplicationController
   before_action :authenticate_user!
-  before_action :guest_signed_in?, except: [:index, :show], if: :user_signed_in?
+  before_action :check_guest_user, except: [:index, :show], if: :user_signed_in?
 
   def index
     @cats = Cat.where(

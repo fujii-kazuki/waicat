@@ -1,0 +1,85 @@
+<section>
+  <div class="container">
+    <h2 class="heading heading--2">会員情報編集</h2>
+
+    <%= form_with model: @user, method: :patch, class: 'form user-edit__form' do |f| %>
+      <div class="form__container">
+        <%= render "layouts/error_messages", obj: @user %>
+        <section>
+          <h3 class="heading heading--3">プロフィール画像</h3>
+          <div class="user-edit__form-avatar-delete-button-wrap">
+            <button type="button" id="avatar-delete-button" class="
+              user-edit__form-avatar-delete-button
+              <%= ' user-edit__form-avatar-delete-button--hidden' if !@user.avatar.attached? %>
+            ">
+              <i class="fa-solid fa-circle-xmark"></i>
+            </button>
+          </div>
+
+          <div id="avatar-wrap" class="user-edit__form-avatar-wrap">
+            <%= image_tag @user.profile_image %>
+            <% if @user.avatar.attached? %>
+              <%= f.hidden_field :avatar, value: @user.avatar.signed_id %>
+            <% end %>
+          </div>
+
+          <%= f.file_field :avatar, accept: 'image/jpg, image/jpeg, image/png', direct_upload: true, id: 'avatar-uploader', class: 'input-file' %>
+          <p class="form__text">（ファイル形式：jpg, png）（ファイルサイズ：1枚5MBまで）</p>
+        </section>
+
+        <section>
+          <h3 class="heading heading--3">基本情報</h3>
+          <div class="user-edit__form-grid">
+            <div>
+              <%= f.label :name, class: 'form__label' %>
+              <%= f.text_field :name, autocomplete: 'name', autofocus: true, placeholder: '例）猫山太郎', required: true, class: 'text-field' %>
+            </div>
+
+            <div>
+              <%= f.label :postal_code, class: 'form__label' %>
+              <%= f.text_field :postal_code, autocomplete: 'postal_code', placeholder: '例）1234567', required: true, class: 'text-field' %>
+            </div>
+            
+            <div>
+              <p id="search_address_error_text" class="form__text form__text--error">
+                郵便番号に間違いがないか確認し、再度お試しするか手入力してください
+              </p>
+              <button type="button" id="search_address_button" class="form__search-address-button">住所検索</button>
+            </div>
+
+            <div>
+              <%= f.label :prefecture, class: 'form__label' %>
+              <%= f.collection_select :prefecture, Prefecture.all, :name, :name, { include_blank: true }, class: 'selectbox' %>
+            </div>
+
+            <div>
+              <%= f.label :city, class: 'form__label' %>
+              <%= f.text_field :city, autocomplete: 'city', placeholder: '例）新宿区', required: true, class: 'text-field' %>
+            </div>
+
+            <div>
+              <%= f.label :telephone_number, class: 'form__label' %>
+              <%= f.telephone_field :telephone_number, autocomplete: 'telephone_number', placeholder: '例）09012345678', required: true, class: 'text-field' %>
+            </div>
+
+            <div>
+              <%= f.label :email, class: 'form__label' %>
+              <%= f.email_field :email, autocomplete: "email", placeholder: '例）sample@sample.jp', required: true, class: 'text-field' %>
+            </div>
+
+            <div>
+              <p class="form__text">
+                退会を希望の方は<%= link_to 'こちら', confirm_user_path, class: 'user-edit__form-user-leave-link' %>
+              </p>
+            </div>
+          </div>
+
+          <div class="form__flex">
+            <%= link_to 'マイページに戻る', user_path(@user.id), class: 'user-edit__form-mypage-button' %>
+            <%= button_tag '確定', type: 'submit', class: 'user-edit__form-confirm-button' %>
+          </div>
+        </section>
+      </div>
+    <% end %>
+  </div>
+</section>

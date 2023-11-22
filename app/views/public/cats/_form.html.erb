@@ -41,7 +41,7 @@
       <h4 class="heading heading--4">新たにアップロードする写真</h4>
       <div id="new-photos-preview" class="publish-edit__new-photos-preview"></div>
       <div>
-        <%= f.file_field :photos, accept: 'image/jpg, image/jpeg, image/png', multiple: true, direct_upload: true, id: 'photo-uploader' %>
+        <%= f.file_field :photos, accept: 'image/jpg, image/jpeg, image/png', multiple: true, direct_upload: true, id: 'photo-uploader', class: 'input-file' %>
         <p class="form__text">3~10枚の写真をアップロードしてください（ファイル形式：jpg, png）（ファイルサイズ：1枚5MBまで）</p>
       </div>
     </div>
@@ -64,7 +64,7 @@
       </div>
 
       <div>
-        <%= f.file_field :video, accept: 'video/*', direct_upload: true, id: 'video-uploader' %>
+        <%= f.file_field :video, accept: 'video/*', direct_upload: true, id: 'video-uploader', class: 'input-file' %>
         <p class="form__text">映像は必須ではありません（ファイル形式：mp4, mov）（ファイルサイズ：30MBまで）</p>
         <p class="form__text">新たに映像をアップロードし掲載を更新すると、古い映像は削除されます</p>
       </div>
