@@ -42,7 +42,7 @@ ActiveRecord::Schema.define(version: 2023_11_09_060440) do
 
   create_table "activities", force: :cascade do |t|
     t.integer "user_id", null: false
-    t.text "body", default: "", null: false
+    t.text "body", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -131,7 +131,7 @@ ActiveRecord::Schema.define(version: 2023_11_09_060440) do
   create_table "comments", force: :cascade do |t|
     t.integer "cat_id", null: false
     t.integer "user_id", null: false
-    t.text "body", default: "", null: false
+    t.text "body", null: false
     t.boolean "deleted_flag", default: false, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -140,7 +140,7 @@ ActiveRecord::Schema.define(version: 2023_11_09_060440) do
   create_table "contacts", force: :cascade do |t|
     t.integer "user_id", null: false
     t.string "title", default: "", null: false
-    t.text "body", default: "", null: false
+    t.text "body", null: false
     t.boolean "readed_flag", default: false, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -157,7 +157,7 @@ ActiveRecord::Schema.define(version: 2023_11_09_060440) do
   create_table "notices", force: :cascade do |t|
     t.integer "user_id", null: false
     t.string "title", default: "", null: false
-    t.text "body", default: "", null: false
+    t.text "body", null: false
     t.string "url", default: ""
     t.boolean "readed_flag", default: false, null: false
     t.boolean "deleted_flag", default: false, null: false

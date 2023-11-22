@@ -5,7 +5,11 @@
     </h2>
 
     <h3 class="heading heading--3">
-      <%= @cat.publication_title %>
+      <% if @cat.publication_title.blank? %>
+        タイトル未設定
+      <% else %>
+        <%= @cat.publication_title %>
+      <% end %>
     </h3>
 
     <% if current_user.id == @cat.user.id &&
