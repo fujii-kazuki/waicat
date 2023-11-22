@@ -21,11 +21,11 @@ class Public::UsersController < ApplicationController
   end
 
   def edit
-    @user = User.find(params[:id])
+    @user = current_user
   end
 
   def update
-    @user = User.find(params[:id])
+    @user = current_user
     if @user.update(user_params)
       @user.update(avatar: nil) if params[:user][:avatar].nil? #プロフィール画像が設定されていないなら削除
       flash[:success] = '会員情報の更新が完了しました。'
@@ -36,6 +36,12 @@ class Public::UsersController < ApplicationController
   end
 
   def confirm
+    cats = current_user.cats
+    # 会員の掲載に相談中、里親決定のものがあれば、退会をキャンセル
+    if cats.exists?(publication_status: ['in_consultation', 'foster_parents_decided'])
+      flash[:alert] = 'お客様は里親譲歩の話し合い最中の為、退会できません。'
+      redirect_to user_path(current_user.id)
+    end
   end
 
   private
