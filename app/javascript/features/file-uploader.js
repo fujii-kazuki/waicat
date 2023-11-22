@@ -1,3 +1,5 @@
+import avatarDefaultImageURL from '../../assets/images/avatar-default.png';
+
 window.addEventListener('DOMContentLoaded', () => {
   // 写真をアップロードするinput要素にイベントを追加
   addPhotoInputEvent();
@@ -170,7 +172,7 @@ function addAvatarInputEvent() {
 
   avatarInput.addEventListener('change', (event) => {
     // 要素内の画像を削除する（デフォルト画像に戻す）
-    avatarWrap.innerHTML = '<img src="/assets/avatar-default.png">';
+    avatarWrap.innerHTML = `<img src="${avatarDefaultImageURL}">`;
 
     const file = event.target.files[0];
     if (!file) return;
@@ -207,7 +209,7 @@ function addDeleteAvatarButtonEvent() {
 
   deleteAvatarButton.addEventListener('click', () => {
     // 要素内の画像を削除する（デフォルト画像に戻す）
-    avatarWrap.innerHTML = '<img src="/assets/avatar-default.png">';
+    avatarWrap.innerHTML = `<img src="${avatarDefaultImageURL}">`;
     // アバター削除ボタンを非表示
     deleteAvatarButton.classList.add('user-edit__form-avatar-delete-button--hidden');
     avatarInput.value = ''; //inputの中身をリセット

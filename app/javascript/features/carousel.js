@@ -1,5 +1,4 @@
 import Swiper from 'swiper/swiper-bundle';
-import 'swiper/swiper-bundle.min.css';
 
 window.addEventListener('DOMContentLoaded', () => {
   publishCarousel(); //掲載詳細ページのカルーセル
