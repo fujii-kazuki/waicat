@@ -1,0 +1,71 @@
+.chatroom-list {
+  list-style: none;
+
+  &__item {
+    display: grid;
+    column-gap: 20px;
+    row-gap: .25em;
+    grid-template-columns: auto auto 1fr;
+    grid-template-rows: auto auto;
+    grid-template-areas:
+    "item1 item2 item3"
+    "item1 item4 item4";
+    padding: 1em;
+    
+    @include media-breakpoint-down(sm) {
+      grid-template-columns: auto 1fr;
+      grid-template-rows: auto auto auto;
+      grid-template-areas:
+      "item1 item3"
+      "item1 item2"
+      "item1 item4";
+    }
+    
+    &:not(:last-child) {
+      border-bottom: 1px solid $waicat-main;
+    }
+
+    @for $i from 1 through 4 {
+      & > :nth-child(#{$i}) {
+        grid-area: item#{$i};
+      }
+    }
+
+    &-avatar-wrap {
+      background-color: $gray-200;
+      border-radius: 50%;
+      overflow: hidden;
+      height: 80px;
+      width: 80px;
+
+      img {
+        object-fit: cover;
+        height: 100%;
+        width: 100%;
+      }
+    }
+
+    &-user-name {
+      align-self: center;
+    }
+
+    &-link {
+      @include link($primary);
+    }
+
+    &-status-text {
+      background-color: $danger;
+      border-radius: 30px;
+      color: $white;
+      display: inline-block;
+      font-size: 1.2rem;
+      padding: .25em 1em;
+      white-space: nowrap;
+    }
+
+    &-message-body {
+      color: $gray-600;
+      font-size: 1.4rem;
+    }
+  }
+}

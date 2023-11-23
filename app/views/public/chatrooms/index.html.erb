@@ -1,24 +1,47 @@
-<h1>Public::Chatrooms#index</h1>
-<p>Find me in app/views/public/chatrooms/index.html.erb</p>
+<section>
+  <div class="container">
+    <h2 class="heading heading--2">チャットルーム一覧</h2>
 
-<h2>チャットルーム一覧</h2>
+    <% if @chatrooms.any? %>
+      <ul class="chatroom-list">
+        <% @chatrooms.each do |chatroom| %>
+          <li class="chatroom-list__item">
+            <div class="chatroom-list__item-avatar-wrap">
+              <% if current_user.id == chatroom.candidate.user.id %>
+                <%= link_to user_path(chatroom.candidate.cat.user.id) do %>
+                  <%= image_tag chatroom.candidate.cat.user.profile_image %>
+                <% end %>
+              <% else %>
+                <%= link_to user_path(chatroom.candidate.user.id) do %>
+                  <%= image_tag chatroom.candidate.user.profile_image %>
+                <% end %>
+              <% end%>
+            </div>
+            <p class="chatroom-list__item-user-name">
+              <%= link_to chatroom_path(chatroom.id), class: 'chatroom-list__item-link' do %>
+                <%= chatroom.candidate.cat.name %>
+                <% if current_user.id == chatroom.candidate.user.id %>
+                  の里親募集者：<%= chatroom.candidate.cat.user.name %>
+                <% else %>
+                  の里親応募者：<%= chatroom.candidate.user.name %>
+                <% end %>
+              <% end %>
+            </p>
 
-<% if @chatrooms.any? %>
-  <div>
-    <% if @active_chatrooms.any? %>
-      <%= render 'list', chatrooms: @active_chatrooms %>
+            <div class="chatroom-list__item-status-wrap">
+              <% if chatroom.deleted_flag %>
+                <p class="chatroom-list__item-status-text">終了済み</p>
+              <% end %>
+            </div>
+
+            <p class="chatroom-list__item-message-body">
+              <%= chatroom.last_message.created_at.strftime('%Y/%m/%d %H:%M') %>：<%= truncate(chatroom.last_message.body, length: 200) %>
+            </p>
+          </li>
+        <% end %>
+      </ul>
     <% else %>
-      <p>お話中のチャットルームはありません。</p>
+      <p>チャットルームはまだ作られていません。</p>
     <% end %>
   </div>
-
-  <div>
-    <% if @passive_chatrooms.any? %>
-      <%= render 'list', chatrooms: @passive_chatrooms %>
-    <% else %>
-      <p>終了されたチャットルームはありません。</p>
-    <% end %>
-  </div>
-<% else %>
-  <p>チャットルームはまだ作られていません。</p>
-<% end %>
+</section>
