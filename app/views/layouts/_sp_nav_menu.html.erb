@@ -29,7 +29,12 @@
             <%= link_to 'チャットルーム', chatrooms_path, class: 'sp-nav-menu__item-link' %>
           </li>
           <li class="sp-nav-menu__item">
-            <%= link_to '通知', notices_path, class: 'sp-nav-menu__item-link' %>
+            <%= link_to notices_path, class: 'sp-nav-menu__item-link' do %>
+              通知
+              <% if @unread_notices_num > 1 %>
+                <i class="fa-solid fa-bell"></i></i><%= @unread_notices_num %>
+              <% end %>
+            <% end %>
           </li>
         <% end %>
         <li class="sp-nav-menu__item">
