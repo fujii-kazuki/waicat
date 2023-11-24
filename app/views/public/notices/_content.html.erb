@@ -1,12 +1,16 @@
-<% if notice.readed_flag %>
-  <p>既読</p>
-<% end %>
-<% if notice.url.blank? %>
-  <%= notice.title %>
-<% else %>
-  <%= link_to notice.title, notice.url %>
-<% end %>
-<p><%= safe_join(notice.body.split("\n"),tag(:br)) %></p>
+<p class="notice-list__item-title">
+  <% if notice.url.blank? %>
+    <%= notice.title %>
+  <% else %>
+    <%= link_to notice.title, notice.url, class: 'notice-list__item-title-link' %>
+  <% end %>
+</p>
+
+<p class="notice-list__item-body"><%= show_text notice.body %></p>
+
 <% if !notice.readed_flag %>
-  <%= link_to '確認しました', notice_confirm_path(notice.id), method: :patch, remote: true %>
+  <%= link_to '確認しました', notice_confirm_path(notice.id), method: :patch, remote: true,
+    class: 'notice-list__item-link' %>
+<% else %>
+  <p class="notice-list__item-readed">既読</p>
 <% end %>
