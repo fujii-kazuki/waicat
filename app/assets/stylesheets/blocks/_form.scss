@@ -360,4 +360,12 @@
   &-confirm-button {
     @include button($primary);
   }
+
+  &-back-button {
+    @include button($secondary);
+  }
+
+  &-send-button {
+    @include button($success);
+  }
 }

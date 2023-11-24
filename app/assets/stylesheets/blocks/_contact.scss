@@ -1,0 +1,26 @@
+.contact {
+  &__text {
+    margin: 2em 0;
+  }
+
+  &__grid {
+    border: 1px solid $waicat-main;
+    border-radius: 10px;
+    display: grid;
+    grid-template-columns: auto 1fr;
+
+    & > * {
+      padding: 2em;
+    }
+    
+    & > :nth-child(1),
+    & > :nth-child(2) {
+      border-bottom: 1px solid $waicat-main;
+    }
+
+    dt {
+      border-right: 1px solid $waicat-main;
+      text-align: right;
+    }
+  }
+}
