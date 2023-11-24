@@ -38,7 +38,7 @@ class Public::CommentsController < ApplicationController
     @cat = Cat.find(params[:cat_id])
     @comments = @cat.comments
     @cat.comments.find(params[:id]).destroy
-    flash[:notice] = 'コメントを削除しました。'
+    flash.now[:success] = 'コメントを削除しました。'
   end
 
   private
