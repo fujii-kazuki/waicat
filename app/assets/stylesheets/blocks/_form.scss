@@ -348,3 +348,16 @@
     @include button($waicat-main, 'sm')
   }
 }
+
+.contact__form {
+  &-flex {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1em;
+  }
+
+  &-confirm-button {
+    @include button($primary);
+  }
+}

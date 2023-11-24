@@ -45,6 +45,9 @@ ja:
         publication_deadline: '掲載期限'
       comment:
         body: 'コメントの内容'
+      contact:
+        title: 'お問い合わせ内容'
+        body: '詳細'
     errors:
       messages:
         record_invalid: 'バリデーションに失敗しました: %{errors}'
