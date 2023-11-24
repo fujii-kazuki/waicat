@@ -43,7 +43,7 @@ class Public::CandidatesController < ApplicationController
 
   def decide
     cat = Cat.find(params[:cat_id])
-    candidate = Candidate.find(params[:candidate_id])
+    candidate = Candidate.find(params[:id])
 
     # 既に応募ステータスが「相談中」になっているか確認
     if candidate.status == 'in_consultation'
@@ -53,7 +53,7 @@ class Public::CandidatesController < ApplicationController
       candidate.update(status: 'foster_parents_decided')
       # 里親決定メッセージを自動送信
       decide_foster_parent_message(candidate.chatroom)
-      flash[:notice] = "#{cat.name}の里親を決定しました。"
+      flash[:success] = "#{cat.name}の里親を決定しました。"
       # 応募者に里親決定通知を送信
       decide_notice(candidate)
     else
@@ -65,7 +65,7 @@ class Public::CandidatesController < ApplicationController
 
   def decline
     cat = Cat.find(params[:cat_id])
-    candidate = Candidate.find(params[:candidate_id])
+    candidate = Candidate.find(params[:id])
     chatroom = candidate.chatroom
 
     # 応募ステータスが相談中か確認
@@ -74,6 +74,14 @@ class Public::CandidatesController < ApplicationController
       cat.update(publication_status: 'public')
       # 応募ステータスを「お断り」に変更
       candidate.update(status: 'declined')
+      # メッセージを送信
+      Message.create_and_send(
+        user_id: current_user.id,
+        chatroom_id: chatroom.id,
+        body: "※こちらは自動送信メッセージです
+
+              チャットルームはここで終了されました。"
+      )
       # チャットルームを論理削除
       chatroom.update(deleted_flag: true)
       flash[:notice] = '里親応募をお断りしました。'
@@ -85,6 +93,33 @@ class Public::CandidatesController < ApplicationController
       flash[:alert] = '既に里親決定済みか、譲渡済み、またはお断り済みです。'
       # チャットルームへリダイレクト
       redirect_to chatroom_path(candidate.chatroom.id)
+    end
+  end
+
+  def complete
+    cat = Cat.find(params[:cat_id]) #掲載
+    candidate = Candidate.find(params[:id]) #立候補
+    chatroom = candidate.chatroom #チャットルーム
+
+    # 譲渡完了できる状態か確認
+    if cat.publication_status == 'foster_parents_decided' &&
+       candidate.status == 'foster_parents_decided'
+
+      # 掲載ステータスを「募集終了」にする
+      cat.update(publication_status: 'recruitment_closed')
+      # 立候補ステータスを「譲渡完了」にする
+      candidate.update(status: 'transfer_completed')
+      # 自動メッセージを送信
+      complete_message(chatroom)
+      # 相手に通知を送信
+      complete_notice(candidate)
+      # チャットルームページへリダイレクト
+      flash[:notice] = "無事に#{cat.name}の譲渡を完了しました。"
+      redirect_to chatroom_path(chatroom.id)
+
+    else
+      flash[:alert] = '十分に話し合いを進めて譲渡完了報告をしてください。'
+      redirect_to chatroom_path(chatroom.id)
     end
   end
 
@@ -117,22 +152,21 @@ class Public::CandidatesController < ApplicationController
 
   # 里親応募メッセージ
   def candidate_message(chatroom)
-    # 掲載者の名前
-    publisher_name = chatroom.candidate.cat.user.name
     # 猫の名前
     cat_name = chatroom.candidate.cat.name
-
-    current_user.messages.create(
+    # メッセージを送信
+    Message.create_and_send(
+      user_id: current_user.id,
       chatroom_id: chatroom.id,
       body: "※こちらは自動送信メッセージです
-      
+
             #{cat_name}の里親に応募しました！
             こちらのチャットルームにて、
             
             ・簡単な自己紹介
             ・応募に至った経緯など
             ・猫を迎えるに至っての準備など
-            
+
             里親決定に向けて話し合いましょう！"
     )
   end
@@ -143,8 +177,9 @@ class Public::CandidatesController < ApplicationController
     candidate_user_name = chatroom.candidate.user.name
     # 猫の名前
     cat_name = chatroom.candidate.cat.name
-
-    current_user.messages.create(
+    # メッセージを送信
+    Message.create_and_send(
+      user_id: current_user.id,
       chatroom_id: chatroom.id,
       body: "※こちらは自動送信メッセージです
 
@@ -157,7 +192,27 @@ class Public::CandidatesController < ApplicationController
 
             上記の件にて話し合いましょう！
 
-            また、後日無事に#{cat_name}の譲渡が終わりましたら、#{candidate_user_name}さんは「受け取り完了ボタン」を押してください。"
+            また、後日無事に#{cat_name}の譲渡が終わりましたら、#{candidate_user_name}さんは「譲渡完了完了ボタン」を押してください。"
+    )
+  end
+
+  # 譲渡完了メッセージ
+  def complete_message(chatroom)
+    # 猫の名前
+    cat_name = chatroom.candidate.cat.name
+
+    # メッセージを送信
+    Message.create_and_send(
+      user_id: current_user.id,
+      chatroom_id: chatroom.id,
+      body: "※こちらは自動送信メッセージです
+
+            #{cat_name}を無事に受け取りました！
+
+            今後は#{cat_name}の様子や安否のご連絡を定期的にお話しさせていただきます。
+            今回の件、一旦ありがとうございました！
+
+            引き続きよろしくお願いします。"
     )
   end
   
@@ -205,6 +260,23 @@ class Public::CandidatesController < ApplicationController
       title: "お気の毒ですが、#{cat.name}の里親応募がキャンセルされました。",
       body: "#{cat.name}の飼い主の#{publishe_user.name}さんが、あなたの#{cat.name}の里親応募をキャンセルしました。
             また機会がある事をお祈りしております。",
+      url: chatroom_path(chatroom.id)
+    )
+  end
+
+  # 里親募集者に譲渡完了通知を送信
+  def complete_notice(candidate)
+    cat = candidate.cat
+    publisher = cat.user #里親募集者
+    candidater = candidate.user #里親応募者
+    chatroom = candidate.chatroom
+
+    # 通知を作成
+    Notice.create(
+      user_id: publisher.id,
+      title: "#{candidater.name}さんが#{cat.name}の受け取りを完了しました。",
+      body: "#{candidater.name}さんが、あなたから無事に#{cat.name}の受け取りを完了したそうです！一旦お疲れ様でした！
+            今後もチャットルームにて相手から、#{cat.name}の様子や安否のお話をお伺いください。",
       url: chatroom_path(chatroom.id)
     )
   end

@@ -5,6 +5,6 @@ class Candidate < ApplicationRecord
 
   validates :status, presence: true
 
-  # 0:相談中, 1:里親決定, 2:譲渡済み, 3:お断り
-  enum status: { in_consultation: 0, foster_parents_decided: 1, transferred: 2, declined: 3 }, _prefix: :status
+  # 0:相談中, 1:里親決定, 2:譲渡完了, 3:お断り
+  enum status: { in_consultation: 0, foster_parents_decided: 1, transfer_completed: 2, declined: 3 }, _prefix: :status
 end

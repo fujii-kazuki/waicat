@@ -18,7 +18,7 @@
       </div>
 
       <div class="comments__form-grid">
-        <%= f.text_area :body, autocomplete: 'body', placeholder: 'コメントの内容', id: 'comment-text-area', class: 'text-area' %>
+        <%= f.text_area :body, autofocus: true, autocomplete: 'body', placeholder: 'コメントの内容', id: 'comment-text-area', class: 'text-area' %>
         <%= button_tag '送信', class: 'comments__form-submit-button' %>
       </div>
     <% end %>

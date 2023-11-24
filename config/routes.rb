@@ -32,8 +32,12 @@ Rails.application.routes.draw do
       # public/candicatesコントローラー
       resources :candidates, only: [:create] do
         get 'confirm', on: :collection
-        patch 'decide'
-        patch 'decline'
+
+        member do
+          patch 'decide'
+          patch 'decline'
+          patch 'complete'
+        end
       end
     end
 
@@ -43,6 +47,9 @@ Rails.application.routes.draw do
 
       # public/chatroomsコントローラー
       resources :chatrooms, only: [:index, :show] do
+        member do
+          patch 'close'
+        end
 
         # public/messagesコントローラー
         resources :messages, only: [:create]

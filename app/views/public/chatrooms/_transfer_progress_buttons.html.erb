@@ -1,0 +1,60 @@
+<div class="chatroom__flex">
+  <%# 里親決定 %>
+  <% if @cat.user_id == current_user.id && @candidate.status == 'in_consultation' %>
+    <div class="chatroom__flex-item">
+      <%= link_to '里親決定', cat_candidate_decide_path(cat_id: @cat.id, id: @candidate.id), method: :patch,
+        class: 'chatroom__candidate-ok-button',
+        data: { confirm: "#{@candidate.user.name}さんを#{@cat.name}の里親に決定します。\nよろしいですか？" }
+      %>
+      <p class="chatroom__description-text">
+        お話し相手、<%= link_to @candidate.user.name, user_path(@candidate.user.id), class: 'chatroom__link' %>さんを
+        <%= link_to @cat.name, cat_path(@cat.id), class: 'chatroom__link' %>の里親に決定し、今後の譲渡についてのお話を進めていただきます。
+      </p>
+    </div>
+  <% end %>
+
+  <%# 里親お断り %>
+  <% if @cat.user_id == current_user.id && @candidate.status == 'in_consultation' %>
+    <div class="chatroom__flex-item">
+      <%= link_to '里親お断り', cat_candidate_decline_path(cat_id: @cat.id, id: @candidate.id), method: :patch,
+        class: 'chatroom__candidate-cancel-button',
+        data: { confirm: "#{@candidate.user.name}さんの応募をお断りし、チャットルームを終了します。\nよろしいですか？" }
+      %>
+      <p class="chatroom__description-text">
+        お話し相手、<%= link_to @candidate.user.name, user_path(@candidate.user.id), class: 'chatroom__link' %>さんからの
+        里親応募をお断りし、このチャットルームを閉じます。
+      </p>
+    </div>
+  <% end %>
+
+  <%# 譲渡完了 %>
+  <% if @candidate.user.id == current_user.id && @candidate.status == 'foster_parents_decided' %>
+    <div class="chatroom__flex-item">
+      <%= link_to '譲渡完了', complete_cat_candidate_path(cat_id: @cat.id, id: @candidate.id), method: :patch,
+        class: 'chatroom__candidate-complete-button',
+        data: { confirm: "#{@cat.user.name}さんへ、#{@cat.name}を無事に受け取った報告を行います。よろしいですか？" }
+      %>
+      <p class="chatroom__description-text">
+        無事に<%= link_to @cat.user.name, user_path(@cat.user.id), class: 'chatroom__link' %>さんから、
+        <%= link_to @cat.name, cat_path(@cat.id),  class: 'chatroom__link' %>の受け取りが完了しましたら押してください。
+        その後は<%= link_to @cat.user.name, user_path(@cat.user.id), class: 'chatroom__link' %>さんへ定期的に、
+        譲渡後の<%= link_to @cat.name, cat_path(@cat.id),  class: 'chatroom__link' %>の様子や安否確認のご連絡をお話し相手によろしくお願いします。
+      </p>
+    </div>
+  <% end %>
+
+  <%# チャットルームを閉じる %>
+  <% if @cat.user.id == current_user.id && @candidate.status == 'transfer_completed' %>
+    <div class="chatroom__flex-item">
+      <%= link_to 'チャットを終了する', close_chatroom_path(cat_id: @cat.id, id: @candidate.id), method: :patch,
+        class: 'chatroom__close-button',
+        data: { confirm: "#{@candidate.user.name}さんとのチャットをここで終了します。よろしいですか？" }
+      %>
+      <p class="chatroom__description-text">
+        譲渡後の<%= link_to @cat.name, cat_path(@cat.id),  class: 'chatroom__link' %>の様子や安否確認を終え、安心できましたら押してください。
+        1度チャットを終了しますと、今後<%= link_to @candidate.user.name, user_path(@candidate.user.id),  class: 'chatroom__link' %>さんとのご連絡は
+        各自で行っていただく事になります。ご注意ください。
+      </p>
+    </div>
+  <% end %>
+</div>

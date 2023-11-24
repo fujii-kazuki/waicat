@@ -7,10 +7,11 @@
     content: '';
     background-color: $color;
     position: absolute;
-    bottom: -5px;
+    bottom: -.2em;
     left: 0;
     transition: transform .5s;
-    height: 2px;
+    height: .1em;
+    max-height: 2px;
     width: 100%;
   }
 

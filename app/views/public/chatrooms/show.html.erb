@@ -1,39 +1,66 @@
+
+<section class="chatroom">
+  <div class="container">
+    <h2 class="heading heading--2"><%= @chatroom.chat_partner(current_user).name %>さんとのチャットルーム</h2>
+
+    <dl class="chatroom__grid">
+      <dt>応募元の掲載</dt>
+      <dd>
+        <div class="chatroom__cat-photo-wrap">
+          <%= image_tag @cat.photos[0] %>
+        </div>
+        <%= link_to @cat.publication_title, cat_path(@cat.id), class: 'chatroom__link' %>
+      </dd>
+    </dl>
+
+    <%# チャットルームユーザー2名のプロフィール画像のURLをカスタムデータ属性として持たせる %>
+    <div id="users-profile-image-url" hidden
+    user-<%= current_user.id %>-avatar-src="
+      <%= profile_image_url current_user %>"
+    user-<%= @chatroom.chat_partner(current_user).id %>-avatar-src="
+      <%= profile_image_url @chatroom.chat_partner(current_user) %>"></div>
+
+    <%= render 'public/messages/list' %>
+
+    <% if @chatroom.deleted_flag %>
+      <p class="chatroom__ended-text">
+        <i class="fa-solid fa-circle-exclamation"></i>
+        このチャットルームは終了しています
+      </p>
+      <%= link_to '< チャットルーム一覧に戻る', chatrooms_path, class: 'chatroom__form-back-link' %>
+    <% else %>
+      <%= form_with model: [@chatroom, @message], local: false, class: 'form chatroom__form' do |f| %>
+        <div class="chatroom__form-container">
+          <%= f.text_area :body, placeholder: '送信メッセージを入力', id: 'message-body-field', class: 'text-area chatroom__form-text-area' %>
+          <%= link_to '< チャットルーム一覧に戻る', chatrooms_path, class: 'chatroom__form-back-link' %>
+          <%= button_tag '送信', class: 'chatroom__form-send-button' %>
+        </div>
+      <% end %>
+
+      <%#　譲渡の進捗状況ボタン %>
+      <%= render 'transfer_progress_buttons' %>
+    <% end %>
+  </div>
+</section>
+
+
+<%# リアルタイムチャットでの自分と相手のスタイル差別化の為、ここへ記述 %>
 <style>
   li[user-id="<%= current_user.id %>"] {
+    direction: rtl;
+  }
+
+  li[user-id="<%= current_user.id %>"] * {
+    direction: ltr;
+  }
+
+  li[user-id="<%= current_user.id %>"] > .message-list__item-user-name,
+  li[user-id="<%= current_user.id %>"] > .message-list__item-created-at {
+    text-align: right;
+  }
+
+  li[user-id="<%= current_user.id %>"] > .message-list__item-body {
+    background-color: #6dbec8;
+    color: white;
   }
 </style>
-
-<h1>Public::Chatrooms#show</h1>
-<p>Find me in app/views/public/chatrooms/show.html.erb</p>
-
-<%= link_to 'チャットルーム一覧に戻る', chatrooms_path %>
-
-<p>掲載：<%= link_to @cat.publication_title, cat_path(@cat.id) %></p>
-<% if @candidate.user_id == current_user.id %>
-  <p>里親募集者：<%= @cat.user.name %></p>
-<% else %>
-  <p>里親応募者：<%= @candidate.user.name %></p>
-<% end %>
-
-<% if @chatroom.deleted_flag %>
-  <p>このチャットルームは終了しています。</p>
-<% end %>
-
-<%= render 'public/messages/list' %>
-
-<% if @cat.user_id == current_user.id %>
-  <%= link_to '里親決定', cat_candidate_decide_path(cat_id: @cat.id, candidate_id: @candidate.id), method: :patch,
-    data: { confirm: "#{@candidate.user.name}さんを#{@cat.name}の里親に決定します。\nよろしいですか？" }
-  %>
-<% end %>
-
-<% if @cat.user_id == current_user.id %>
-  <%= link_to '里親お断り', cat_candidate_decline_path(cat_id: @cat.id, candidate_id: @candidate.id), method: :patch,
-    data: { confirm: "#{@candidate.user.name}さんの応募をお断りし、チャットルームを終了します。\nよろしいですか？" }
-  %>
-<% end %>
-
-<%= form_with model: [@chatroom, @message], local: false do |f| %>
-  <%= f.text_area :body, autofocus: true, placeholder: '送信メッセージを入力', id: 'message-body-field' %>
-  <%= f.submit '送信' %>
-<% end %>
