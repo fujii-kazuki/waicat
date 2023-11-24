@@ -284,39 +284,7 @@
   }
 }
 
-.comments__form {
-  margin: 40px auto 0;
-  max-width: 800px;
-
-  &-grid {
-    display: grid;
-    grid-template-columns: 1fr 100px;
-    gap: 1em;
-  }
-
-  &-submit-button {
-    @include button($primary);
-    align-self: end;
-  }
-}
-
-.candidate__form {
-  margin-top: 50px;
-
-  &-container {
-    margin: 30px 0;
-    text-align: center;
-  }
-
-  &-back-button {
-    @include button($secondary)
-  }
-
-  &-candidate-button {
-    @include button($primary)
-  }
-}
-
+.comments__form,
 .chatroom__form {
   &-container {
     display: grid;
@@ -342,5 +310,22 @@
   &-send-button {
     @include button($primary, 'sm');
     justify-self: end;
+  }
+}
+
+.candidate__form {
+  margin-top: 50px;
+
+  &-container {
+    margin: 30px 0;
+    text-align: center;
+  }
+
+  &-back-button {
+    @include button($secondary)
+  }
+
+  &-candidate-button {
+    @include button($primary)
   }
 }
