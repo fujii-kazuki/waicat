@@ -102,7 +102,7 @@ class Public::CatsController < ApplicationController
       if @cat.invalid?
         render :new
       else
-        flash[:warn] = '掲載内容を確認してください。'
+        flash.now[:warn] = '掲載内容を確認してください。'
       end
 
     # 掲載編集フォームからの下書き保存の場合
@@ -127,7 +127,7 @@ class Public::CatsController < ApplicationController
       if @cat.invalid?
         render :edit
       else
-        flash[:warn] = '掲載内容を確認してください。'
+        flash.now[:warn] = '掲載内容を確認してください。'
       end
     end
   end

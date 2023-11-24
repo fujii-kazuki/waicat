@@ -2,7 +2,7 @@
   <%# 里親決定 %>
   <% if @cat.user_id == current_user.id && @candidate.status == 'in_consultation' %>
     <div class="chatroom__flex-item">
-      <%= link_to '里親決定', cat_candidate_decide_path(cat_id: @cat.id, id: @candidate.id), method: :patch,
+      <%= link_to '里親決定', decide_cat_candidate_path(cat_id: @cat.id, id: @candidate.id), method: :patch,
         class: 'chatroom__candidate-ok-button',
         data: { confirm: "#{@candidate.user.name}さんを#{@cat.name}の里親に決定します。\nよろしいですか？" }
       %>
@@ -16,7 +16,7 @@
   <%# 里親お断り %>
   <% if @cat.user_id == current_user.id && @candidate.status == 'in_consultation' %>
     <div class="chatroom__flex-item">
-      <%= link_to '里親お断り', cat_candidate_decline_path(cat_id: @cat.id, id: @candidate.id), method: :patch,
+      <%= link_to '里親お断り', decline_cat_candidate_path(cat_id: @cat.id, id: @candidate.id), method: :patch,
         class: 'chatroom__candidate-cancel-button',
         data: { confirm: "#{@candidate.user.name}さんの応募をお断りし、チャットルームを終了します。\nよろしいですか？" }
       %>
