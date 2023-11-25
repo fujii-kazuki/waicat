@@ -1,7 +1,7 @@
 .flash-message {
   animation: hidden 5s forwards;
   position: fixed;
-  bottom: 20px;
+  bottom: 40px;
   left: 0;
   transform: translateY(100%);
   opacity: 0;
@@ -25,10 +25,6 @@
       transform: translateY(100%);
       opacity: 0;
     }
-  }
-
-  @include media-breakpoint-down(sm) {
-    bottom: 15px;
   }
 
   &__text {

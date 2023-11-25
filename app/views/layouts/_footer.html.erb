@@ -26,9 +26,6 @@
               <%= link_to 'マイページ', user_path(current_user.id), class: 'footer__nav-item-link' %>
             </li>
             <li class="footer__nav-item">
-              <%= link_to 'ブックマーク', bookmarks_path, class: 'footer__nav-item-link' %>
-            </li>
-            <li class="footer__nav-item">
               <%= link_to 'チャットルーム', chatrooms_path, class: 'footer__nav-item-link' %>
             </li>
             <li class="footer__nav-item">
@@ -40,6 +37,9 @@
               <% end %>
             </li>
           <% end %>
+          <li class="footer__nav-item">
+            <%= link_to 'ブックマーク', bookmarks_path, class: 'footer__nav-item-link' %>
+          </li>
           <li class="footer__nav-item">
             <%= link_to 'ログアウト', destroy_user_session_path, method: :delete, class: 'footer__nav-item-link' %>
           </li>

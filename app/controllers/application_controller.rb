@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
     if current_user.is_guest_user?
       # ゲストユーザーなら前のページへリダイレクト
       flash[:alert] = 'そちらの機能をご利用するには新規登録が必要です。'
-      redirect_back(fallback_location: root_path) 
+      redirect_back(fallback_location: root_path)
     end
   end
 

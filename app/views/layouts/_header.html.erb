@@ -17,9 +17,6 @@
               <%= link_to 'マイページ', user_path(current_user.id), class: 'header__sub-menu-item-link' %>
             </li>
             <li class="header__sub-menu-item">
-              <%= link_to 'ブックマーク', bookmarks_path, class: 'header__sub-menu-item-link' %>
-            </li>
-            <li class="header__sub-menu-item">
               <%= link_to 'チャットルーム', chatrooms_path, class: 'header__sub-menu-item-link' %>
             </li>
             <li class="header__sub-menu-item">
@@ -31,6 +28,9 @@
               <% end %>
             </li>
           <% end %>
+          <li class="header__sub-menu-item">
+            <%= link_to 'ブックマーク', bookmarks_path, class: 'header__sub-menu-item-link' %>
+          </li>
           <li class="header__sub-menu-item">
             <%= link_to 'ログアウト', destroy_user_session_path, method: :delete, class: 'header__sub-menu-item-link' %>
           </li>

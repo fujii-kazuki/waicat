@@ -1,8 +1,9 @@
 #hamburger-menu {
+  transform: rotate(0) scale(0.8);
   transition: transform .5s;
 
   &.js-active {
-    transform: rotate(360deg);
+    transform: rotate(360deg) scale(0.8);
   }
 
   & > span {

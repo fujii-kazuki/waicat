@@ -1,6 +1,5 @@
 class Public::BookmarksController < ApplicationController
   before_action :authenticate_user!
-  before_action :check_guest_user, if: :user_signed_in?
 
   def index
     @bookmark_cats = Kaminari.paginate_array(

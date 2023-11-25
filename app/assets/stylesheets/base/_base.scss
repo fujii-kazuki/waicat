@@ -1,6 +1,10 @@
 html {
   font-size: 62.5%;
   height: 100%;
+
+  @include media-breakpoint-down(md) {
+    font-size: 56.65%;
+  }
 }
 
 body {

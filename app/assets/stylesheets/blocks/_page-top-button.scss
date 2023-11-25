@@ -4,18 +4,17 @@
   cursor: pointer;
   overflow: hidden;
   position: fixed;
-  bottom: 20px;
-  right: 20px;
+  bottom: 30px;
+  right: 30px;
   transform: rotate(-15deg);
   user-select: none;
   height: 70px;
   width: 70px;
   z-index: 1;
 
-  @include media-breakpoint-down(sm) {
-    bottom: 5px;
-    right: 5px;
+  @include media-breakpoint-down(md) {
     transform: rotate(-15deg) scale(0.8);
+    right: 10px;
   }
 
   &__icon, &__text {

@@ -1,4 +1,7 @@
 class Public::ContactsController < ApplicationController
+  before_action :authenticate_user!
+  before_action :check_guest_user, if: :user_signed_in?
+  
   def new
     @contact = Contact.new
   end
