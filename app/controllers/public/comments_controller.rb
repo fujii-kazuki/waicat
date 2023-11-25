@@ -20,13 +20,15 @@ class Public::CommentsController < ApplicationController
     @comment.user_id = current_user.id
 
     if @comment.save
-      flash[:notice] = 'コメントを投稿しました。'
+      flash.now[:notice] = 'コメントを投稿しました。'
       # 掲載のコメントに関与する会員全員に通知を送信
       comment_notice(
         sender: current_user, #送信者
         recipients_id: @cat.comments.where.not(user_id: current_user.id).pluck(:user_id).uniq, #受信者ID（一意なユーザーIDの配列）
         comment: @comment #コメント
       )
+    else
+      flash.now[:alert] = '内容を入力してください。'
     end
 
     @comments = @cat.comments
@@ -36,7 +38,7 @@ class Public::CommentsController < ApplicationController
     @cat = Cat.find(params[:cat_id])
     @comments = @cat.comments
     @cat.comments.find(params[:id]).destroy
-    flash[:notice] = 'コメントを削除しました。'
+    flash.now[:success] = 'コメントを削除しました。'
   end
 
   private

@@ -16,7 +16,11 @@
 
       <div class="publish-list__item-wrap-bottom">
         <h3 class="publish-list__item-publication-title">
-          <%= link_to truncate(cat.publication_title, length: 60), cat_path(cat.id), class: 'publish-list__item-link' %>
+          <% if cat.publication_title.blank? %>
+            <%= link_to 'タイトル未設定', cat_path(cat.id), class: 'publish-list__item-link' %>
+          <% else %>
+            <%= link_to truncate(cat.publication_title, length: 60), cat_path(cat.id), class: 'publish-list__item-link' %>
+          <% end %>
         </h3>
         <table class="publish-list__item-table">
           <tbody class="publish-list__item-tbody">

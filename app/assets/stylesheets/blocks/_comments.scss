@@ -49,45 +49,72 @@
   }
 
   &__link {
-    @include link($primary);
+    @include link($primary, 'none');
   }
 
   &__list {
+    background-color: $gray-100;
+    border-radius: 10px;
     font-size: 1.4rem;
     list-style: none;
-    margin: 0 auto;
+    margin: 0 auto 20px;
+    padding: 1em;
     max-width: 800px;
-    height: 60vh;
+    max-height: 60vh;
     overflow-y: scroll;
     position: relative;
-
-    &::after {
-      background: linear-gradient(to top, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0));
-      content: '';
-      display: block;
-      position: sticky;
-      bottom: 0;
-      left: 0;
-      height: 10vh;
-      width: 100%;
-    }
   }
 
   &__item {
-    margin-bottom: 1em;
-    padding-right: 10vw;
+    display: grid;
+    column-gap: 10px;
+    row-gap: .25em;
+    grid-template-columns: auto 1fr;
+    grid-template-rows: auto auto auto;
+    grid-template-areas:
+    "item1 item2"
+    "item1 item3"
+    "item1 item4";
+    padding: 10px;
+
+    @for $i from 1 through 4 {
+      & > :nth-child(#{$i}) {
+        grid-area: item#{$i};
+      }
+    }
 
     &--publisher {
+      direction: rtl;
+
+      & * {
+        direction: ltr;
+      }
+    }
+
+    &-avatar-image-wrap {
+      background-color: $gray-200;
+      border-radius: 50%;
+      overflow: hidden;
+      height: 60px;
+      width: 60px;
+
+      img {
+        object-fit: cover;
+        height: 100%;
+        width: 100%;
+      }
+    }
+
+    &--publisher &-user-name,
+    &--publisher &-meta {
       text-align: right;
-      padding-right: 0;
-      padding-left: 10vw;
     }
 
     &-body {
-      background-color: $gray-300;
+      background-color: $white;
       border-radius: 5px;
-      display: inline-block;
-      padding: 1em;
+      justify-self: baseline;
+      padding: 1.25em;
     }
 
     &--publisher &-body {
@@ -96,8 +123,12 @@
     }
 
      &-meta {
-      color: $secondary;
+      color: $gray-600;
       font-size: 1.2rem;
+     }
+
+     &--publisher &-meta {
+      text-align: right;
      }
 
      &-link {

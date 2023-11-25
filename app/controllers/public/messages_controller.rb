@@ -1,20 +1,26 @@
 class Public::MessagesController < ApplicationController
+  before_action :authenticate_user!
+  before_action :check_guest_user, if: :user_signed_in?
+
   def create
     chatroom = Chatroom.find(params[:chatroom_id])
+
     # 削除フラグ確認
     if chatroom.deleted_flag
-      flash.now[:danger] = 'このチャットルームは既に終了しています。'
-
+      flash.now[:alert] = 'このチャットルームは既に終了しています。'
     else
-      @message = current_user.messages.new(message_params)
-      @message.chatroom_id = chatroom.id
-      # 空メッセージ判定
-      if @message.empty_body?
-        flash.now[:danger] = '内容を入力してください。'
+      message = Message.new(message_params)
+      # 空メッセージ確認
+      if message.empty_body?
+        flash.now[:alert] = '内容を入力してください。'
       else
-        @message.save
-        # リアルタイムチャット表示
-        ActionCable.server.broadcast 'message_channel', { user: current_user, message: @message }
+        # メッセージを送信
+        @message = Message.create_and_send(
+          user_id: current_user.id,
+          chatroom_id: chatroom.id,
+          body: params[:message][:body]
+        )
+
         # チャット相手に通知を送信
         message_notice(
           sender: @message.user, #送信者

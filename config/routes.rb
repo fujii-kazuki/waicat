@@ -17,14 +17,12 @@ Rails.application.routes.draw do
       post 'guest_sign_in' => 'sessions#guest_sign_in', as: 'guest_session'
     end
     
-    # public/searchesコントローラー
-    scope :cats do
-      resources :searches, only: [:index]
-    end
-    
     # public/catsコントローラー
     resources :cats do
-      post 'confirm', on: :collection
+      collection do
+        post 'confirm'
+        get 'search'
+      end
 
       # public/commentsコントローラー
       resources :comments, only: [:index, :create, :destroy]
@@ -32,8 +30,12 @@ Rails.application.routes.draw do
       # public/candicatesコントローラー
       resources :candidates, only: [:create] do
         get 'confirm', on: :collection
-        patch 'decide'
-        patch 'decline'
+
+        member do
+          patch 'decide'
+          patch 'decline'
+          patch 'complete'
+        end
       end
     end
 
@@ -43,6 +45,9 @@ Rails.application.routes.draw do
 
       # public/chatroomsコントローラー
       resources :chatrooms, only: [:index, :show] do
+        member do
+          patch 'close'
+        end
 
         # public/messagesコントローラー
         resources :messages, only: [:create]
@@ -50,7 +55,7 @@ Rails.application.routes.draw do
 
       # public/noticesコントローラー
       resources :notices, only: [:index] do
-        post 'search', on: :collection
+        get 'search', on: :collection
         patch 'confirm'
         patch 'leave'
       end

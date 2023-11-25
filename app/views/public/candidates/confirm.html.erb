@@ -1,50 +1,135 @@
-<h1>Public::Candidates#confirm</h1>
-<p>Find me in app/views/public/candidates/confirm.html.erb</p>
+<section class="publish">
+  <div class="container">
+    <h2 class="heading heading--2">
+      里親応募に伴う掲載の確認
+    </h2>
 
-<h2>里親応募確認</h2>
-<p>※まだ里親応募は行なわれてません。</p>
-<p>里親として応募します。もう一度確認をお願いします。</p>
+    <h3 class="heading heading--3">
+      <% if @cat.publication_title.blank? %>
+        タイトル未設定
+      <% else %>
+        <%= @cat.publication_title %>
+      <% end %>
+    </h3>
 
-<% if @cat.photos.attached? %>
-  <div>
-    <% @cat.photos.each do |photo| %>
-      <%= image_tag photo %>
+    <% if @cat.photos.attached? %>
+      <div class="publish__photos">
+        <div id="publish-swiper" class="publish-swiper">
+          <div class="swiper-wrapper">
+            <% @cat.photos.each do |photo| %>
+              <div class="swiper-slide">
+                <%= image_tag photo %>
+              </div>
+            <% end %>
+          </div>
+          <div class="swiper-button-prev"></div>
+          <div class="swiper-button-next"></div>
+        </div>
+
+        <div id="publish-thumbs-slider" class="publish-swiper publish-swiper--thumbs">
+          <div class="swiper-wrapper">
+            <% @cat.photos.each do |photo| %>
+              <div class="swiper-slide">
+                <%= image_tag photo %> 
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+
+    <% if @cat.video.attached? %>
+      <h3 class="heading heading--3">映像</h3>
+      <div class="publish__video">
+        <%= video_tag rails_blob_path(@cat.video), controls: true %>
+      </div>
+    <% end %>
+
+    <section>
+      <h3 class="heading heading--3">基本情報</h3>
+      <dl class="publish__grid publish__grid--1">
+        <dt>掲載状態</dt>
+        <dd class="publish__status publish__status--<%= @cat.publication_status %>"><%= @cat.publication_status_i18n %></dd>
+
+        <dt>所在地</dt>
+        <dd><%= @cat.prefecture %><%= @cat.city %></dd>
+
+        <dt>掲載日</dt>
+        <dd><%= @cat.publication_date %></dd>
+
+        <dt>掲載期限</dt>
+        <dd><%= @cat.publication_deadline %></dd>
+
+        <dt>名前</dt>
+        <dd><%= @cat.name %></dd>
+
+        <dt>性別</dt>
+        <dd class="publish__gender publish__gender--<%= @cat.gender %>"><%= @cat.gender_i18n %></dd>
+
+        <dt>年齢</dt>
+        <dd><%= @cat.age %>歳</dd>
+
+        <dt>体重</dt>
+        <dd><%= @cat.weight %>kg</dd>
+
+        <dt>毛の柄・長さ</dt>
+        <dd><%= @cat.animal_print %>・<%= @cat.hair_length_i18n %></dd>
+
+        <dt>種類</dt>
+        <dd><%= @cat.breed %></dd>
+        
+        <dt>去勢・避妊</dt>
+        <% if @cat.castration_flag %>
+          <dd>去勢済み</dd>
+        <% else %>
+          <dd>未手術</dd>
+        <% end %>
+
+        <dt>ワクチン</dt>
+        <% if @cat.vaccine_flag %>
+          <dd>接種済み</dd>
+        <% else %>
+          <dd>未接種</dd>
+        <% end %>
+      </dl>
+    </section>
+
+    <section>
+      <h3 class="heading heading--3">詳細情報</h3>
+      <dl class="publish__grid publish__grid--2">
+        <dt>経緯</dt>
+        <dd><%= show_text @cat.background %></dd>
+
+        <dt>性格</dt>
+        <dd><%= show_text @cat.personality %></dd>
+
+        <dt>健康状態</dt>
+        <dd><%= show_text @cat.health %></dd>
+
+        <dt>譲渡場所</dt>
+        <dd><%= show_text @cat.delivery_place %></dd>
+
+        <% if !@cat.remarks.blank? %>
+          <dt>備考</dt>
+          <dd><%= show_text @cat.remarks %></dd>
+        <% end %>
+      </dl>
+    </section>
+
+    <%= form_with url: cat_candidates_path, class: 'form candidate__form' do |f| %>
+      <div class="form__container">
+        <p class="form__text">※まだ里親応募は完了していません。</p>
+
+        <div class="candidate__form-container">
+          <%= f.check_box :confirmed, { class: 'checkbox' }, true, false %>
+          <%= f.label :confirmed, '里親募集の掲載、条件等を全て確認しました。' %>
+        </div>
+
+        <div class="form__flex">
+          <%= link_to '戻る', cat_path(@cat.id), class: 'candidate__form-back-button'  %>
+          <%= button_tag '里親応募', class: 'candidate__form-candidate-button'  %>
+        </div>
+      </div>
     <% end %>
   </div>
-<% end %>
-<% if @cat.video.attached? %>
-  <div>
-    <%= video_tag rails_blob_path(@cat.video), controls: true %>
-  </div>
-<% end %>
-<p>掲載タイトル：<%= @cat.publication_title %></p>
-<p>名前：<%= @cat.name %></p>
-<p>年齢：<%= @cat.age %></p>
-<p>性別：<%= @cat.gender_i18n %></p>
-<p>体重：<%= @cat.weight %></p>
-<p>種類：<%= @cat.breed %></p>
-<p>毛の柄：<%= @cat.animal_print %></p>
-<p>毛の長さ：<%= @cat.hair_length_i18n %></p>
-<p>去勢・避妊フラグ：<%= @cat.castration_flag %></p>
-<p>ワクチン接種フラグ：<%= @cat.vaccine_flag %></p>
-<p>郵便番号：<%= @cat.postal_code %></p>
-<p>都道府県：<%= @cat.prefecture %></p>
-<p>市区町村：<%= @cat.city %></p>
-<p>経緯：<%= @cat.background %></p>
-<p>性格：<%= @cat.personality %></p>
-<p>健康状態：<%= @cat.health %></p>
-<p>譲渡場所：<%= @cat.delivery_place %></p>
-<p>備考：<%= @cat.remarks %></p>
-<p>掲載日：<%= @cat.publication_date %></p>
-<p>掲載期限：<%= @cat.publication_deadline %></p>
-<p>掲載ステータス：<%= @cat.publication_status_i18n %></p>
-<p>登録日時：<%= @cat.created_at %></p>
-<p>更新日時：<%= @cat.updated_at %></p>
-
-<%= form_with url: cat_candidates_path do |f| %>
-  <%= f.check_box :confirmed, {}, true, false %>
-  <%= f.label :confirmed, '里親募集の掲載、条件等を全て確認しました。' %>
-
-  <%= f.submit '里親応募' %>
-  <%= link_to '戻る', cat_path(@cat.id) %>
-<% end %>
+</section>

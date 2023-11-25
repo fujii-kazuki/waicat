@@ -1,3 +1,5 @@
-$('#cat-comment-list').html("<%= j(render 'list', comments: @comments ) %>");
-$('#comment-error-messages').html("");
-$('#flash-message').html("<%= j(render 'layouts/flash_message') %>");
+<%# コメントリストをレンダリング %>
+document.querySelector('#cat-comment-list').innerHTML = '<%= j(render 'list', comments: @comments ) %>';
+
+<%# フラッシュメッセージをレンダリング %>
+document.querySelector('#flash-message').innerHTML = '<%= j(render 'layouts/flash_message') %>';

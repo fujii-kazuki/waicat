@@ -22,11 +22,6 @@
       width: 100%;
     }
 
-    &-link {
-      color: $primary;
-      text-decoration: none;
-    }
-
     &-wrap-top {
       height: 260px;
       overflow: hidden;
@@ -89,6 +84,10 @@
     &-publication-title {
       font-size: 1.6rem;
       margin-bottom: 10px;
+    }
+
+    &-publication-title > &-link {
+      @include link($primary, true)
     }
 
     &-table {

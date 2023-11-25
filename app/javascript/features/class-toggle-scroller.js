@@ -30,10 +30,8 @@ function pageTopButton() {
   let currentPosition = 0;
 
   window.addEventListener('scroll', () => {
-    if (currentPosition < document.documentElement.scrollTop) {
-      if (currentPosition > 120) {
-        pageTopButton.classList.add('js-show');
-      }
+    if (currentPosition > 120) {
+      pageTopButton.classList.add('js-show');
     } else {
       pageTopButton.classList.remove('js-show');
     }

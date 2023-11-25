@@ -32,7 +32,12 @@
               <%= link_to 'チャットルーム', chatrooms_path, class: 'footer__nav-item-link' %>
             </li>
             <li class="footer__nav-item">
-              <%= link_to '通知', notices_path, class: 'footer__nav-item-link' %>
+              <%= link_to notices_path, class: 'footer__nav-item-link' do %>
+                通知
+                <% if @unread_notices_num > 1 %>
+                  <i class="fa-solid fa-bell"></i></i><%= @unread_notices_num %>
+                <% end %>
+              <% end %>
             </li>
           <% end %>
           <li class="footer__nav-item">

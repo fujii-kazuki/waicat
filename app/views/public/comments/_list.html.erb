@@ -2,11 +2,18 @@
   <ul class="comments__list">
     <% comments.each do |comment| %>
       <li class="comments__item<%= ' comments__item--publisher' if @cat.user.id == comment.user.id %>">
+        <div class="comments__item-avatar-image-wrap">
+          <%= link_to user_path(comment.user.id) do %>
+            <%= image_tag comment.user.profile_image %>
+          <% end %>
+        </div>
+
         <p class="comments__item-user-name">
           <%= '掲載者本人：' if @cat.user.id == comment.user.id %><%= comment.user.name %>
         </p>
 
         <p class="comments__item-body"><%= show_text comment.body %></p>
+
         <div class="comments__item-meta">
           <time class="comments__item-created-at"><%= comment.created_at.strftime('%Y/%m/%d %H:%M') %></time>
           <% if comment.user.id == current_user.id %>

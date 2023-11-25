@@ -1,6 +1,9 @@
 class Public::NoticesController < ApplicationController
+  before_action :authenticate_user!
+  before_action :check_guest_user, if: :user_signed_in?
+  
   def index
-    @notices = current_user.notices.order(created_at: :desc)
+    @notices = current_user.notices.order(created_at: :desc).page(params[:page]).per(20)
   end
 
   def confirm
@@ -12,9 +15,9 @@ class Public::NoticesController < ApplicationController
   def search
     case params[:sort]
     when '新しい順' then
-      @notices = current_user.notices.order(created_at: :desc)
+      @notices = current_user.notices
     when '古い順' then
-      @notices = current_user.notices.order(created_at: :asc)
+      @notices = current_user.notices.reverse
     end
 
     case params[:pattern]
@@ -25,6 +28,9 @@ class Public::NoticesController < ApplicationController
     when '既読のみ' then
       @notices = @notices.select { |notice| notice.readed_flag }
     end
+
+    # ページネーションに対応
+    @notices = Kaminari.paginate_array(@notices).page(params[:page]).per(10)
     
     render :index
   end

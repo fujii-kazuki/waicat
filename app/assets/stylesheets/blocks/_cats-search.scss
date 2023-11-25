@@ -1,0 +1,44 @@
+.cats-search {
+  margin: 0 auto;
+  max-width: 600px;
+  user-select: none;
+
+  &__accordion {
+    border: 1px solid $waicat-main;
+    border-radius: 10px;
+    padding: 1em 2em;
+
+    &-head {
+      border-bottom: 1px solid $waicat-main;
+      color: $waicat-main;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: color .5s;
+
+      &:hover {
+        color: $gray-600;
+      }
+
+      &-icon {
+        font-size: 2rem;
+        transition: transform .5s;
+
+        &--down {
+          transform: rotate(-450deg);
+        }
+      }
+    }
+
+    &-body {
+      font-size: 1.4rem;
+      height: 0;
+      overflow: hidden;
+
+      &--open {
+        height: auto;
+      }
+    }
+  }
+}

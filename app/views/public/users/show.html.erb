@@ -43,7 +43,8 @@
 
     <section>
       <h3 class="heading heading--3">
-        <%= @user.name %>の掲載一覧<small>（全<%= @total_count %>件・<%= @current_page %>/<%= @total_pages %>ページ目）</small>
+        <%= @user.name %>の掲載一覧
+        <small>（全<%= @total_count %>件・<%= @current_page %>/<%= @total_pages %>ページ目）</small>
       </h3>
       <% if @cats.any? %>
         <%= render 'public/cats/list', cats: @cats %>

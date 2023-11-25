@@ -1,0 +1,49 @@
+.notice-list {
+  list-style: none;
+
+  &__item {
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: repeat(3, auto);
+    gap: .5em;
+    padding: 2em 1em;
+
+    &:not(:last-child) {
+      border-bottom: 1px solid $waicat-main;
+    }
+
+    &-title {
+      &-link {
+        @include link($primary, 'none');
+        display: block;
+      }
+    }
+
+    &-body {
+      font-size: 1.4rem;
+    }
+
+    &-link {
+      @include button($success, 'sm', 'round');
+      font-size: 1.2rem;
+      justify-self: end;
+
+      &::before {
+        content: '\f058';
+        font-family: "Font Awesome 6 Free";
+        font-weight: 900;
+        margin-right: .5em;
+      }
+    }
+
+    &-readed {
+      background-color: $secondary;
+      border-radius: 30px;
+      color: $white;
+      font-size: 1.2rem;
+      justify-self: end;
+      padding: .5em 2em;
+      white-space: nowrap;
+    }
+  }
+}

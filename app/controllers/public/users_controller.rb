@@ -37,8 +37,12 @@ class Public::UsersController < ApplicationController
 
   def confirm
     cats = current_user.cats
-    # 会員の掲載に相談中、里親決定のものがあれば、退会をキャンセル
-    if cats.exists?(publication_status: ['in_consultation', 'foster_parents_decided'])
+    candidates = current_user.candidates
+    # 里親募集の掲載に相談中、里親決定のもの
+    # または里親立候補後の話し合い途中であれば、退会をキャンセル
+    if cats.exists?(publication_status: ['in_consultation', 'foster_parents_decided']) ||
+       candidates.exists?(status: ['in_consultation', 'foster_parents_decided'])
+
       flash[:alert] = 'お客様は里親譲歩の話し合い最中の為、退会できません。'
       redirect_to user_path(current_user.id)
     end

@@ -1,6 +1,8 @@
 class Public::CatsController < ApplicationController
   before_action :authenticate_user!
   before_action :check_guest_user, except: [:index, :show], if: :user_signed_in?
+  # Gem「ransack」のフォームで使用するインスタンス変数「@q」定義
+  before_action :set_q, only: [:index, :search]
 
   def index
     @cats = Cat.where(
@@ -102,7 +104,7 @@ class Public::CatsController < ApplicationController
       if @cat.invalid?
         render :new
       else
-        flash[:warn] = '掲載内容を確認してください。'
+        flash.now[:warn] = '掲載内容を確認してください。'
       end
 
     # 掲載編集フォームからの下書き保存の場合
@@ -127,7 +129,7 @@ class Public::CatsController < ApplicationController
       if @cat.invalid?
         render :edit
       else
-        flash[:warn] = '掲載内容を確認してください。'
+        flash.now[:warn] = '掲載内容を確認してください。'
       end
     end
   end
@@ -136,6 +138,28 @@ class Public::CatsController < ApplicationController
     Cat.find(params[:id]).update(deleted_flag: true)
     flash[:notice] = '掲載を削除しました。'
     redirect_to user_path(current_user.id)
+  end
+
+  def search
+    @cats = @q.result.where(
+      publication_status: ['public', 'in_consultation', 'foster_parents_decided', 'recruitment_closed'],
+      deleted_flag: false
+    ).order(created_at: :desc).page(params[:page]).per(2)
+    @current_page = @cats.current_page
+    @total_pages = @cats.total_pages == 0 ? 1 : @cats.total_pages
+    @total_count = @cats.total_count
+    render :index
+
+    # 複数キーワード検索時に利用可
+    # @search_words = params[:publication_title_or_breed_or_animal_print_or_prefecture_or_city_cont].gsub(/　/," ").strip # 前後のスペースを削除
+    # if @search_words.blank? # 空検索判定
+    #   flash[:alert] = '検索キーワードを入力してください。'
+    #   redirect_back fallback_location: root_path
+    # else
+    #   key_words = @search_words.split(/[\p{blank}\s]+/)
+    #   grouping_hash = key_words.reduce({}){|hash, word| hash.merge(word => { publication_title_or_breed_or_animal_print_or_prefecture_or_city_cont: word })}
+    #   @cats = Cat.ransack({ combinator: 'and', groupings: grouping_hash }).result
+    # end
   end
 
   private
@@ -166,5 +190,10 @@ class Public::CatsController < ApplicationController
       :publication_deadline,
       :publication_status
     )
+  end
+
+  # Gem「ransack」のフォームで使用するインスタンス変数「@q」定義
+  def set_q
+    @q = Cat.ransack(params[:q])
   end
 end
