@@ -1,0 +1,55 @@
+<div class="cats-search">
+  <div id="accordion" class="cats-search__accordion">
+    <div id="accordion-head" class="cats-search__accordion-head">
+      <p class="cats-search__accordion-head-text">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        検索フォームを<span id="accordion-open-or-close-text">開く</span>
+      </p>
+      <span id="accordion-icon" class="cats-search__accordion-head-icon">
+        <i class="fa-solid fa-circle-chevron-left"></i>
+      </span>
+    </div>
+
+    <div id="accordion-body" class="cats-search__accordion-body">
+      <%= search_form_for @q, url: search_cats_path, class: 'form cats-search__form' do |f| %>
+        <div class="form__container">
+          <h4 class="heading heading--4">カテゴリー検索</h4>
+          <div class="cats-search__form-grid">
+            <div>
+              <%= f.label :prefecture_eq, '都道府県' %>
+              <%= f.collection_select :prefecture_eq, Prefecture.all, :name, :name, { include_blank: '全て' }, class: 'selectbox' %>
+            </div>
+            <div>
+              <%= f.label :gender_eq, '性別' %>
+              <%= f.select :gender_eq, [[Cat.genders_i18n[:male], 0], [Cat.genders_i18n[:female], 1]], { include_blank: '全て' }, class: 'selectbox' %>
+            </div>
+            <div>
+              <%= f.label :age_gteq, '年齢(〜以上)' %>
+              <%= f.number_field :age_gteq, autocomplete: 'age_gteq', placeholder: '例）1.5', step: '0.1', min: '0', class: 'text-field' %>
+            </div>
+            <div>
+              <%= f.label :age_lteq, '年齢(〜以下)' %>
+              <%= f.number_field :age_lteq, autocomplete: 'age_lteq', placeholder: '例）5.0', step: '0.1', min: '0', class: 'text-field' %>
+            </div>
+            <div>
+              <%= f.label :breed_eq, '種類' %>
+              <%= f.collection_select :breed_eq, Breed.all, :name, :name, { include_blank: '全て' }, class: 'selectbox' %>
+            </div>
+            <div>
+              <%= f.label :animal_print_eq, '毛の柄' %>
+              <%= f.collection_select :animal_print_eq, AnimalPrint.all, :name, :name, { include_blank: '全て' }, class: 'selectbox' %>
+            </div>
+          </div>
+
+          <h4 class="heading heading--4">キーワード検索</h4>
+          <%= f.search_field :publication_title_or_breed_or_animal_print_or_prefecture_or_city_cont,
+            placeholder: '掲載タイトル、種類、毛の柄、所在地', class: 'text-field' %>
+
+          <div class="form__flex">
+            <%= f.submit '検索', class: 'cats-search__form-search-button' %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

@@ -369,3 +369,33 @@
     @include button($success);
   }
 }
+
+.cats-search__form {
+  &-grid {
+    display: grid;
+    gap: .5em;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-areas:
+      "item1 item2 item3 item4"
+      "item5 item5 item5 item5"
+      "item6 item6 item6 item6";
+
+    @include media-breakpoint-down(sm) {
+      grid-template-areas:
+      "item1 item1 item2 item2"
+      "item3 item3 item4 item4"
+      "item5 item5 item5 item5"
+      "item6 item6 item6 item6";
+    }
+
+    @for $i from 1 through 6 {
+      & > :nth-child(#{$i}) {
+        grid-area: item#{$i};
+      }
+    }
+  }
+
+  &-search-button {
+    @include button($waicat-main, 'sm', 'round')
+  }
+}

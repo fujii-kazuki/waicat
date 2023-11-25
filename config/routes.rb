@@ -17,14 +17,12 @@ Rails.application.routes.draw do
       post 'guest_sign_in' => 'sessions#guest_sign_in', as: 'guest_session'
     end
     
-    # public/searchesコントローラー
-    scope :cats do
-      resources :searches, only: [:index]
-    end
-    
     # public/catsコントローラー
     resources :cats do
-      post 'confirm', on: :collection
+      collection do
+        post 'confirm'
+        get 'search'
+      end
 
       # public/commentsコントローラー
       resources :comments, only: [:index, :create, :destroy]

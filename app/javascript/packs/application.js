@@ -12,6 +12,7 @@ Rails.start()
 // Turbolinks.start() #Turbolinksを無効にする
 ActiveStorage.start()
 
+import '../features/accordion' //里親募集掲載の検索フォームのアコーディオン機能
 import '../features/hamburger-toggle' //ハンバーガーメニューによる開閉機能
 import '../features/class-toggle-scroller' //スクロールによる要素のクラス名の切り替え
 import '../features/page-top-smooth-scroll' //ページトップボタン機能
