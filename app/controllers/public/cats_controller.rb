@@ -38,7 +38,7 @@ class Public::CatsController < ApplicationController
     if params[:back_new]
       render :new
     else
-      @cat.video = nil if params[:cat][:video].nil?
+      @cat.video.purge if params[:cat][:video].nil?
       @cat.publication_status = 'public'
       @cat.publication_date = Time.zone.now
       if @cat.save
@@ -71,7 +71,7 @@ class Public::CatsController < ApplicationController
     if params[:back_edit]
       render :edit
     else
-      @cat.video = nil if params[:cat][:video].nil?
+      @cat.video.purge if params[:cat][:video].nil?
       @cat.publication_status = 'public'
       if @cat.save
         flash[:success] = '掲載の更新が完了しました。'
@@ -111,11 +111,12 @@ class Public::CatsController < ApplicationController
     elsif params[:edit_draft]
       @cat = Cat.find(params[:cat][:id])
       @cat.assign_attributes(cat_params) # attributeを変更（DBへの保存は行われない）
+      @cat.publication_status = 'draft'
       if @cat.invalid?
         render :edit
       else
-        @cat.photos = nil if params[:cat][:photos].nil?
-        @cat.video = nil if params[:cat][:video].nil?
+        @cat.photos.purge if params[:cat][:photos].nil?
+        @cat.video.purge if params[:cat][:video].nil?
         @cat.save
         flash[:success] = '下書き保存が完了しました。'
         redirect_to cat_path(@cat.id)
