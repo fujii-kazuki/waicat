@@ -2,7 +2,7 @@
 
 <img style="width: 85%;" src="https://github.com/fujii-kazuki/waicat/assets/142955783/5779822d-95be-4b6d-acbf-93a6f1dc5826">
 <img style="width: 13%;" src="https://github.com/fujii-kazuki/waicat/assets/142955783/4d7a4c1c-3545-4828-921c-68e44f554169">
-  
+
 ## サイト概要
 - [サイトテーマ](#サイトテーマ)
   - [テーマを選んだ理由](#テーマを選んだ理由)
@@ -39,11 +39,13 @@
 - 猫ちゃんの飼い主の募集する時
 - 飼い猫を募集、検索時
 - 飼い主候補と飼い猫ちゃんの譲渡についての相談時
-​
+<img style="width: 60%;" src="https://github.com/fujii-kazuki/waicat/assets/142955783/394174a4-5ff7-458d-a0ef-22fc5ba20efd">
+
+
 ## 設計書
 
 ### ER図
-![ER](https://github.com/fujii-kazuki/waicat/assets/142955783/4bfd1d9c-847f-4264-b339-49b67c333977)
+<img style="width: 75%;" src="https://github.com/fujii-kazuki/waicat/assets/142955783/4bfd1d9c-847f-4264-b339-49b67c333977">
 
 ### テーブル設計書
 https://docs.google.com/spreadsheets/d/1MabnBQgrqwucpTfdZOK9WKm8-InxjHh0/edit#gid=22058163
@@ -73,9 +75,11 @@ https://docs.google.com/spreadsheets/d/1XBAAwcyST-mEpkTHLLL2FVesoSUJ39IeSXmJweub
 - ゲストログイン
 - 会員情報編集
   - アバター画像投稿・プレビュー・削除（Gem ActiveStorageValidations）
+![avatar-img-upload-preview](https://github.com/fujii-kazuki/waicat/assets/142955783/db34513b-b7ec-4da0-99e8-92bfa46771f0)
 - 投稿
   - 動画・複数画像投稿・プレビュー・削除（Gem ActiveStorageValidations）
   - 添付画像のサムネイル付きカルーセル（npm Swiper）
+![photos-upload-preview](https://github.com/fujii-kazuki/waicat/assets/142955783/0c171fcd-0a59-45e7-a692-d1825003fb2c)
   - 下書き保存
   - 投稿掲載期限設定
 - 住所自動入力（郵便番号検索API）
@@ -86,7 +90,8 @@ https://docs.google.com/spreadsheets/d/1XBAAwcyST-mEpkTHLLL2FVesoSUJ39IeSXmJweub
 - コメント投稿・削除（Ajax）
 - ページネーション（Gem kaminari）
 - 里親立候補・決定・お断り
-- リアルタイムチャット（Ajax, ActionCable）
+- リアルタイムチャット（Ajax, ActionCable）  
+![chat-preview](https://github.com/fujii-kazuki/waicat/assets/142955783/a9aa441e-c280-4130-8080-57a5940a6143)
 - 通知未読・既読・ソート
 - お問い合せ
 - レスポンシブ対応
@@ -94,3 +99,4 @@ https://docs.google.com/spreadsheets/d/1XBAAwcyST-mEpkTHLLL2FVesoSUJ39IeSXmJweub
 ## 使用画像素材
 - [photoAC](https://www.photo-ac.com/)
 - [ICOOON MONO](https://icooon-mono.com/)
+- [Unsplash](https://unsplash.com/ja)
