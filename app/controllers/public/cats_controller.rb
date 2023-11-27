@@ -1,6 +1,6 @@
 class Public::CatsController < ApplicationController
   before_action :authenticate_user!
-  before_action :check_guest_user, except: [:index, :show], if: :user_signed_in?
+  before_action :check_guest_user, except: [:index, :show, :search], if: :user_signed_in?
   # Gem「ransack」のフォームで使用するインスタンス変数「@q」定義
   before_action :set_q, only: [:index, :search]
 
@@ -144,7 +144,7 @@ class Public::CatsController < ApplicationController
     @cats = @q.result.where(
       publication_status: ['public', 'in_consultation', 'foster_parents_decided', 'recruitment_closed'],
       deleted_flag: false
-    ).order(created_at: :desc).page(params[:page]).per(2)
+    ).order(created_at: :desc).page(params[:page]).per(12)
     @current_page = @cats.current_page
     @total_pages = @cats.total_pages == 0 ? 1 : @cats.total_pages
     @total_count = @cats.total_count
