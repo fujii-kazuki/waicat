@@ -1,0 +1,21 @@
+#accordion {
+  .cats-search__accordion {
+    &-body {
+      height: 0;
+      overflow: hidden;
+      
+      &.js-open {
+        height: auto;
+        overflow: visible;
+      }
+    }
+
+    &-head-icon {
+      transition: transform .5s;
+
+      &.js-down {
+        transform: rotate(-450deg);
+      }
+    }
+  }
+}

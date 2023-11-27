@@ -23,22 +23,11 @@
 
       &-icon {
         font-size: 2rem;
-        transition: transform .5s;
-
-        &--down {
-          transform: rotate(-450deg);
-        }
       }
     }
 
     &-body {
       font-size: 1.4rem;
-      height: 0;
-      overflow: hidden;
-
-      &--open {
-        height: auto;
-      }
     }
   }
 }
