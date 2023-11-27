@@ -39,6 +39,10 @@
               <%= f.label :animal_print_eq, '毛の柄' %>
               <%= f.collection_select :animal_print_eq, AnimalPrint.all, :name, :name, { include_blank: '全て' }, class: 'selectbox' %>
             </div>
+            <div>
+              <%= f.label :publication_status_eq, '掲載状態' %>
+              <%= f.select :publication_status_eq, [['公開（里親募集中）のみ', 1]], { include_blank: '全て' }, class: 'selectbox' %>
+            </div>
           </div>
 
           <h4 class="heading heading--4">キーワード検索</h4>

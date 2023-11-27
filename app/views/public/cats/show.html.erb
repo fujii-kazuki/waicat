@@ -133,6 +133,11 @@
     </section>
 
     <section>
+      <h3 class="heading heading--3">掲載者情報</h3>
+      <%= render 'profile-card' %>
+    </section>
+
+    <section>
       <h3 class="heading heading--3">質問・コメント</h3>
 
       <%= render 'public/comments/list', comments: @cat.comments.limit(5) %>

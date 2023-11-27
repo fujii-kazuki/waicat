@@ -1,5 +1,7 @@
 .logo {
   box-sizing: content-box;
+  font-family: 'Noto Serif JP', serif;
+  text-shadow: rgba(0, 0, 0, 0.1) 0px 3px 8px;
   width: 100px;
 
   &__root-link {

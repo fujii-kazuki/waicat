@@ -18,7 +18,7 @@ window.addEventListener('DOMContentLoaded', () => {
   // アコーディオンの開閉
   function toggleAccordion() {
     this.openOrCloseText.innerText = this.openOrCloseText.innerText === '開く' ? '閉じる' : '開く';
-    this.icon.classList.toggle('cats-search__accordion-head-icon--down');
-    this.body.classList.toggle('cats-search__accordion-body--open');
+    this.icon.classList.toggle('js-down');
+    this.body.classList.toggle('js-open');
   }
 });

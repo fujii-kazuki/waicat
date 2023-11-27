@@ -9,6 +9,7 @@
   appearance: none;
   border-radius: 5px;
   transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+  font-size: 16px;
 
   &:focus {
     border-color: $primary;

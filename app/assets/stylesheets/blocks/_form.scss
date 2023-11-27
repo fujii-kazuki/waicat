@@ -292,7 +292,7 @@
     grid-template-columns: auto auto;
     grid-template-rows: auto auto;
     gap: 10px;
-    margin: 0 auto;
+    margin: 20px auto 0;
     max-width: 800px;
   }
 
@@ -378,17 +378,20 @@
     grid-template-areas:
       "item1 item2 item3 item4"
       "item5 item5 item5 item5"
-      "item6 item6 item6 item6";
+      "item6 item6 item6 item6"
+      "item7 item7 . .";
 
     @include media-breakpoint-down(sm) {
+      grid-template-columns: repeat(2, 1fr);
       grid-template-areas:
-      "item1 item1 item2 item2"
-      "item3 item3 item4 item4"
-      "item5 item5 item5 item5"
-      "item6 item6 item6 item6";
+      "item1 item2"
+      "item3 item4"
+      "item5 item5"
+      "item6 item6"
+      "item7 item7";
     }
 
-    @for $i from 1 through 6 {
+    @for $i from 1 through 7 {
       & > :nth-child(#{$i}) {
         grid-area: item#{$i};
       }
