@@ -1,0 +1,20 @@
+<div class="profile-card">
+  <div class="profile-card__container">
+    <div class="profile-card__avatar-image-wrap">
+      <%= image_tag @cat.user.profile_image %>
+    </div>
+
+    <dl class="profile-card__grid">
+      <dt>名前</dt>
+      <dd><%= @cat.user.name%></dd>
+      <dt>所在地</dt>
+      <dd><%= @cat.user.prefecture %><%= @cat.user.city %></dd>
+      <% if !@cat.user.profile.blank? %>
+        <dt>プロフィール</dt>
+        <dd><%= show_text @cat.user.profile.truncate(150) %></dd>
+      <% end %>
+    </dl>
+
+    <%= link_to '詳細 > ', user_path(@cat.user.id), class: 'profile-card__link' %>
+  </div>
+</div>
