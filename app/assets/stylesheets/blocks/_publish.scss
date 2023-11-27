@@ -199,6 +199,7 @@
 
   &__comment-button {
     @include button($waicat-accent, 'md', 'round', 'center');
+    margin-top: 20px;
   }
 
   &__flex-2 {
