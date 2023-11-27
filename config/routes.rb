@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
 
+  namespace :admin do
+    get 'contacts/index'
+    get 'contacts/new'
+  end
   root 'public/homes#top'
   
   ################## 利用者側 ##################
@@ -113,7 +117,12 @@ Rails.application.routes.draw do
     resources :notices, only: [:index, :create] do
       patch 'leave'
     end
-  end
 
+    # admin/contactsコントローラー
+    resources :contacts, only: [:index, :new] do
+      patch 'read', on: :member
+      patch 'reply', on: :collection
+    end
+  end
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
