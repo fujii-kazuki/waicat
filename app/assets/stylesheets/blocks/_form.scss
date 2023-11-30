@@ -403,3 +403,23 @@
     @include button($waicat-main, 'sm', 'round')
   }
 }
+
+.admin-table__form {
+  padding: 0 .2em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .2em;
+  margin: 0 auto;
+
+  & > .form__label {
+    white-space: nowrap;
+  }
+  & > .selectbox {
+    background-color: $white;
+    color: $black;
+    font-size: 1.2rem;
+    padding: .275rem 2.25rem .275rem .75rem;
+    width: auto;
+  }
+}

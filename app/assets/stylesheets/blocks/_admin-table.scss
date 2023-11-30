@@ -1,0 +1,66 @@
+.admin-table {
+  border-collapse: collapse;
+  table-layout: fixed;
+  text-align: center;
+  width: 100%;
+
+  &__thead-tr {
+    background-color: $waicat-main;
+    color: $white;
+  }
+
+  &__th {
+    border-right: 2px solid $white;
+    border-left: 2px solid $white;
+    padding: .5em 0;
+
+    & > .sort_link {
+      @include link($white, true);
+    }
+  }
+  
+  &__tbody-tr{
+    font-size: 1.4rem;
+
+    &:nth-child(even) {
+      background-color: $gray-100;
+    }
+  }
+
+  &__td {
+    padding: .5em 1em;
+
+    &--image {
+      & > div {
+        background-color: $gray-200;
+        border-radius: 50%;
+        overflow: hidden;
+        margin: 0 auto;
+        height: 50px;
+        width: 50px;
+  
+        img {
+          object-fit: cover;
+          height: 100%;
+          width: 100%;
+        }
+      }
+    }
+
+    &--secondary {
+      color: $secondary;
+      font-weight: bold;
+    }
+
+    &--success {
+      color: $success;
+      font-weight: bold;
+    }
+
+    &--link {
+      & > a {
+        @include link($primary, true)
+      }
+    }
+  }
+}

@@ -22,4 +22,13 @@ module ApplicationHelper
       asset_path('avatar-default.png')
     end
   end
+
+  # Gem「ransack」のソートリンクのアイコンを表示
+  def sort_link_arrow(column_name)
+    if !params[:q].nil? && params[:q][:s] == "#{column_name} asc"
+      '<i class="fa-solid fa-caret-up"></i>'.html_safe
+    else
+      '<i class="fa-solid fa-caret-down"></i>'.html_safe
+    end
+  end
 end

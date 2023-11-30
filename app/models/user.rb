@@ -66,4 +66,11 @@ class User < ApplicationRecord
   def is_cat_publisher?(cat)
     id == cat.user.id
   end
+
+  private
+
+  # Gem「ransack」の検索対象カラムをホワイトリストに登録
+  def self.ransackable_attributes(auth_object = nil)
+    ['id', 'created_at', 'deleted_flag']
+  end
 end
