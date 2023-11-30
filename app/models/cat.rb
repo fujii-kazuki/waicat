@@ -66,7 +66,7 @@ class Cat < ApplicationRecord
 
   # Gem「ransack」の検索対象カラムをホワイトリストに登録
   def self.ransackable_attributes(auth_object = nil)
-    ['publication_title', 'age', 'gender', 'breed', 'animal_print', 'prefecture', 'city', 'publication_status']
+    ['id', 'publication_title', 'age', 'gender', 'breed', 'animal_print', 'prefecture', 'city', 'publication_status', 'publication_date', 'deleted_flag']
   end
 
   # 掲載期間が今日の日付以降か確認

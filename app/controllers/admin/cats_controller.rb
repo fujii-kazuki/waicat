@@ -1,8 +1,9 @@
 class Admin::CatsController < ApplicationController
   def index
-    # パラメーターに会員IDが含まれているか
     if params[:user_id].blank?
-      @cats = Cat.all.order(created_at: :desc)
+      # パラメーターに会員IDが含まれていない場合
+      @q = Cat.ransack(params[:q])
+      @cats = @q.result.order(created_at: :desc).page(params[:page]).per(15)
     else
       @cats = Cat.where(user_id: params[:user_id]).order(created_at: :desc)
     end

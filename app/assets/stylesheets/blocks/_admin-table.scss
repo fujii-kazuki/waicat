@@ -47,6 +47,12 @@
       }
     }
 
+    &--link {
+      & > a {
+        @include link($primary, true)
+      }
+    }
+
     &--secondary {
       color: $secondary;
       font-weight: bold;
@@ -57,10 +63,35 @@
       font-weight: bold;
     }
 
-    &--link {
-      & > a {
-        @include link($primary, true)
-      }
+    // 下書き、非公開
+    &--draft, &--private {
+      color: $secondary;
+      font-weight: bold;
+    }
+
+    // 公開
+    &--public {
+      color: $waicat-accent;
+      font-weight: bold;
+    }
+
+    // 相談中
+    &--in_consultation {
+      color: $primary;
+      font-weight: bold;
+    }
+
+    // 里親決定
+    &--foster_parents_decided {
+      color: $success;
+      font-weight: bold;
+    }
+
+    // 募集終了、掲載締め切り
+    &--recruitment_closed,
+    &--publication_deadline {
+      color: $waicat-main;
+      font-weight: bold;
     }
   }
 }
