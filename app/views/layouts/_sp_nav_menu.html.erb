@@ -42,7 +42,10 @@
         </li>
       <% elsif admin_signed_in? && admin_url? %>
         <%# 管理者ログイン済かつ管理者ページ %>
-        <li class="header__sub-menu-item">
+        <li class="sp-nav-menu__item">
+          <%= link_to '管理者トップページ', admin_top_path, class: 'sp-nav-menu__item-link' %>
+        </li>
+        <li class="sp-nav-menu__item">
           <%= link_to '管理者ログアウト', destroy_admin_session_path, method: :delete, class: 'sp-nav-menu__item-link' %>
         </li>
       <% else %>

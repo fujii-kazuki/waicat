@@ -1,20 +1,31 @@
-<h1>Admin::Homes#top</h1>
-<p>Find me in app/views/admin/homes/top.html.erb</p>
+<section class="admin-top">
+  <div class="container">
+    <h2 class="heading heading--2">管理者トップページ</h2>
 
-<%= link_to '管理者ログアウト', destroy_admin_session_path, method: :delete %>
+    <% if @unreaded_contacts_num > 0 %>
+      <div class="admin-top__unreaded-notice">
+        <span class="admin-top__unreaded-notice-icon">
+          <i class="fa-solid fa-envelope"></i>
+        </span>
+        未確認のお問い合わせが
+        <%= link_to admin_contacts_path, class: 'admin-top__unreaded-notice-link' do %>
+          <%= @unreaded_contacts_num %>件
+        <% end %>
+        あります。
+      </div>
+    <% end %>
 
-<div>
-  <%= link_to '会員一覧ページ', admin_users_path %>
-</div>
-
-<div>
-  <%= link_to '猫一覧ページ', admin_cats_path %>
-</div>
-
-<div>
-  <%= link_to '猫山太郎-2の猫一覧ページ', admin_cats_path(user_id: 1) %>
-</div>
-
-<div>
-  <%= link_to 'チャットルーム一覧ページ', admin_chatrooms_path %>
-</div>
+    <div class="admin-top__grid">
+      <% @menus.each do |menu| %>
+        <%= link_to menu[3], class: "admin-top__menu admin-top__menu--#{menu[1]}" do %>
+          <span class="admin-top__menu-icon">
+            <%= menu[2].html_safe %>
+          </span>
+          <span class="admin-top__menu-text">
+            <%= menu[0] %>一覧
+          </span>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</section>

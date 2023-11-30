@@ -1,0 +1,102 @@
+.admin-table {
+  border-collapse: collapse;
+  table-layout: fixed;
+  text-align: center;
+  width: 100%;
+
+  &__thead-tr {
+    background-color: $waicat-main;
+    color: $white;
+  }
+
+  &__th {
+    border-right: 2px solid $white;
+    border-left: 2px solid $white;
+    padding: .5em 0;
+
+    & > .sort_link {
+      @include link($white, true);
+    }
+  }
+  
+  &__tbody-tr{
+    font-size: 1.4rem;
+
+    &:nth-child(even) {
+      background-color: $gray-100;
+    }
+  }
+
+  &__td {
+    padding: .5em 1em;
+
+    &--image {
+      & > div {
+        background-color: $gray-200;
+        border-radius: 50%;
+        overflow: hidden;
+        margin: 0 auto;
+        height: 50px;
+        width: 50px;
+  
+        img {
+          object-fit: cover;
+          height: 100%;
+          width: 100%;
+        }
+      }
+    }
+
+    &--link {
+      & > a {
+        @include link($primary, 'none')
+      }
+    }
+
+    &--secondary {
+      color: $secondary;
+      font-weight: bold;
+    }
+
+    &--success {
+      color: $success;
+      font-weight: bold;
+    }
+
+    &--primary {
+      color: $primary;
+      font-weight: bold;
+    }
+
+    // 下書き、非公開
+    &--draft, &--private {
+      color: $secondary;
+      font-weight: bold;
+    }
+
+    // 公開
+    &--public {
+      color: $waicat-accent;
+      font-weight: bold;
+    }
+
+    // 相談中
+    &--in_consultation {
+      color: $primary;
+      font-weight: bold;
+    }
+
+    // 里親決定
+    &--foster_parents_decided {
+      color: $success;
+      font-weight: bold;
+    }
+
+    // 募集終了、掲載締め切り
+    &--recruitment_closed,
+    &--publication_deadline {
+      color: $waicat-main;
+      font-weight: bold;
+    }
+  }
+}

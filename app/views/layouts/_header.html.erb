@@ -37,6 +37,9 @@
         <% elsif admin_signed_in? && admin_url? %>
           <%# 管理者ログイン済かつ管理者ページ %>
           <li class="header__sub-menu-item">
+            <%= link_to '管理者トップページ', admin_top_path, class: 'header__sub-menu-item-link' %>
+          </li>
+          <li class="header__sub-menu-item">
             <%= link_to '管理者ログアウト', destroy_admin_session_path, method: :delete, class: 'header__sub-menu-item-link' %>
           </li>
         <% else %>

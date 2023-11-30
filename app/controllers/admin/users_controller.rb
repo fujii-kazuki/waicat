@@ -1,6 +1,7 @@
 class Admin::UsersController < ApplicationController
   def index
-    @users = User.all.order(created_at: :desc)
+    @q = User.ransack(params[:q])
+    @users = @q.result.order(created_at: :desc).page(params[:page]).per(15)
   end
 
   def show

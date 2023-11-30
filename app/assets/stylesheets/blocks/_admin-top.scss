@@ -1,0 +1,61 @@
+.admin-top {
+  &__unreaded-notice {
+    background-color: $success;
+    border-radius: 5px;
+    color: $white;
+    margin-bottom: 20px;
+    padding: 1em 2em;
+
+    &-link {
+      @include link($white, true)
+    }
+  }
+
+  &__grid {
+    display: grid;
+    align-items: center;
+    justify-content: center;
+    grid-template-columns: repeat(2, 200px);
+    grid-template-rows: repeat(2, 200px);
+    gap: 30px;
+
+    @include media-breakpoint-down(sm) {
+      grid-template-columns: repeat(2, 140px);
+      grid-template-rows: repeat(2, 140px);
+      gap: 10px;
+    }
+  }
+
+  &__menu {
+    display: flex !important;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+
+    &--users {
+      @include button($primary);
+    }
+
+    &--cats {
+      @include button($waicat-accent);
+    }
+
+    &--chatrooms {
+      @include button($waicat-main);
+    }
+
+    &--contacts {
+      @include button($gray-500);
+    }
+
+    &-icon {
+      font-size: 6rem;
+    }
+
+    &-text {
+      white-space: nowrap;
+    }
+  }
+}

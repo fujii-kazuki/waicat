@@ -1,21 +1,70 @@
-<h1>Admin::Chatrooms#index</h1>
-<p>Find me in app/views/admin/chatrooms/index.html.erb</p>
+<section>
+  <div class="container">
+    <h2 class="heading heading--2">チャットルーム一覧</h2>
 
-<h2>チャットルーム一覧</h2>
-
-<% if @chatrooms.any? %>
-  <ul>
-    <% @chatrooms.each do |chatroom| %>
-      <li>
-        <p>ルームID：<%= chatroom.id %></p>
-        <p>里親募集者：<%= chatroom.candidate.cat.user.name %></p>
-        <p>里親応募者：<%= chatroom.candidate.user.name %></p>
-        <p>作成日時：<%= chatroom.created_at %></p>
-        <p>最終メッセージ：<%= chatroom.messages.last.created_at %></p>
-        <%= link_to '入る', admin_chatroom_path(chatroom.id) %>
-      </li>
-    <% end %>
-  </ul>
-<% else %>
-  <p>チャットルームが見つかりませんでした</p>
-<% end %>
+      <table class="admin-table admin-table--users">
+        <thead>
+          <tr class="admin-table__thead-tr">
+            <th class="admin-table__th">
+              <%= sort_link @q, :id, hide_indicator: true do %>
+                ID <%= sort_link_arrow 'id' %>
+              <% end %>
+            </th>
+            <th class="admin-table__th">里親募集者名</th>
+            <th class="admin-table__th">里親応募者名</th>
+            <th class="admin-table__th">
+              <%= sort_link @q, :created_at, hide_indicator: true do %>
+                作成日時 <%= sort_link_arrow 'created_at' %>
+              <% end%>
+            </th>
+            <th class="admin-table__th">
+              <%= search_form_for @q, url: admin_chatrooms_path, class: 'form admin-table__form' do |f| %>
+                <%= f.label :deleted_flag_eq, '状態', class: 'form__label' %>
+                <%= f.select :deleted_flag_eq, [['利用中', false], ['削除済', true]], { include_blank: '全て' }, onchange: 'submit(this.form)', class: 'selectbox' %>
+              <% end %>
+            </th>
+            <th class="admin-table__th">
+          </tr>
+        </thead>
+        <tbody>
+          <% if @chatrooms.any? %>
+            <% @chatrooms.each do |chatroom| %>
+              <tr class="admin-table__tbody-tr">
+                <td class="admin-table__td">
+                  <%= chatroom.id %>
+                </td>
+                <td class="admin-table__td admin-table__td--image admin-table__td--link">
+                  <div>
+                    <%= image_tag chatroom.candidate.cat.user.profile_image %>
+                  </div>
+                  <%= link_to chatroom.candidate.cat.user.name, admin_user_path(chatroom.candidate.cat.user.id) %>
+                </td>
+                <td class="admin-table__td admin-table__td--image admin-table__td--link">
+                  <div>
+                    <%= image_tag chatroom.candidate.user.profile_image %>
+                  </div>
+                  <%= link_to chatroom.candidate.user.name, admin_user_path(chatroom.candidate.user.id) %>
+                </td>
+                <td class="admin-table__td">
+                  <%= chatroom.created_at.strftime('%Y/%m/%d %H:%M') %>
+                </td>
+                <% if chatroom.deleted_flag %>
+                  <td class="admin-table__td admin-table__td--secondary">
+                    削除済
+                  </td>
+                <% else %>
+                  <td class="admin-table__td admin-table__td--success">
+                    利用中
+                  </td>
+                <% end %>
+                <td class="admin-table__td admin-table__td--link">
+                  <%= link_to 'メッセージを見る', admin_chatroom_path(chatroom.id) %>
+                </td>
+              </tr>
+            <% end %>
+          <% end %>
+      </tbody>
+    </table>
+    <%= paginate @chatrooms %>
+  </div>
+</section>
