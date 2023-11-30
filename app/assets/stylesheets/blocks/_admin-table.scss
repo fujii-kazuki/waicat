@@ -49,7 +49,7 @@
 
     &--link {
       & > a {
-        @include link($primary, true)
+        @include link($primary, 'none')
       }
     }
 
@@ -60,6 +60,11 @@
 
     &--success {
       color: $success;
+      font-weight: bold;
+    }
+
+    &--primary {
+      color: $primary;
       font-weight: bold;
     }
 
