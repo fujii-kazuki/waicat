@@ -43,11 +43,7 @@
                 </td>
                 <td class="admin-table__td admin-table__td--image">
                   <div>
-                    <% if cat.photos.attached? %>
-                      <%= image_tag cat.photos[0] %>
-                    <% else %>
-                      <%= image_tag 'no-image.png' %>
-                    <% end %>
+                    <%= image_tag cat.photo_image_url(0) %>
                   </div>
                 </td>
                 <td class="admin-table__td admin-table__td--link">

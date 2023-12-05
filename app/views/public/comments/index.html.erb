@@ -2,7 +2,7 @@
   <div class="container">
     <dl class="comments__grid">
       <dt>このコメントの里親募集掲載</dt>
-      <dd class="comments__grid-img-wrap"><%= image_tag @cat.photos[0] %></dd>
+      <dd class="comments__grid-img-wrap"><%= image_tag @cat.photo_image_url(0) %></dd>
       <dd><%= link_to @cat.publication_title, cat_path(@cat.id), class: 'comments__link' %></dd>
     </dl>
     

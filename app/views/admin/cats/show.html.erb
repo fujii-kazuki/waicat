@@ -8,8 +8,8 @@
 <p>会員ID：<%= @cat.user_id %></p>
 <% if @cat.photos.attached? %>
   <div>
-    <% @cat.photos.each do |photo| %>
-      <%= image_tag photo %>
+    <% @cat.photos.each_with_index do |photo, i| %>
+      <%= image_tag @cat.photo_image_url(i) %>
     <% end %>
   </div>
 <% end %>

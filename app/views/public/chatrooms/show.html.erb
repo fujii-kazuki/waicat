@@ -7,7 +7,7 @@
       <dt>応募元の掲載</dt>
       <dd>
         <div class="chatroom__cat-photo-wrap">
-          <%= image_tag @cat.photos[0] %>
+          <%= image_tag @cat.photo_image_url(0) %>
         </div>
         <%= link_to @cat.publication_title, cat_path(@cat.id), class: 'chatroom__link' %>
       </dd>
@@ -16,9 +16,9 @@
     <%# チャットルームユーザー2名のプロフィール画像のURLをカスタムデータ属性として持たせる %>
     <div id="users-profile-image-url" hidden
     user-<%= current_user.id %>-avatar-src="
-      <%= profile_image_url current_user %>"
+      <%= current_user.profile_image_url %>"
     user-<%= @chatroom.chat_partner(current_user).id %>-avatar-src="
-      <%= profile_image_url @chatroom.chat_partner(current_user) %>"></div>
+      <%= @chatroom.chat_partner(current_user).profile_image_url %>"></div>
 
     <%= render 'public/messages/list' %>
 

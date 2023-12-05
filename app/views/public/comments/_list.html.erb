@@ -4,7 +4,7 @@
       <li class="comments__item<%= ' comments__item--publisher' if @cat.user.id == comment.user.id %>">
         <div class="comments__item-avatar-image-wrap">
           <%= link_to user_path(comment.user.id) do %>
-            <%= image_tag comment.user.profile_image %>
+            <%= image_tag comment.user.profile_image_url %>
           <% end %>
         </div>
 
