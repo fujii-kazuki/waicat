@@ -12,6 +12,7 @@
   - [ER図](#er図)
   - [テーブル設計書](#テーブル設計書)
   - [アプリケーション詳細設計書](#アプリケーション詳細設計書)
+  - [AWS構成図](#aws構成図)
 - [使用技術](#使用技術)
 - [機能一覧](#機能一覧)
 - [使用画像素材](#使用画像素材)
@@ -52,7 +53,10 @@ https://docs.google.com/spreadsheets/d/1MabnBQgrqwucpTfdZOK9WKm8-InxjHh0/edit#gi
 
 ### アプリケーション詳細設計書
 https://docs.google.com/spreadsheets/d/1XBAAwcyST-mEpkTHLLL2FVesoSUJ39IeSXmJweubW5c/edit#gid=549108681
-​
+
+### AWS構成図
+<img style="width: 75%;" src="https://github.com/fujii-kazuki/waicat/assets/142955783/630661e6-3459-402e-bbd6-1702b376b9cb">
+
 ## 使用技術
 - HTML5 / CSS3
 - Sass
@@ -66,6 +70,10 @@ https://docs.google.com/spreadsheets/d/1XBAAwcyST-mEpkTHLLL2FVesoSUJ39IeSXmJweub
   - Cloud9
   - EC2
   - RDS
+  - IAM
+  - CloudWatch
+  - S3
+  - Lambda
 - Docker 4.24.2
 - Visual Studio Code
 - [郵便番号検索API](https://zipcloud.ibsnet.co.jp/doc/api)
