@@ -26,9 +26,9 @@
       <div class="publish__photos">
         <div id="publish-swiper" class="publish-swiper">
           <div class="swiper-wrapper">
-            <% @cat.photos.each do |photo| %>
+            <% @cat.photos.each_with_index do |photo, i| %>
               <div class="swiper-slide">
-                <%= image_tag photo %>
+                <%= image_tag @cat.photo_image_url(i, 'original') %>
               </div>
             <% end %>
           </div>
@@ -38,9 +38,9 @@
 
         <div id="publish-thumbs-slider" class="publish-swiper publish-swiper--thumbs">
           <div class="swiper-wrapper">
-            <% @cat.photos.each do |photo| %>
+            <% @cat.photos.each_with_index do |photo, i| %>
               <div class="swiper-slide">
-                <%= image_tag photo %> 
+                <%= image_tag @cat.photo_image_url(i) %> 
               </div>
             <% end %>
           </div>

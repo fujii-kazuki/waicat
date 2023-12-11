@@ -11,12 +11,12 @@
       <% if cat.photos.attached? %>
         <div id="publish-edit-swiper" class="publish-swiper">
           <div class="swiper-wrapper">
-            <% cat.photos.each do |photo| %>
+            <% cat.photos.each_with_index do |photo, i| %>
               <div class="swiper-slide">
                 <button type="button" class="publish-edit__slide-delete-button">
                   削除
                 </button>
-                <%= image_tag photo %>
+                <%= image_tag cat.photo_image_url(i, 'original') %>
                 <%= f.hidden_field :photos, multiple: true, value: photo.signed_id %>
               </div>
             <% end %>
@@ -27,9 +27,9 @@
 
         <div id="publish-edit-thumbs-slider" class="publish-swiper publish-swiper--thumbs">
           <div class="swiper-wrapper">
-            <% cat.photos.each do |photo| %>
+            <% cat.photos.each_with_index do |photo, i| %>
               <div class="swiper-slide">
-                <%= image_tag photo %> 
+                <%= image_tag cat.photo_image_url(i, 'original') %> 
               </div>
             <% end %>
           </div>

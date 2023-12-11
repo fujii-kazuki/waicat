@@ -6,11 +6,7 @@
           <p class="publish-list__item-publication-status publish-list__item-publication-status--<%= cat.publication_status %>">
             <%= cat.publication_status_i18n %><%= "：#{cat.get_remaining_period_string}" if cat.publication_status == 'public' %>
           </p>
-          <% if cat.photos.attached? %>
-            <%= image_tag cat.photos[0], class: 'publish-list__item-img' %>
-          <% else %>
-            <%= image_tag 'no-image.png', class: 'publish-list__item-img' %>
-          <% end %>
+          <%= image_tag cat.photo_image_url(0), class: 'publish-list__item-img' %>
         </div>
       <% end %>
 

@@ -3,7 +3,7 @@
     <li class="message-list__item" user-id="<%= message.user.id %>">
       <div class="message-list__item-avatar-wrap">
         <%= link_to user_path(message.user.id) do %>
-          <%= image_tag message.user.profile_image %>
+          <%= image_tag message.user.profile_image_url %>
         <% end %>
       </div>
 

@@ -14,15 +14,6 @@ module ApplicationHelper
     safe_join(text.split("\n"),tag(:br))
   end
 
-  # 会員プロフィール画像のURLを返す
-  def profile_image_url(user)
-    if user.avatar.attached?
-      rails_blob_url(user.profile_image)
-    else
-      asset_path('avatar-default.png')
-    end
-  end
-
   # Gem「ransack」のソートリンクのアイコンを表示
   def sort_link_arrow(column_name)
     if !params[:q].nil? && params[:q][:s] == "#{column_name} asc"

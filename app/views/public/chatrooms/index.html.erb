@@ -9,11 +9,11 @@
             <div class="chatroom-list__item-avatar-wrap">
               <% if current_user.id == chatroom.candidate.user.id %>
                 <%= link_to user_path(chatroom.candidate.cat.user.id) do %>
-                  <%= image_tag chatroom.candidate.cat.user.profile_image %>
+                  <%= image_tag chatroom.candidate.cat.user.profile_image_url %>
                 <% end %>
               <% else %>
                 <%= link_to user_path(chatroom.candidate.user.id) do %>
-                  <%= image_tag chatroom.candidate.user.profile_image %>
+                  <%= image_tag chatroom.candidate.user.profile_image_url %>
                 <% end %>
               <% end%>
             </div>

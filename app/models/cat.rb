@@ -62,8 +62,27 @@ class Cat < ApplicationRecord
     end
   end
 
-  private
+  # 写真のURLを返す
+  def photo_image_url(index, img_type = 'thumbnail') # img_type = original or thumbnail
+    if photos.attached?
+      if Rails.env.production?
+        case img_type
+        when 'original' then
+          "https://waicat-img-files-original.s3.ap-northeast-1.amazonaws.com/#{photos[index].key}"
+        when 'thumbnail' then
+          "https://waicat-img-files-resize.s3.ap-northeast-1.amazonaws.com/#{photos[index].key}-thumb.#{photos[index].content_type.split('/').pop}"
+        end
+      elsif Rails.env.development?
+        Rails.application.routes.url_helpers.rails_blob_url(photos[index], only_path: true)
+      end
+    else
+      # デフォルト画像のパスを返す
+      ActionController::Base.helpers.asset_path('no-image.png')
+    end
+  end
 
+  private
+  
   # Gem「ransack」の検索対象カラムをホワイトリストに登録
   def self.ransackable_associations(auth_object = nil)
     ['id', 'publication_title', 'age', 'gender', 'breed', 'animal_print', 'prefecture', 'city', 'publication_status', 'publication_date', 'deleted_flag']

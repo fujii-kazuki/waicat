@@ -17,7 +17,7 @@
           </div>
 
           <div id="avatar-wrap" class="user-edit__form-avatar-wrap">
-            <%= image_tag @user.profile_image %>
+            <%= image_tag @user.profile_image_url('original') %>
             <% if @user.avatar.attached? %>
               <%= f.hidden_field :avatar, value: @user.avatar.signed_id %>
             <% end %>

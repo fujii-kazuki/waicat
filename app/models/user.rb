@@ -43,12 +43,22 @@ class User < ApplicationRecord
     email == 'guest@example.com' ? true : false
   end
 
-  # 会員のプロフィール画像のパスを返す
-  def profile_image
+  # 会員プロフィール画像のURLを返す
+  def profile_image_url(img_type = 'thumbnail') # original or thumbnail
     if avatar.attached?
-      avatar
+      if Rails.env.production?
+        case img_type
+        when 'original' then
+          "https://waicat-img-files-original.s3.ap-northeast-1.amazonaws.com/#{avatar.key}"
+        when 'thumbnail' then
+          "https://waicat-img-files-resize.s3.ap-northeast-1.amazonaws.com/#{avatar.key}-thumb.#{avatar.content_type.split('/').pop}"
+        end
+      elsif Rails.env.development?
+        Rails.application.routes.url_helpers.rails_blob_url(avatar, only_path: true)
+      end
     else
-      'avatar-default.png'
+      # デフォルト画像のパスを返す
+      ActionController::Base.helpers.asset_path('avatar-default.png')
     end
   end
 
