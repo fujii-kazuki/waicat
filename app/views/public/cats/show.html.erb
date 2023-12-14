@@ -40,7 +40,11 @@
           <div class="swiper-wrapper">
             <% @cat.photos.each_with_index do |photo, i| %>
               <div class="swiper-slide">
-                <%= image_tag @cat.photo_image_url(i) %> 
+                <% if user_signed_in? && @cat.user.id == current_user.id %>
+                  <%= image_tag @cat.photo_image_url(i, 'original') %>
+                <% else %>
+                  <%= image_tag @cat.photo_image_url(i) %>
+                <% end %>
               </div>
             <% end %>
           </div>
