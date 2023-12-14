@@ -1,5 +1,7 @@
 # 待ちねこ - waicat
 
+URL : https://waicat.fkazu.work/
+
 <img style="width: 85%;" src="https://github.com/fujii-kazuki/waicat/assets/142955783/5779822d-95be-4b6d-acbf-93a6f1dc5826">
 <img style="width: 13%;" src="https://github.com/fujii-kazuki/waicat/assets/142955783/4d7a4c1c-3545-4828-921c-68e44f554169">
 
@@ -55,7 +57,7 @@ https://docs.google.com/spreadsheets/d/1MabnBQgrqwucpTfdZOK9WKm8-InxjHh0/edit#gi
 https://docs.google.com/spreadsheets/d/1XBAAwcyST-mEpkTHLLL2FVesoSUJ39IeSXmJweubW5c/edit#gid=549108681
 
 ### AWS構成図
-<img style="width: 75%;" src="https://github.com/fujii-kazuki/waicat/assets/142955783/630661e6-3459-402e-bbd6-1702b376b9cb">
+<img style="width: 75%;" src="https://github.com/fujii-kazuki/waicat/assets/142955783/f66ded5c-aaa0-47ef-b8dc-89c4db28c7e6">
 
 ## 使用技術
 - HTML5 / CSS3
@@ -71,6 +73,9 @@ https://docs.google.com/spreadsheets/d/1XBAAwcyST-mEpkTHLLL2FVesoSUJ39IeSXmJweub
   - EC2
   - RDS
   - IAM
+  - ELB
+  - ACM
+  - Route53
   - CloudWatch
   - S3
   - Lambda
