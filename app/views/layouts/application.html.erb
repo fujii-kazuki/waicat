@@ -19,7 +19,7 @@
     <%= javascript_pack_tag 'application' %>
   </head>
 
-  <body ontouchstart="">
+  <body>
     <%= render 'layouts/header' %>
 
     <%= render 'layouts/sp_nav_menu' %>
@@ -36,5 +36,8 @@
     <%= render 'layouts/footer' %>
 
     <div id="flash-message"><%= render 'layouts/flash_message' %></div>
+
+    <%# 下記コードでiOSでリンクを2回タップしないと反応しない現象を解決 %>
+    <script>document.addEventListener('touchstart',function(){});</script>
   </body>
 </html>
