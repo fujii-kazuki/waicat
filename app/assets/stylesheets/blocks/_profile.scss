@@ -41,6 +41,26 @@
         align-items: center;
         padding: 1em;
       }
+
+      @include media-breakpoint-down(sm) {
+        grid-template-columns: auto;
+        
+        & > dd {
+          border-bottom: none;
+        }
+      }
+    }
+  }
+
+  &__dd {
+    font-weight: bold;
+
+    &--success {
+      color: $success;
+    }
+
+    &--secondary {
+      color: $secondary;
     }
   }
 
@@ -69,4 +89,15 @@
     @include link($primary, true);
   }
 
+  &__link-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1em;
+    margin-top: 30px;
+  }
+
+  &__link {
+    @include link($primary, true);
+  }
 }
