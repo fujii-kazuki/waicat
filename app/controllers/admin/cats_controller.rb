@@ -1,11 +1,13 @@
 class Admin::CatsController < ApplicationController
   def index
-    if params[:user_id].blank?
+    if params.dig(:q, :user_id).blank?
       # パラメーターに会員IDが含まれていない場合
       @q = Cat.ransack(params[:q])
       @cats = @q.result.order(created_at: :desc).page(params[:page]).per(15)
     else
-      @cats = Cat.where(user_id: params[:user_id]).order(created_at: :desc)
+      @user = User.find(params[:q][:user_id])
+      @q = @user.cats.ransack(params[:q])
+      @cats = @q.result.order(created_at: :desc).page(params[:page]).per(15)
     end
   end
 
