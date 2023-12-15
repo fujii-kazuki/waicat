@@ -1,14 +1,8 @@
 class Admin::ChatroomsController < ApplicationController
   def index
-    if params[:user_id].blank?
-      # パラメーターに会員IDが含まれていない場合
-      @q = Chatroom.ransack(params[:q])
-      @chatrooms = @q.result.order(created_at: :desc).page(params[:page]).per(15)
-    else
-      chatroom_users = ChatroomUser.where(user_id: params[:user_id])
-      @chatrooms = chatroom_users.map { |chatroom_user| chatroom_user.chatroom }
-      @chatrooms.reverse
-    end
+    # パラメーターに会員IDが含まれていない場合
+    @q = Chatroom.ransack(params[:q])
+    @chatrooms = @q.result.order(created_at: :desc).page(params[:page]).per(15)
   end
 
   def show

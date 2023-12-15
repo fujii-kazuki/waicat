@@ -47,7 +47,6 @@
     <div class="profile__link-wrap">
       <%= link_to 'この会員の掲載一覧', admin_cats_path(q: { user_id: @user.id }), class: 'profile__link' %>
       <%= link_to 'この会員のコメント一覧', admin_user_comments_path(user_id: @user.id), class: 'profile__link' %>
-      <%= link_to 'この会員のチャットルーム一覧', admin_chatrooms_path(user_id: @user.id), class: 'profile__link' %>
       <% if !@user.deleted_flag %>
         <%= link_to 'この会員を削除', admin_user_leave_path(@user.id), method: :patch, data: { confirm: 'この会員を削除します。よろしいですか？' }, class: 'profile__link' %>
       <% end %>
