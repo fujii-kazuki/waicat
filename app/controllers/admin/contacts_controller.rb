@@ -4,6 +4,6 @@ class Admin::ContactsController < ApplicationController
     @contacts = @q.result.order(created_at: :desc).page(params[:page]).per(15)
   end
 
-  def new
+  def show
   end
 end
