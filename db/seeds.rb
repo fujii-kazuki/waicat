@@ -10,7 +10,7 @@
 # 管理者
 Admin.create!(
   email: 'admin@admin',
-  password: 'adminmin'
+  password: 'password'
 )
 
 # 都道府県
@@ -45,11 +45,11 @@ User.create!(
   User.create!(
     name: "猫山太郎-#{i}",
     telephone_number: '09012345678',
-    email: "sample@sample#{i}.jp",
+    email: "test@test#{i}",
     postal_code: '1234567',
     prefecture: Prefecture.find(rand(1..47)).name,
     city: "にゃん#{i}区",
-    password: '000000'
+    password: 'password'
   )
 end
 
