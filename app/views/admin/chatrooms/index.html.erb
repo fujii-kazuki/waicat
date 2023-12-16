@@ -23,7 +23,8 @@
                 <%= f.select :deleted_flag_eq, [['利用中', false], ['削除済', true]], { include_blank: '全て' }, onchange: 'submit(this.form)', class: 'selectbox' %>
               <% end %>
             </th>
-            <th class="admin-table__th">
+            <th class="admin-table__th"></th>
+            <th class="admin-table__th"></th>
           </tr>
         </thead>
         <tbody>
@@ -59,6 +60,11 @@
                 <% end %>
                 <td class="admin-table__td admin-table__td--link">
                   <%= link_to 'メッセージを見る', admin_chatroom_path(chatroom.id) %>
+                </td>
+                <td class="admin-table__td admin-table__td--link">
+                  <% if !chatroom.deleted_flag %>
+                    <%= link_to '削除', admin_chatroom_leave_path(chatroom.id), method: :patch, data: { confirm: "チャットルームを削除します。よろしいですか？" } %>
+                  <% end %>
                 </td>
               </tr>
             <% end %>
