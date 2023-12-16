@@ -1,19 +1,48 @@
-<h1>Admin::Chatrooms#show</h1>
-<p>Find me in app/views/admin/chatrooms/show.html.erb</p>
+<section class="chatroom">
+  <div class="container">
+    <h2 class="heading heading--2">チャットルーム詳細</h2>
 
-<%= link_to '戻る', 'javascript:history.back()' %>
-<% if !@chatroom.deleted_flag %>
-  <%= link_to 'このチャットルームを閉じる', admin_chatroom_leave_path(@chatroom.id), method: :patch, data: { confirm: 'このチャットルームを閉じてもよろしいですか？' } %>
-<% end %>
+    <dl class="chatroom__grid">
+      <dt>応募元の掲載</dt>
+      <dd>
+        <div class="chatroom__cat-photo-wrap">
+          <%= image_tag @cat.photo_image_url(0) %>
+        </div>
+        <%= link_to @cat.publication_title, admin_cat_path(@cat.id), class: 'chatroom__link' %>
+      </dd>
+    </dl>
 
-<p>掲載：<%= link_to @cat.publication_title, admin_cat_path(@cat.id) %></p>
-<p>里親募集者：<%= @recruiter.name %></p>
-<p>里親応募者：<%= @candidater.name %></p>
+    <%= render 'public/messages/list' %>
 
-<ul>
-  <% @messages.each do |message| %>
-    <li user-id="<%= message.user.id %>">
-      <%= safe_join(message.body.split("\n"),tag(:br)) %>
-    </li>
-  <% end %>
-</ul>
+    <div class="chatroom__container">
+      <% if @chatroom.deleted_flag %>
+        <p class="chatroom__ended-text">
+          <i class="fa-solid fa-circle-exclamation"></i>
+          このチャットルームは終了しています
+        </p>
+      <% else %>
+        <div>
+          <%= link_to 'チャットルームを削除', admin_chatroom_leave_path(@chatroom.id), method: :patch, class: 'chatroom__leave-button', data: { confirm: "このチャットルームを削除します。よろしいですか？" } %>
+        </div>
+      <% end %>
+      <%= link_to '< チャットルーム一覧に戻る', admin_chatrooms_path, class: 'chatroom__form-back-link' %>
+    </div>
+  </div>
+</section>
+
+
+<%# リアルタイムチャットでの自分と相手のスタイル差別化の為、ここへ記述 %>
+<style>
+  li[user-id="<%= @candidater.id %>"] {
+    direction: rtl;
+  }
+
+  li[user-id="<%= @candidater.id %>"] * {
+    direction: ltr;
+  }
+
+  li[user-id="<%= @candidater.id %>"] > .message-list__item-user-name,
+  li[user-id="<%= @candidater.id %>"] > .message-list__item-created-at {
+    text-align: right;
+  }
+</style>

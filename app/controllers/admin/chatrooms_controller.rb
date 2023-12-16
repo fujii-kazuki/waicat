@@ -7,7 +7,7 @@ class Admin::ChatroomsController < ApplicationController
 
   def show
     @chatroom = Chatroom.find(params[:id])
-    @messages = @chatroom.messages
+    @messages = @chatroom.messages.reverse
     @candidater = @chatroom.candidate.user #里親立候補者
     @recruiter = @chatroom.chat_partner(@candidater) #里親募集者
     @cat = @chatroom.candidate.cat
@@ -16,7 +16,7 @@ class Admin::ChatroomsController < ApplicationController
   def leave
     chatroom = Chatroom.find(params[:chatroom_id])
     chatroom.update(deleted_flag: true)
-    flash[:notice] = 'このチャットルームを閉じました。'
-    redirect_to admin_chatrooms_path
+    flash[:notice] = 'チャットルームを閉じました。'
+    redirect_back(fallback_location: root_path)
   end
 end

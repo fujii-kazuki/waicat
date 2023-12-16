@@ -24,11 +24,13 @@
     <%= render 'public/messages/list' %>
 
     <% if @chatroom.deleted_flag %>
-      <p class="chatroom__ended-text">
-        <i class="fa-solid fa-circle-exclamation"></i>
-        このチャットルームは終了しています
-      </p>
-      <%= link_to '< チャットルーム一覧に戻る', chatrooms_path, class: 'chatroom__form-back-link' %>
+      <div class="chatroom__container">
+        <p class="chatroom__ended-text">
+          <i class="fa-solid fa-circle-exclamation"></i>
+          このチャットルームは終了しています
+        </p>
+        <%= link_to '< チャットルーム一覧に戻る', chatrooms_path, class: 'chatroom__form-back-link' %>
+      </div>
     <% else %>
       <%= form_with model: [@chatroom, @message], local: false, class: 'form chatroom__form' do |f| %>
         <div class="chatroom__form-container">
