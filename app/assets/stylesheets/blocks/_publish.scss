@@ -16,6 +16,15 @@
     }
   }
 
+  &__deleted-text {
+    background-color: $secondary;
+    border-radius: 5px;
+    color: $white;
+    font-size: 1.4rem;
+    font-weight: bold;
+    padding: .5em 2.5em;
+  }
+
   &__photos {
     margin-bottom: .5em;
   }

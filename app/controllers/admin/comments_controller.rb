@@ -1,11 +1,16 @@
 class Admin::CommentsController < ApplicationController
   def index
     if params.dig(:q, :cat_id)
-      @comments = Comment.where(cat_id: params[:q][:cat_id]).order(created_at: :desc)
+      @cat = Cat.find(params[:cat_id])
+      @q = Comment.where(cat_id: @cat.id).ransack(params[:q])
+      @comments = @q.result.order(created_at: :desc).page(params[:page]).per(15)
+      @search_form_path = admin_cat_comments_path
+
     elsif params.dig(:q, :user_id)
       @user = User.find(params[:user_id])
       @q = Comment.where(user_id: @user.id).ransack(params[:q])
       @comments = @q.result.order(created_at: :desc).page(params[:page]).per(15)
+      @search_form_path = admin_user_comments_path
     end
   end
 

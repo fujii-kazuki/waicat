@@ -1,7 +1,12 @@
 <section>
   <div class="container">
     <h2 class="heading heading--2">
-      <%= @user.name + 'のコメント一覧' if !params.dig(:q, :user_id).blank? %>
+      <% if params.dig(:q, :cat_id) %>
+        <%= truncate(@cat.publication_title) %>
+      <% elsif params.dig(:q, :user_id) %>
+        <%= @user.name%>
+      <% end %>
+      のコメント一覧
     </h2>
 
     <table class="admin-table admin-table--comments">
@@ -20,8 +25,12 @@
             <% end%>
           </th>
           <th class="admin-table__th">
-            <%= search_form_for @q, url: admin_user_comments_path, class: 'form admin-table__form' do |f| %>
-              <%= f.hidden_field :user_id, value: params[:user_id] %>
+            <%= search_form_for @q, url: @search_form_path, class: 'form admin-table__form' do |f| %>
+              <% if params.dig(:q, :cat_id) %>
+                <%= f.hidden_field :cat_id, value: params[:cat_id] %>
+              <% elsif params.dig(:q, :user_id) %>
+                <%= f.hidden_field :user_id, value: params[:user_id] %>
+              <% end %>
               <%= f.label :deleted_flag_eq, '状態', class: 'form__label' %>
               <%= f.select :deleted_flag_eq, [['表示中', false], ['削除済', true]], { include_blank: '全て' }, onchange: 'submit(this.form)', class: 'selectbox' %>
             <% end %>
