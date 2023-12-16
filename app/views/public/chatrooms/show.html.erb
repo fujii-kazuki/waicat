@@ -15,6 +15,7 @@
 
     <%# チャットルームユーザー2名のプロフィール画像のURLをカスタムデータ属性として持たせる %>
     <div id="users-profile-image-url" hidden
+    chatroom-id="<%= @chatroom.id %>" 
     user-<%= current_user.id %>-avatar-src="
       <%= current_user.profile_image_url %>"
     user-<%= @chatroom.chat_partner(current_user).id %>-avatar-src="
