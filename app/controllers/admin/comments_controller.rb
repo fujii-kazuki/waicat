@@ -1,9 +1,11 @@
 class Admin::CommentsController < ApplicationController
   def index
-    if params[:cat_id]
-      @comments = Comment.where(cat_id: params[:cat_id]).order(created_at: :desc)
-    elsif params[:user_id]
-      @comments = Comment.where(user_id: params[:user_id]).order(created_at: :desc)
+    if params.dig(:q, :cat_id)
+      @comments = Comment.where(cat_id: params[:q][:cat_id]).order(created_at: :desc)
+    elsif params.dig(:q, :user_id)
+      @user = User.find(params[:user_id])
+      @q = Comment.where(user_id: @user.id).ransack(params[:q])
+      @comments = @q.result.order(created_at: :desc).page(params[:page]).per(15)
     end
   end
 
@@ -11,6 +13,11 @@ class Admin::CommentsController < ApplicationController
     comment = Comment.find(params[:comment_id])
     comment.update(deleted_flag: true)
     flash[:notice] = "コメント「#{comment.body.truncate(30)}」を削除しました。"
-    redirect_back fallback_location: root_path
+
+    if params.dig(:q, :cat_id)
+      redirect_to admin_cat_comments_path(cat_id: params[:q][:cat_id], q: { cat_id: params[:q][:cat_id] })
+    elsif params.dig(:q, :user_id)
+      redirect_to admin_user_comments_path(user_id: params[:q][:user_id], q: { user_id: params[:q][:user_id] })
+    end
   end
 end

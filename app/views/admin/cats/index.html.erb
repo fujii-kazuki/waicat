@@ -54,7 +54,7 @@
                   <% if cat.publication_title.blank? %>
                     <%= link_to 'タイトル未設定', admin_cat_path(cat.id) %>
                   <% else %>
-                    <%= link_to truncate(cat.publication_title, length: 60) %>
+                    <%= link_to truncate(cat.publication_title, length: 60), admin_cat_path(cat.id) %>
                   <% end %>
                 </td>
                 <td class="admin-table__td admin-table__td--link">
