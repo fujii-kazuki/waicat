@@ -22,7 +22,7 @@
             <li class="header__sub-menu-item">
               <%= link_to notices_path, class: 'header__sub-menu-item-link' do %>
                 通知
-                <% if @unread_notices_num > 1 %>
+                <% if @unread_notices_num > 0 %>
                   <i class="fa-solid fa-bell"></i></i><%= @unread_notices_num %>
                 <% end %>
               <% end %>

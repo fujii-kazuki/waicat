@@ -31,7 +31,7 @@
             <li class="footer__nav-item">
               <%= link_to notices_path, class: 'footer__nav-item-link' do %>
                 通知
-                <% if @unread_notices_num > 1 %>
+                <% if @unread_notices_num > 0 %>
                   <i class="fa-solid fa-bell"></i></i><%= @unread_notices_num %>
                 <% end %>
               <% end %>
