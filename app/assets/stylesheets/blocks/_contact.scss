@@ -27,19 +27,27 @@
     @include link($primary, true);
 
     &-back {
-      @include link($secondary, true);
+      @include link($secondary);
       font-size: 1.4rem;
     }
 
     &-read {
-      @include button($success, 'sm', 'round');
+      @include button($primary, 'sm', 'round');
       font-size: 1.2rem;
 
-      &::before {
-        content: '\f058';
-        font-family: "Font Awesome 6 Free";
-        font-weight: 900;
-        margin-right: .5em;
+      &--readed {
+        background-color: $success;
+
+        &::before {
+          content: '\f058';
+          font-family: "Font Awesome 6 Free";
+          font-weight: 900;
+          margin-right: .5em;
+        }
+
+        &:after {
+          display: none;
+        }
       }
     }
   }

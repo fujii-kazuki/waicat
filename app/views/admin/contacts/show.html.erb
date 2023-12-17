@@ -13,7 +13,12 @@
 
     <div class="contact__flex">
       <%= link_to '< 一覧へ戻る', admin_contacts_path, class: 'contact__link-back' %>
-      <%= link_to '確認しました', read_admin_contact_path(@contact.id), method: :patch, class: 'contact__link-read' %>
+      <% if @contact.readed_flag %>
+        <p class="contact__link-read contact__link-read--readed">確認済み</p>
+      <% else %>
+        <%= link_to '確認しました', read_admin_contact_path(@contact.id), method: :patch, remote: true,
+          id: 'read-link', class: 'contact__link-read' %>
+      <% end %>
     </div>
   </div>
 </section>
