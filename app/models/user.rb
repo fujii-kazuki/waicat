@@ -25,8 +25,9 @@ class User < ApplicationRecord
 
   devise :validatable
   
+  # ゲストユーザーのモデルインスタンスを返す（無ければ自動作成）
   def self.guest
-    user = find_or_create_by!(email: 'guest@example.com') do |user|
+    user = find_or_create_by!(email: User.get_guest_user_email) do |user|
       user.name = 'ゲストユーザー'
       user.postal_code = '0000000'
       user.prefecture = '***'
@@ -38,9 +39,14 @@ class User < ApplicationRecord
     return user
   end
 
+  # ゲストユーザーのメールアドレスを返す
+  def self.get_guest_user_email
+    ENV.has_key?('WAICAT_GUEST_EMAIL') ? ENV['WAICAT_GUEST_EMAIL'] : 'guest@example.com'
+  end
+
   # ゲストユーザー判定
   def is_guest_user?
-    email == 'guest@example.com' ? true : false
+    email == User.get_guest_user_email ? true : false
   end
 
   # 会員プロフィール画像のURLを返す

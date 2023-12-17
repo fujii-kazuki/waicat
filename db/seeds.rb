@@ -7,10 +7,16 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 
+##################################################################
+
 # 管理者
+
+##################################################################
+
+# 環境変数が定義されていない場合、サンプルのメールアドレスとパスワードを設定
 Admin.create!(
-  email: 'admin@admin',
-  password: 'password'
+  email: ENV.has_key?('WAICAT_ADMIN_EMAIL') ? ENV['WAICAT_ADMIN_EMAIL'] : 'admin@example.com',
+  password: ENV.has_key?('WAICAT_ADMIN_PASSWORD') ? ENV['WAICAT_ADMIN_PASSWORD'] : 'password'
 )
 
 # 都道府県
@@ -31,7 +37,7 @@ end
 # ゲストユーザー
 User.create!(
   name: 'ゲストユーザー',
-  email: 'guest@example.com',
+  email: User.get_guest_user_email,
   postal_code: '0000000',
   prefecture: '***',
   city: '***',
