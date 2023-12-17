@@ -6,6 +6,7 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
+puts 'seedの実行を開始'
 
 ##################################################################
 
@@ -189,3 +190,5 @@ end
     body: "#{i}-お問い合わせ内容ですお問い合わせ内容ですお問い合わせ内容ですお問い合わせ内容ですお問い合わせ内容です"
   )
 end
+
+puts 'seedの実行が完了しました'
