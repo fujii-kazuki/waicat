@@ -6,84 +6,21 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-# レコード作成完了メッセージ
-def records_created_complete_message(records_name)
-  puts "#{records_name}のレコードが作成されました"
-end
-
 puts 'seedの実行を開始'
 
-##################################################################
+# seedsフォルダ内の引数ファイルのパスを返す
+def seeds_path(file_name)
+  return "./db/seeds/#{file_name}.rb"
+end
 
 # 管理者
-
-##################################################################
-
-def admin_seed
-  # 環境変数が定義されていない場合、サンプルのメールアドレスとパスワードを設定
-  email = ENV.has_key?('WAICAT_ADMIN_EMAIL') ? ENV['WAICAT_ADMIN_EMAIL'] : 'admin@example.com'
-  password = ENV.has_key?('WAICAT_ADMIN_PASSWORD') ? ENV['WAICAT_ADMIN_PASSWORD'] : 'password'
-
-  Admin.find_or_create_by!(email: email) do |admin|
-    admin.password = password
-    # レコード作成完了メッセージ
-    records_created_complete_message('管理者')
-  end
-end
-
-admin_seed()
-
-
-##################################################################
+require seeds_path('admin')
 
 # ゲストユーザー
-
-##################################################################
-
-def guest_user_seed
-  email = User.get_guest_user_email # 環境変数が定義されていない場合、サンプルのメールアドレスを設定
-  password = SecureRandom.urlsafe_base64
-
-  User.find_or_create_by!(email: email) do |guest_user|
-    guest_user.name = 'ゲストユーザー'
-    guest_user.postal_code = '0000000'
-    guest_user.prefecture = '***'
-    guest_user.city = '***'
-    guest_user.telephone_number = '00000000000'
-    guest_user.password = password
-    # レコード作成完了メッセージ
-    records_created_complete_message('ゲストユーザー')
-  end
-end
-
-guest_user_seed()
-
-
-##################################################################
+require seeds_path('guest_user')
 
 # 都道府県
-
-##################################################################
-
-def prefectures_seed
-  prefecture_names = [
-    '北海道', '青森県', '岩手県', '宮城県', '秋田県', '山形県', '福島県',
-    '茨城県', '栃木県', '群馬県', '埼玉県', '千葉県', '東京都', '神奈川県',
-    '新潟県', '富山県', '石川県', '福井県', '山梨県', '長野県', '岐阜県',
-    '静岡県', '愛知県', '三重県', '滋賀県', '京都府', '大阪府', '兵庫県',
-    '奈良県', '和歌山県', '鳥取県', '島根県', '岡山県', '広島県', '山口県',
-    '徳島県', '香川県', '愛媛県', '高知県', '福岡県', '佐賀県', '長崎県',
-    '熊本県', '大分県', '宮崎県', '鹿児島県', '沖縄県'
-  ]
-  
-  prefecture_names.each do |prefecture_name|
-    Prefecture.find_or_create_by!(name: prefecture_name) do |prefecture|
-      prefecture.name = prefecture_name
-    end
-  end
-end
-
-prefectures_seed()
+require seeds_path('prefecture')
 
 
 # 会員
@@ -231,4 +168,4 @@ end
   )
 end
 
-puts 'seedの実行が完了しました'
+puts 'seedの実行を完了'
