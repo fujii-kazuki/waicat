@@ -34,6 +34,31 @@ end
 admin_seed()
 
 
+##################################################################
+
+# ゲストユーザー
+
+##################################################################
+
+def guest_user_seed
+  email = User.get_guest_user_email # 環境変数が定義されていない場合、サンプルのメールアドレスを設定
+  password = SecureRandom.urlsafe_base64
+
+  User.find_or_create_by!(email: email) do |guest_user|
+    guest_user.name = 'ゲストユーザー'
+    guest_user.postal_code = '0000000'
+    guest_user.prefecture = '***'
+    guest_user.city = '***'
+    guest_user.telephone_number = '00000000000'
+    guest_user.password = password
+    # レコード作成完了メッセージ
+    records_created_complete_message('ゲストユーザー')
+  end
+end
+
+guest_user_seed()
+
+
 # 都道府県
 [
   '北海道', '青森県', '岩手県', '宮城県', '秋田県', '山形県', '福島県',
@@ -48,17 +73,6 @@ admin_seed()
     name: prefecture_name
   )
 end
-
-# ゲストユーザー
-User.create!(
-  name: 'ゲストユーザー',
-  email: User.get_guest_user_email,
-  postal_code: '0000000',
-  prefecture: '***',
-  city: '***',
-  telephone_number: '00000000000',
-  password: SecureRandom.urlsafe_base64
-)
 
 # 会員
 15.times do |i|
