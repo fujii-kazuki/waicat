@@ -22,20 +22,9 @@ require seeds_path('guest_user')
 # 都道府県
 require seeds_path('prefecture')
 
-
 # 会員
-15.times do |i|
-  i += 1
-  User.create!(
-    name: "猫山太郎-#{i}",
-    telephone_number: '09012345678',
-    email: "test@test#{i}",
-    postal_code: '1234567',
-    prefecture: Prefecture.find(rand(1..47)).name,
-    city: "にゃん#{i}区",
-    password: 'password'
-  )
-end
+require seeds_path('user')
+
 
 # 種類
 breed_names = [
