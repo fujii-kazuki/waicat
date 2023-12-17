@@ -1,2 +1,19 @@
-<h1>Admin::Contacts#show</h1>
-<p>Find me in app/views/admin/contacts/show.html.erb</p>
+<section class="contact">
+  <div class="container">
+    <h2 class="heading heading--2">お問い合わせ内容</h2>
+
+    <dl class="contact__grid">
+      <dt>送信者</dt>
+      <dd><%= link_to @contact.user.name, admin_user_path(@contact.user.id), class: 'contact__link' %></dd>
+      <dt>タイトル</dt>
+      <dd><%= @contact.title %></dd>
+      <dt>内容</dt>
+      <dd><%= show_text @contact.body %></dd>
+    </dl>
+
+    <div class="contact__flex">
+      <%= link_to '< 一覧へ戻る', admin_contacts_path, class: 'contact__link-back' %>
+      <%= link_to '確認しました', read_admin_contact_path(@contact.id), method: :patch, class: 'contact__link-read' %>
+    </div>
+  </div>
+</section>
