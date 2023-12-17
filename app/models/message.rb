@@ -14,11 +14,11 @@ class Message < ApplicationRecord
     )
 
     # リアルタイムチャットを表示
-    ActionCable.server.broadcast 'message_channel', {
+    ActionCable.server.broadcast("chatroom-#{chatroom_id}", {
       user: message.user,
       message_body: message.body,
       message_created_at: message.created_at.strftime('%Y/%m/%d %H:%M')
-    }
+    })
 
     return message
   end

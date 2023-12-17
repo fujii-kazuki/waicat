@@ -15,6 +15,10 @@
       <% end %>
     </dl>
 
-    <%= link_to '詳細 > ', user_path(@cat.user.id), class: 'profile-card__link' %>
+    <% if admin_url? %>
+        <%= link_to '詳細 > ', admin_user_path(@cat.user.id), class: 'profile-card__link' %>
+    <% else %>
+      <%= link_to '詳細 > ', user_path(@cat.user.id), class: 'profile-card__link' %>
+    <% end %>
   </div>
 </div>

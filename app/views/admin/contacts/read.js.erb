@@ -1,0 +1,8 @@
+const readLinkElm = document.querySelector('#read-link');
+const readedTextElm = document.createElement('p');
+readedTextElm.className = 'contact__link-read contact__link-read--readed';
+readedTextElm.innerText = '確認済み';
+readLinkElm.replaceWith(readedTextElm);
+
+<%# フラッシュメッセージをレンダリング %>
+document.querySelector('#flash-message').innerHTML = '<%= j(render 'layouts/flash_message') %>';

@@ -1,6 +1,8 @@
 <section>
   <div class="container">
-    <h2 class="heading heading--2">掲載一覧</h2>
+    <h2 class="heading heading--2">
+      <%= @user.name + 'の' if !params.dig(:q, :user_id).blank? %>掲載一覧
+    </h2>
 
       <table class="admin-table admin-table--users">
         <thead>
@@ -21,6 +23,7 @@
             <th class="admin-table__th">
               <%= search_form_for @q, url: admin_cats_path, class: 'form admin-table__form' do |f| %>
                 <%= f.hidden_field :deleted_flag_eq %>
+                <%= f.hidden_field :user_id, value: params.dig(:q, :user_id) %>
                 <%= f.label :publication_status_eq, '掲載ステータス', class: 'form__label' %>
                 <%= f.select :publication_status_eq, [['下書き', 0], ['公開', 1], ['非公開', 2], ['相談中', 3], ['里親決定', 4], ['募集終了', 5], ['掲載締め切り', 6]], { include_blank: '全て' }, onchange: 'submit(this.form)', class: 'selectbox' %>
               <% end %>
@@ -28,6 +31,7 @@
             <th class="admin-table__th">
               <%= search_form_for @q, url: admin_cats_path, class: 'form admin-table__form' do |f| %>
                 <%= f.hidden_field :publication_status_eq %>
+                <%= f.hidden_field :user_id, value: params.dig(:q, :user_id) %>
                 <%= f.label :deleted_flag_eq, '状態', class: 'form__label' %>
                 <%= f.select :deleted_flag_eq, [['利用中', false], ['削除済', true]], { include_blank: '全て' }, onchange: 'submit(this.form)', class: 'selectbox' %>
               <% end %>
@@ -50,7 +54,7 @@
                   <% if cat.publication_title.blank? %>
                     <%= link_to 'タイトル未設定', admin_cat_path(cat.id) %>
                   <% else %>
-                    <%= link_to truncate(cat.publication_title, length: 60) %>
+                    <%= link_to truncate(cat.publication_title, length: 60), admin_cat_path(cat.id) %>
                   <% end %>
                 </td>
                 <td class="admin-table__td admin-table__td--link">

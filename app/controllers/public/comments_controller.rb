@@ -35,9 +35,9 @@ class Public::CommentsController < ApplicationController
   end
 
   def destroy
+    Comment.find(params[:id]).update(deleted_flag: true)
     @cat = Cat.find(params[:cat_id])
     @comments = @cat.comments
-    @cat.comments.find(params[:id]).destroy
     flash.now[:success] = 'コメントを削除しました。'
   end
 

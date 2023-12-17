@@ -1,19 +1,13 @@
 class Admin::ChatroomsController < ApplicationController
   def index
-    if params[:user_id].blank?
-      # パラメーターに会員IDが含まれていない場合
-      @q = Chatroom.ransack(params[:q])
-      @chatrooms = @q.result.order(created_at: :desc).page(params[:page]).per(15)
-    else
-      chatroom_users = ChatroomUser.where(user_id: params[:user_id])
-      @chatrooms = chatroom_users.map { |chatroom_user| chatroom_user.chatroom }
-      @chatrooms.reverse
-    end
+    # パラメーターに会員IDが含まれていない場合
+    @q = Chatroom.ransack(params[:q])
+    @chatrooms = @q.result.order(created_at: :desc).page(params[:page]).per(15)
   end
 
   def show
     @chatroom = Chatroom.find(params[:id])
-    @messages = @chatroom.messages
+    @messages = @chatroom.messages.reverse
     @candidater = @chatroom.candidate.user #里親立候補者
     @recruiter = @chatroom.chat_partner(@candidater) #里親募集者
     @cat = @chatroom.candidate.cat
@@ -22,7 +16,7 @@ class Admin::ChatroomsController < ApplicationController
   def leave
     chatroom = Chatroom.find(params[:chatroom_id])
     chatroom.update(deleted_flag: true)
-    flash[:notice] = 'このチャットルームを閉じました。'
-    redirect_to admin_chatroom_path(chatroom.id)
+    flash[:notice] = 'チャットルームを閉じました。'
+    redirect_back(fallback_location: root_path)
   end
 end

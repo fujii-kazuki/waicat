@@ -76,6 +76,11 @@
     }
   }
 
+  &__container {
+    margin: 0 auto;
+    max-width: 800px;
+  }
+
   &__description-text {
     font-size: 1.2rem;
     padding: 0 1em;
@@ -83,6 +88,11 @@
 
   &__ended-text {
     color: $danger;
+    margin: 1em 0;
+  }
+
+  &__leave-button {
+    @include button($secondary, 'sm');
     margin: 1em 0;
   }
 
