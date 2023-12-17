@@ -40,7 +40,7 @@ users = [
 
 users.each do |user|
   User.find_or_create_by!(email: user[:email]) do |end_user|
-    puts "Userモデルのレコード(name: '#{user[:name]}', telephone_number: '#{user[:telephone_number]}', email: '#{user[:email]}', postal_code: '#{user[:postal_code]}', prefecture: '#{user[:prefecture]}', city: '#{user[:city]}', password: '#{user[:password]}')作成"
+    puts "Userモデルのレコード作成"
 
     end_user.name = user[:name]
     end_user.telephone_number = user[:telephone_number]

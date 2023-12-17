@@ -16,7 +16,7 @@ prefectures = [
 
 prefectures.each do |prefecture_name|
   Prefecture.find_or_create_by!(name: prefecture_name) do |prefecture|
-    puts "Prefectureモデルのレコード(name: '#{prefecture_name}')作成"
+    puts "Prefectureモデルのレコード作成"
 
     prefecture.name = prefecture_name
   end
