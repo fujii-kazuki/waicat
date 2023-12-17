@@ -6,6 +6,11 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
+# レコード作成完了メッセージ
+def records_created_complete_message(records_name)
+  puts "#{records_name}のレコードが作成されました"
+end
+
 puts 'seedの実行を開始'
 
 ##################################################################
@@ -14,11 +19,20 @@ puts 'seedの実行を開始'
 
 ##################################################################
 
-# 環境変数が定義されていない場合、サンプルのメールアドレスとパスワードを設定
-Admin.create!(
-  email: ENV.has_key?('WAICAT_ADMIN_EMAIL') ? ENV['WAICAT_ADMIN_EMAIL'] : 'admin@example.com',
-  password: ENV.has_key?('WAICAT_ADMIN_PASSWORD') ? ENV['WAICAT_ADMIN_PASSWORD'] : 'password'
-)
+def admin_seed
+  # 環境変数が定義されていない場合、サンプルのメールアドレスとパスワードを設定
+  email = ENV.has_key?('WAICAT_ADMIN_EMAIL') ? ENV['WAICAT_ADMIN_EMAIL'] : 'admin@example.com'
+  password = ENV.has_key?('WAICAT_ADMIN_PASSWORD') ? ENV['WAICAT_ADMIN_PASSWORD'] : 'password'
+
+  Admin.find_or_create_by!(email: email) do |admin|
+    admin.password = password
+    # レコード作成完了メッセージ
+    records_created_complete_message('管理者')
+  end
+end
+
+admin_seed()
+
 
 # 都道府県
 [
