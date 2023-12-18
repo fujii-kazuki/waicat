@@ -94,7 +94,7 @@ class Cat < ApplicationRecord
   # 掲載期間が今日の日付以降か確認
   def confirm_publication_deadline
     return if publication_deadline.blank?
-    errors.add(:publication_deadline, "は本日から最低でも翌日以降の日付を選択してください") if publication_deadline < Time.zone.now.tomorrow
+    errors.add(:publication_deadline, "は翌日以降の日付を選択してください") if publication_deadline < Time.zone.now.tomorrow
     errors.add(:publication_deadline, "は掲載日（新規の掲載の場合は本日）から当日含む14日以内の日付を選択してください") if publication_deadline > publication_date.since(2.weeks)
   end
 

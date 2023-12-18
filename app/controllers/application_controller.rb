@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
 
   before_action :authenticate_admin!, if: :admin_url?
   before_action :check_unread_notices, if: proc { user_signed_in? && !current_user.is_guest_user? }
-  before_action :check_publication_period, if: proc { user_signed_in? && !current_user.is_guest_user? }
+  before_action :check_publication_period
   
   # ゲストユーザーか確認
   def check_guest_user
