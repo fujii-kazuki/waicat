@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>The page you were looking for doesn't exist (404)</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <style>
+    body {
+      background-color: #6dbec8;
+      color: white;
+      font-family: sans-serif;
+    }
+
+    .error-page {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      height: 100vh;
+      width: 100%;
+    }
+
+    .error-page__container {
+      padding-bottom: 20vh;
+    }
+
+    .error-page__heading {
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      margin-bottom: 50px;
+      text-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    }
+
+    .error-page__heading > span:first-child {
+      font-size: 200px;
+    }
+
+    .error-page__heading > span:last-child {
+      letter-spacing: 35px;
+      margin-right: -1em;
+    }
+
+    .error-page__top-page-link {
+      background-color: white;
+      border-radius: 10px;
+      color: #6dbec8;
+      display: inline-block;
+      margin-top: 20px;
+      padding: .5em 2em;
+      text-decoration: none;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="error-page">
+    <div class="error-page__container">
+      <h1 class="error-page__heading">
+        <span>500</span>
+        <span>Error</span>
+      </h1>
+      <p class="error-page__text">申し訳ありませんが、問題が発生しました。</p>
+      <a href="/" class="error-page__top-page-link">トップページへ</a>
+    </div>
+  </div>
+</body>
+</html>

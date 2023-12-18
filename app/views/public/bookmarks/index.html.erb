@@ -1,0 +1,15 @@
+<section>
+  <div class="container">
+    <h2 class="heading heading--2">
+      ブックマーク一覧
+      <small>（全<%= @total_count %>件・<%= @current_page %>/<%= @total_pages %>ページ目）</small>
+    </h2>
+
+    <% if @bookmark_cats.any? %>
+      <%= render 'public/cats/list', cats: @bookmark_cats %>
+      <%= paginate @bookmark_cats %>
+    <% else %>
+      <p>ブックマークされた掲載はありません</p>
+    <% end %>
+  </div>
+</section>

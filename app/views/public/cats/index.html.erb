@@ -1,0 +1,24 @@
+<section>
+  <div class="container">
+    <h2 class="heading heading--2">里親募集の猫を探す</h2>
+
+    <section>
+      <h3 class="heading heading--3">検索</h3>
+      <%= render 'search-form' %>
+    </section>
+
+    <section>
+      <h3 class="heading heading--3">
+        掲載一覧
+        <small>（全<%= @total_count %>件・<%= @current_page %>/<%= @total_pages %>ページ目）</small>
+      </h3>
+
+      <% if @cats.any? %>
+        <%= render 'list', cats: @cats %>
+        <%= paginate @cats %>
+      <% else %>
+        <p>現在里親募集中の猫はいません。</p>
+      <% end %>
+    </section>
+  </div>
+</section>

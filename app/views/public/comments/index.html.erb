@@ -1,0 +1,23 @@
+<section class="comments">
+  <div class="container">
+    <dl class="comments__grid">
+      <dt>このコメントの里親募集掲載</dt>
+      <dd class="comments__grid-img-wrap"><%= image_tag @cat.photo_image_url(0) %></dd>
+      <dd><%= link_to @cat.publication_title, cat_path(@cat.id), class: 'comments__link' %></dd>
+    </dl>
+    
+    <h2 class="heading heading--2">コメント一覧</h2>
+
+    <div id="cat-comment-list">
+      <%= render 'list', comments: @comments %>
+    </div>
+
+    <%= form_with model: [@cat, @comment], local: false, class: 'form comments__form' do |f| %>
+      <div class="comments__form-container">
+        <%= f.text_area :body, placeholder: '送信メッセージを入力', id: 'comment-text-area', class: 'text-area comments__form-text-area' %>
+        <%= link_to '< 掲載ページに戻る', cat_path(@cat.id), class: 'comments__form-back-link' %>
+        <%= button_tag '送信', class: 'chatroom__form-send-button' %>
+      </div>
+    <% end %>
+  </div>
+</section>

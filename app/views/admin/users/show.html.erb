@@ -1,0 +1,55 @@
+<section class="profile">
+  <div class="container">
+    <h2 class="heading heading--2">
+      <%= @user.name %>の詳細
+    </h2>
+
+    <div class="profile__grid profile__grid--1">
+      <div class="profile__avatar-image-wrap">
+        <%= image_tag @user.profile_image_url('original') %>
+      </div>
+
+      <dl class="profile__grid profile__grid--2">
+        <dt>状態</dt>
+        <% if @user.deleted_flag %>
+          <dd class="profile__dd profile__dd--secondary">
+            退会済
+          </dd>
+        <% else %>
+          <dd class="profile__dd profile__dd--success">
+            利用中
+          </dd>
+        <% end %>
+        <dt>名前</dt>
+        <dd><%= @user.name %></dd>
+        <dt>所在地</dt>
+        <dd><%= @user.prefecture + @user.city %></dd>
+        <dt>電話番号</dt>
+        <dd><%= @user.telephone_number %></dd>
+        <dt>メールアドレス</dt>
+        <dd><%= @user.email %></dd>
+        <dt>登録日</dt>
+        <dd><%= @user.created_at.strftime('%Y/%m/%d') %></dd>
+      </dl>
+    </div>
+
+    <section>
+      <h3 class="heading heading--3">プロフィール</h3>
+      <p class="profile__profile-text">
+        <% if !@user.profile.blank? %>
+          <%= show_text @user.profile %></p>
+        <% else %>
+          プロフィール文は設定されていません
+        <% end %>
+      </p>
+    </section>
+
+    <div class="profile__link-wrap">
+      <%= link_to 'この会員の掲載一覧', admin_cats_path(q: { user_id: @user.id }), class: 'profile__link' %>
+      <%= link_to 'この会員のコメント一覧', admin_user_comments_path(user_id: @user.id, q: { user_id: @user.id }), class: 'profile__link' %>
+      <% if @user.id != 1 && !@user.deleted_flag %>
+        <%= link_to 'この会員を削除', admin_user_leave_path(@user.id), method: :patch, data: { confirm: 'この会員を削除します。よろしいですか？' }, class: 'profile__link' %>
+      <% end %>
+    </div>
+  </div>
+</section>

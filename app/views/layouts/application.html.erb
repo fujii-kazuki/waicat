@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head lang="ja">
+    <title>待ちねこ - waicat</title>
+    <meta http-equiv="content-language" content="ja">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= favicon_link_tag('favicon.ico') %>
+    
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@700&display=swap" rel="stylesheet">
+
+    <script src="https://kit.fontawesome.com/92a2ba56c2.js" crossorigin="anonymous"></script>
+
+    <%= stylesheet_link_tag 'application', media: 'all' %>
+    <%= javascript_pack_tag 'application' %>
+  </head>
+
+  <body>
+    <%= render 'layouts/header' %>
+
+    <%= render 'layouts/sp_nav_menu' %>
+
+    <main id="main" class="main">
+      <%= yield %>
+    </main>
+
+    <div id="page-top-button" class="page-top-button">
+      <i class="page-top-button__icon fa-solid fa-angle-up"></i>
+      <span class="page-top-button__text">TOP</span>
+    </div>
+
+    <%= render 'layouts/footer' %>
+
+    <div id="flash-message"><%= render 'layouts/flash_message' %></div>
+
+    <%# 下記コードでiOSでリンクを2回タップしないと反応しない現象を解決 %>
+    <script>document.addEventListener('touchstart',function(){});</script>
+  </body>
+</html>

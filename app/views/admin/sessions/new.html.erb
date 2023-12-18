@@ -1,0 +1,30 @@
+<div class="container">
+  <h2 class="heading heading--2">管理者ログイン</h2>
+
+  <%= form_with model: @admin, url: admin_session_path, class: 'form admin-sign-in__form' do |f| %>
+    <div class="form__container">
+      <div class="admin-sign-in__form-grid">
+        <div>
+          <%= f.label :email, class: 'form__label' %>
+          <%= f.email_field :email, autofocus: true, autocomplete: "email", class: 'text-field' %>
+        </div>
+
+        <div>
+          <%= f.label :password, class: 'form__label' %>
+          <%= f.password_field :password, autocomplete: "current-password", class: 'text-field' %>
+        </div>
+
+        <% if devise_mapping.rememberable? %>
+          <div>
+            <%= f.check_box :remember_me, class: 'checkbox' %>
+            <%= f.label :remember_me, class: 'form__label' %>
+          </div>
+        <% end %>
+      </div>
+
+      <div class="form__flex">
+        <%= f.submit "ログイン", class: 'admin-sign-in__form-log-in-button' %>
+      </div>
+    </div>
+  <% end %>
+</div>

@@ -1,0 +1,25 @@
+<section class="contact">
+  <div class="container">
+    <h2 class="heading heading--2">お問い合わせ内容確認</h2>
+
+    <p class="contact__text">下記の内容でお問い合わせを行います。よろしいですか？</p>
+
+    <dl class="contact__grid">
+      <dt>お問い合わせ内容</dt>
+      <dd><%= @contact.title %></dd>
+      <dt>詳細</dt>
+      <dd><%= show_text @contact.body %></dd>
+    </dl>
+
+    <%= form_with model: @contact, class: 'form contact__form' do |f| %>
+      <%= f.hidden_field :title %>
+      <%= f.hidden_field :body %>
+      <div class="form__container">
+        <div class="form__flex">
+          <%= f.submit '戻る', class: 'contact__form-back-button' %>
+          <%= f.submit '送信', class: 'contact__form-send-button' %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</section>

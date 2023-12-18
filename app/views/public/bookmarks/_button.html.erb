@@ -1,0 +1,5 @@
+<% if current_user.bookmarked_cat?(cat_id) %>
+  <%= link_to 'ブックマーク解除', bookmark_path(cat_id), method: :delete, remote: true, class: 'bookmark bookmark--delete' %>
+<% else %>
+  <%= link_to 'ブックマーク登録', bookmarks_path(cat_id: cat_id), method: :post, remote: true, class: 'bookmark bookmark--register' %>
+<% end %>

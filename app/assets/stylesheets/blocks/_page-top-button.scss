@@ -1,0 +1,36 @@
+.page-top-button {
+  background-image: image-url('footprints.png');
+  background-size: contain;
+  cursor: pointer;
+  overflow: hidden;
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  transform: rotate(-15deg);
+  user-select: none;
+  height: 70px;
+  width: 70px;
+  z-index: 1;
+
+  @include media-breakpoint-down(md) {
+    transform: rotate(-15deg) scale(0.8);
+    right: 10px;
+  }
+
+  &__icon, &__text {
+    color: $white;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  &__icon {
+    font-size: 16px;
+    top: 28px;
+  }
+
+  &__text {
+    font-size: 12px;
+    bottom: 12px;
+  }
+}

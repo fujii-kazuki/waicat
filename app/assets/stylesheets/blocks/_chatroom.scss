@@ -1,0 +1,124 @@
+.chatroom {
+  &__grid{
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 10px;
+    margin-bottom: 20px;
+
+    @include media-breakpoint-down(md) {
+      grid-template-columns: 1fr;
+    }
+
+    dt {
+      background-color: $waicat-main;
+      border-radius: 5px;
+      color: $white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1em;
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    dd {
+      align-self: center;
+      display: flex;
+      gap: 10px;
+
+      a {
+        @include link($primary, true);
+        align-self: center;
+       }
+    }
+  }
+
+  &__link {
+    @include link($primary);
+  }
+
+  &__cat-photo-wrap {
+    border-radius: 5px;
+    flex: 0 0 100px;
+    overflow: hidden;
+    height: 100px;
+    width: 100px;
+
+    img {
+      object-fit: cover;
+      height: 100%;
+      width: 100%;
+    }
+  }
+
+  &__flex {
+    display: flex;
+    gap: 20px;
+    align-items: start;
+    justify-content: center;
+
+    @include media-breakpoint-down(md) {
+      flex-direction: column;
+
+      & > :not(:first-child) {
+        margin-top: 0;
+      }
+    }
+
+    &-item {
+      margin-top: 50px;
+      text-align: center;
+      width: 40%;
+
+      @include media-breakpoint-down(md) {
+        width: 100%;
+      }
+    }
+  }
+
+  &__container {
+    margin: 0 auto;
+    max-width: 800px;
+  }
+
+  &__description-text {
+    font-size: 1.2rem;
+    padding: 0 1em;
+  }
+
+  &__ended-text {
+    color: $danger;
+    margin: 1em 0;
+  }
+
+  &__leave-button {
+    @include button($secondary, 'sm');
+    margin: 1em 0;
+  }
+
+  &__candidate {
+    &-cancel-button,
+    &-ok-button,
+    &-complete-button {
+      @include media-breakpoint-down(md) {
+        width: 100%;
+      }
+    }
+
+    &-cancel-button {
+      @include button($secondary);
+    }
+  
+    &-ok-button {
+      @include button($success);
+    }
+  
+    &-complete-button {
+      @include button($success);
+    }
+  }
+
+  &__close-button {
+    @include button($danger);
+  }
+}

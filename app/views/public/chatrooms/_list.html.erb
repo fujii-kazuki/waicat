@@ -1,0 +1,17 @@
+<ul>
+  <% chatrooms.each do |chatroom| %>
+    <li>
+      <%= link_to chatroom_path(chatroom.id) do %>
+        <p>
+          <% if current_user.id == chatroom.candidate.user.id %>
+            <%= chatroom.candidate.cat.name %>の里親応募者
+          <% else %>
+            <%= chatroom.candidate.cat.name %>の里親募集者
+          <% end%>
+          ：<%= chatroom.candidate.user.name %>
+        </p>
+        <p><%= truncate(chatroom.last_message.body, length: 200) %></p>
+      <% end %>
+    </li>
+  <% end %>
+</ul>

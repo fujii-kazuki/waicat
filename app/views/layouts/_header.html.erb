@@ -1,0 +1,91 @@
+<header id="header" class="header">
+  <div class="container header__container-top">
+    <%= render 'layouts/logo' %>
+
+    <div id="hamburger-menu" class="hamburger-menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+
+    <nav class="header__sub-menu">
+      <ul class="header__sub-menu-list">
+        <% if user_signed_in? && !admin_url? %>
+          <%# 会員ログイン済 %>
+          <% if !current_user.is_guest_user? %>
+            <li class="header__sub-menu-item">
+              <%= link_to 'マイページ', user_path(current_user.id), class: 'header__sub-menu-item-link' %>
+            </li>
+            <li class="header__sub-menu-item">
+              <%= link_to 'チャットルーム', chatrooms_path, class: 'header__sub-menu-item-link' %>
+            </li>
+            <li class="header__sub-menu-item">
+              <%= link_to notices_path, class: 'header__sub-menu-item-link' do %>
+                通知
+                <% if @unread_notices_num > 0 %>
+                  <i class="fa-solid fa-bell"></i></i><%= @unread_notices_num %>
+                <% end %>
+              <% end %>
+            </li>
+          <% end %>
+          <li class="header__sub-menu-item">
+            <%= link_to 'ブックマーク', bookmarks_path, class: 'header__sub-menu-item-link' %>
+          </li>
+          <li class="header__sub-menu-item">
+            <%= link_to 'ログアウト', destroy_user_session_path, method: :delete, class: 'header__sub-menu-item-link' %>
+          </li>
+        <% elsif admin_signed_in? && admin_url? %>
+          <%# 管理者ログイン済かつ管理者ページ %>
+          <li class="header__sub-menu-item">
+            <%= link_to '管理者トップページ', admin_top_path, class: 'header__sub-menu-item-link' %>
+          </li>
+          <li class="header__sub-menu-item">
+            <%= link_to '管理者ログアウト', destroy_admin_session_path, method: :delete, class: 'header__sub-menu-item-link' %>
+          </li>
+        <% else %>
+          <%# 未ログイン %>
+          <li class="header__sub-menu-item">
+            <%= link_to '新規登録', new_user_registration_path, class: 'header__sub-menu-item-link' %>
+          </li>
+          <li class="header__sub-menu-item">
+            <%= link_to 'ログイン', new_user_session_path, class: 'header__sub-menu-item-link' %>
+          </li>
+          <li class="header__sub-menu-item">
+            <%= link_to 'ゲストログイン', guest_session_path, method: :post, class: 'header__sub-menu-item-link' %>
+          </li>
+        <% end %>
+      </ul>
+    </nav>
+  </div>
+
+  <% if !admin_url? %>
+    <div class="container-fluid header__container-bottom">
+      <div class="container">
+        <nav class="header__menu">
+          <ul class="header__menu-list">
+            <li class="header__menu-item">
+              <%= link_to about_path, class: 'header__menu-item-link' do %>
+                <span>はじめての方へ</span>
+              <% end %>
+            </li>
+            <li class="header__menu-item">
+              <%= link_to cats_path, class: 'header__menu-item-link' do %>
+                <span>里親募集の猫を探す</span>
+              <% end %>
+            </li>
+            <li class="header__menu-item">
+              <%= link_to new_cat_path, class: 'header__menu-item-link' do %>
+                <span>里親を募集する</span>
+              <% end %>
+            </li>
+            <li class="header__menu-item">
+              <%= link_to new_contact_path, class: 'header__menu-item-link' do %>
+                <span>お問い合わせ</span>
+              <% end %>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  <% end %>
+</header>

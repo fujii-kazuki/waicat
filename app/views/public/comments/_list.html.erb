@@ -1,0 +1,28 @@
+<% if comments.any? %>
+  <ul class="comments__list">
+    <% comments.each do |comment| %>
+      <li class="comments__item<%= ' comments__item--publisher' if @cat.user.id == comment.user.id %>">
+        <div class="comments__item-avatar-image-wrap">
+          <%= link_to user_path(comment.user.id) do %>
+            <%= image_tag comment.user.profile_image_url %>
+          <% end %>
+        </div>
+
+        <p class="comments__item-user-name">
+          <%= '掲載者本人：' if @cat.user.id == comment.user.id %><%= comment.user.name %>
+        </p>
+
+        <p class="comments__item-body"><%= show_text comment.body %></p>
+
+        <div class="comments__item-meta">
+          <time class="comments__item-created-at"><%= comment.created_at.strftime('%Y/%m/%d %H:%M') %></time>
+          <% if controller_name == 'comments' && comment.user.id == current_user.id %>
+            <%= link_to '削除', cat_comment_path(cat_id: @cat.id, id: comment.id), method: :delete, remote: true, class: 'comments__item-link', data: { confirm: 'コメントを削除します。よろしいですか？' } %>
+          <% end %>
+        </div>
+      </li>
+    <% end %>
+</ul>
+<% else %>
+  <p class="comments__no-text">質問・コメントはありません。</p>
+<% end %>

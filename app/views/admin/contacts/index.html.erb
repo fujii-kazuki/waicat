@@ -1,0 +1,67 @@
+<section>
+  <div class="container">
+    <h2 class="heading heading--2">掲載一覧</h2>
+
+      <table class="admin-table admin-table--users">
+        <thead>
+          <tr class="admin-table__thead-tr">
+            <th class="admin-table__th">
+              <%= sort_link @q, :id, hide_indicator: true do %>
+                ID <%= sort_link_arrow 'id' %>
+              <% end %>
+            </th>
+            <th class="admin-table__th">お問い合わせ会員名</th>
+            <th class="admin-table__th">タイトル</th>
+            <th class="admin-table__th">内容</th>
+            <th class="admin-table__th">
+              <%= sort_link @q, :created_at, hide_indicator: true do %>
+                日時 <%= sort_link_arrow 'created_at' %>
+              <% end%>
+            </th>
+            <th class="admin-table__th">
+              <%= search_form_for @q, url: admin_contacts_path, class: 'form admin-table__form' do |f| %>
+                <%= f.label :readed_flag_eq, '閲覧状態', class: 'form__label' %>
+                <%= f.select :readed_flag_eq, [['未読', false], ['既読', true]], { include_blank: '全て' }, onchange: 'submit(this.form)', class: 'selectbox' %>
+              <% end %>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <% if @contacts.any? %>
+            <% @contacts.each do |contact| %>
+              <tr class="admin-table__tbody-tr">
+                <td class="admin-table__td">
+                  <%= contact.id %>
+                </td>
+                <td class="admin-table__td admin-table__td--image admin-table__td--link">
+                  <div>
+                    <%= image_tag contact.user.profile_image_url %>
+                  </div>
+                  <%= link_to contact.user.name, admin_user_path(contact.user.id) %>
+                </td>
+                <td class="admin-table__td admin-table__td--link">
+                  <%= link_to contact.title.truncate(30), admin_contact_path(contact.id) %>
+                </td>
+                <td class="admin-table__td">
+                  <%= contact.body.truncate(45) %>
+                </td>
+                <td class="admin-table__td">
+                  <%= contact.created_at.strftime('%Y/%m/%d %H:%M') %>
+                </td>
+                <% if contact.readed_flag %>
+                  <td class="admin-table__td admin-table__td--success">
+                    既読
+                  </td>
+                <% else %>
+                  <td class="admin-table__td admin-table__td--primary">
+                    未読
+                  </td>
+                <% end %>
+              </tr>
+            <% end %>
+          <% end %>
+      </tbody>
+    </table>
+    <%= paginate @contacts %>
+  </div>
+</section>

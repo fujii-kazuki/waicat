@@ -1,0 +1,148 @@
+<section class="publish">
+  <div class="container">
+    <h2 class="heading heading--2">
+      里親募集掲載の内容確認
+    </h2>
+
+    <h3 class="heading heading--3">
+      <%= @cat.publication_title %>
+    </h3>
+
+    <% if @cat.photos.attached? %>
+      <div class="publish__photos">
+        <div id="publish-swiper" class="publish-swiper">
+          <div class="swiper-wrapper">
+            <% @cat.photos.each_with_index do |photo, i| %>
+              <div class="swiper-slide">
+                <%= image_tag @cat.photo_image_url(i, 'original') %>
+              </div>
+            <% end %>
+          </div>
+          <div class="swiper-button-prev"></div>
+          <div class="swiper-button-next"></div>
+        </div>
+
+        <div id="publish-thumbs-slider" class="publish-swiper publish-swiper--thumbs">
+          <div class="swiper-wrapper">
+            <% @cat.photos.each_with_index do |photo, i| %>
+              <div class="swiper-slide">
+                <%= image_tag @cat.photo_image_url(i) %> 
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+
+    <% if @cat.video.attached? %>
+      <h3 class="heading heading--3">映像</h3>
+      <div class="publish__video">
+        <%= video_tag rails_blob_path(@cat.video), controls: true %>
+      </div>
+    <% end %>
+
+    <section>
+      <h3 class="heading heading--3">基本情報</h3>
+      <dl class="publish__grid publish__grid--1">
+        <dt>掲載状態</dt>
+        <dd class="publish__status publish__status--<%= @cat.publication_status %>"><%= @cat.publication_status_i18n %></dd>
+
+        <dt>所在地</dt>
+        <dd><%= @cat.prefecture %><%= @cat.city %></dd>
+
+        <dt>掲載日</dt>
+        <dd><%= @cat.publication_date %></dd>
+
+        <dt>掲載期限</dt>
+        <dd><%= @cat.publication_deadline %></dd>
+
+        <dt>名前</dt>
+        <dd><%= @cat.name %></dd>
+
+        <dt>性別</dt>
+        <dd class="publish__gender publish__gender--<%= @cat.gender %>"><%= @cat.gender_i18n %></dd>
+
+        <dt>年齢</dt>
+        <dd><%= @cat.age %>歳</dd>
+
+        <dt>体重</dt>
+        <dd><%= @cat.weight %>kg</dd>
+
+        <dt>毛の柄・長さ</dt>
+        <dd><%= @cat.animal_print %>・<%= @cat.hair_length_i18n %></dd>
+
+        <dt>種類</dt>
+        <dd><%= @cat.breed %></dd>
+        
+        <dt>去勢・避妊</dt>
+        <% if @cat.castration_flag %>
+          <dd>去勢済み</dd>
+        <% else %>
+          <dd>未手術</dd>
+        <% end %>
+
+        <dt>ワクチン</dt>
+        <% if @cat.vaccine_flag %>
+          <dd>接種済み</dd>
+        <% else %>
+          <dd>未接種</dd>
+        <% end %>
+      </dl>
+    </section>
+
+    <section>
+      <h3 class="heading heading--3">詳細情報</h3>
+      <dl class="publish__grid publish__grid--2">
+        <dt>経緯</dt>
+        <dd><%= show_text @cat.background %></dd>
+
+        <dt>性格</dt>
+        <dd><%= show_text @cat.personality %></dd>
+
+        <dt>健康状態</dt>
+        <dd><%= show_text @cat.health %></dd>
+
+        <dt>譲渡場所</dt>
+        <dd><%= show_text @cat.delivery_place %></dd>
+
+        <% if !@cat.remarks.blank? %>
+          <dt>備考</dt>
+          <dd><%= show_text @cat.remarks %></dd>
+        <% end %>
+      </dl>
+    </section>
+  </div>
+
+  <%= form_with model: @cat, method: "#{:patch if params[:edit]}", class: 'form publish-confirm__form' do |f| %>
+    <% @cat.photos.each do |photo| %>
+      <%= f.hidden_field :photos, multiple: true, value: photo.signed_id %>
+    <% end %>
+    <% if @cat.video.attached? %>
+      <%= f.hidden_field :video, value: @cat.video.signed_id %>
+    <% end %>
+    <%= f.hidden_field :publication_title %>
+    <%= f.hidden_field :name %>
+    <%= f.hidden_field :age %>
+    <%= f.hidden_field :gender %>
+    <%= f.hidden_field :weight %>
+    <%= f.hidden_field :breed %>
+    <%= f.hidden_field :animal_print %>
+    <%= f.hidden_field :hair_length %>
+    <%= f.hidden_field :castration_flag %>
+    <%= f.hidden_field :vaccine_flag %>
+    <%= f.hidden_field :postal_code %>
+    <%= f.hidden_field :prefecture %>
+    <%= f.hidden_field :city %>
+    <%= f.hidden_field :background %>
+    <%= f.hidden_field :personality %>
+    <%= f.hidden_field :health %>
+    <%= f.hidden_field :delivery_place %>
+    <%= f.hidden_field :remarks %>
+    <%= f.hidden_field :publication_deadline %>
+
+    <div class="form__flex">
+      <%= button_tag '戻る', name: "#{params[:new] ? :back_new : :back_edit }", class: 'publish-confirm__form-back-button' %>
+      <%= button_tag params[:new] ? '里親募集を開始' : '掲載の内容を更新', class: 'publish-confirm__form-ok-button' %>
+    </div>
+  <% end %>
+</section>

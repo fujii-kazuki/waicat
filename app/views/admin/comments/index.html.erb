@@ -1,0 +1,86 @@
+<section>
+  <div class="container">
+    <h2 class="heading heading--2">
+      <% if params.dig(:q, :cat_id) %>
+        <%= truncate(@cat.publication_title) %>
+      <% elsif params.dig(:q, :user_id) %>
+        <%= @user.name%>
+      <% end %>
+      のコメント一覧
+    </h2>
+
+    <table class="admin-table admin-table--comments">
+      <thead>
+        <tr class="admin-table__thead-tr">
+          <th class="admin-table__th">
+            <%= sort_link @q, :id, hide_indicator: true do %>
+              ID <%= sort_link_arrow 'id' %>
+            <% end %>
+          </th>
+          <th class="admin-table__th">掲載タイトル</th>
+          <th class="admin-table__th">コメント内容</th>
+          <th class="admin-table__th">
+            <%= sort_link @q, :created_at, hide_indicator: true do %>
+              コメント日付 <%= sort_link_arrow 'created_at' %>
+            <% end%>
+          </th>
+          <th class="admin-table__th">
+            <%= search_form_for @q, url: @search_form_path, class: 'form admin-table__form' do |f| %>
+              <% if params.dig(:q, :cat_id) %>
+                <%= f.hidden_field :cat_id, value: params[:cat_id] %>
+              <% elsif params.dig(:q, :user_id) %>
+                <%= f.hidden_field :user_id, value: params[:user_id] %>
+              <% end %>
+              <%= f.label :deleted_flag_eq, '状態', class: 'form__label' %>
+              <%= f.select :deleted_flag_eq, [['表示中', false], ['削除済', true]], { include_blank: '全て' }, onchange: 'submit(this.form)', class: 'selectbox' %>
+            <% end %>
+          </th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if @comments.any? %>
+          <% @comments.each do |comment| %>
+            <tr class="admin-table__tbody-tr">
+              <td class="admin-table__td">
+                <%= comment.id %>
+              </td>
+              <td class="admin-table__td admin-table__td--link">
+                <% if comment.cat.publication_title.blank? %>
+                  <%= link_to 'タイトル未設定', admin_cat_path(comment.cat.id) %>
+                <% else %>
+                  <%= link_to truncate(comment.cat.publication_title, length: 60), admin_cat_path(comment.cat.id) %>
+                <% end %>
+              </td>
+              <td class="admin-table__td">
+                <%= show_text comment.body %>
+              </td>
+              <td class="admin-table__td">
+                <%= comment.created_at.strftime('%Y/%m/%d %H:%M') %>
+              </td>
+              <% if comment.deleted_flag %>
+                <td class="admin-table__td admin-table__td--secondary">
+                  削除済
+                </td>
+              <% else %>
+                <td class="admin-table__td admin-table__td--success">
+                  表示中
+                </td>
+              <% end %>
+              <td class="admin-table__td admin-table__td--link">
+                <% if !comment.deleted_flag %>
+                  <% if params.dig(:q, :cat_id) %>
+                    <%= link_to 'コメントを削除', admin_comments_leave_path(comment_id: comment.id, q: { cat_id: params[:q][:cat_id] }), method: :patch, data: { confirm: 'コメントを削除します。よろしいですか？' } %>
+                  <% elsif params.dig(:q, :user_id) %>
+                    <%= link_to 'コメントを削除', admin_comments_leave_path(comment_id: comment.id, q: { user_id: params[:q][:user_id] }), method: :patch, data: { confirm: 'コメントを削除します。よろしいですか？' } %>
+                  <% end %>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        <% end %>
+      </tbody>
+    </table>
+    <%= paginate @comments %>
+  </div>
+</section>

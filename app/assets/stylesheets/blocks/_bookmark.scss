@@ -1,0 +1,23 @@
+.bookmark {  
+  &::before {
+    font-family: "Font Awesome 6 Free";
+    padding-right: .25em;
+  }
+
+  &--delete {
+    @include button($danger, 'sm');
+    
+    &::before {
+      content: '\f02e';
+      font-weight: 900;
+    }
+  }
+
+  &--register {
+    @include button($primary, 'sm');
+
+    &::before {
+      content: '\f02e';
+    }
+  }
+}

@@ -1,0 +1,23 @@
+<ul id="message-list" class="message-list">
+  <% @messages.each do |message| %>
+    <li class="message-list__item" user-id="<%= message.user.id %>">
+      <div class="message-list__item-avatar-wrap">
+        <%= link_to admin_url? ? admin_user_path(message.user.id) : user_path(message.user.id) do %>
+          <%= image_tag message.user.profile_image_url %>
+        <% end %>
+      </div>
+
+      <p class="message-list__item-user-name">
+        <%= message.user.name %>
+      </p>
+
+      <p class="message-list__item-body">
+        <%= show_text message.body %>
+      </p>
+
+      <time class="message-list__item-created-at">
+        <%= message.created_at.strftime('%Y/%m/%d %H:%M') %>
+      </time>
+    </li>
+  <% end %>
+</ul>

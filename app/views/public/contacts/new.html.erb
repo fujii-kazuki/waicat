@@ -1,0 +1,26 @@
+<section>
+  <div class="container">
+    <h2 class="heading heading--2">お問い合わせ</h2>
+
+    <%= render 'layouts/error_messages', obj: @contact %>
+
+    <%= form_with model: @contact, url: confirm_contacts_path, method: :get, class: 'form contact__form' do |f| %>
+      <div class="form__container">
+        <div class="contact__form-flex">
+          <div>
+            <%= f.label :title, class: 'form__label' %>
+            <%= f.text_field :title, autocomplete: 'title', autofocus: true, required: true, class: 'text-field' %>
+          </div>
+          <div>
+            <%= f.label :body, class: 'form__label' %>
+            <%= f.text_area :body, autocomplete: 'body', required: true, class: 'text-area' %>
+          </div>
+        </div>
+
+        <div class="form__flex">
+          <%= f.submit '内容確認', class: 'contact__form-confirm-button' %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</section>

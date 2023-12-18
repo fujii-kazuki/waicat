@@ -1,0 +1,85 @@
+<section>
+  <div class="container">
+    <h2 class="heading heading--2">
+      <%= @user.name + 'の' if !params.dig(:q, :user_id).blank? %>掲載一覧
+    </h2>
+
+      <table class="admin-table admin-table--users">
+        <thead>
+          <tr class="admin-table__thead-tr">
+            <th class="admin-table__th">
+              <%= sort_link @q, :id, hide_indicator: true do %>
+                ID <%= sort_link_arrow 'id' %>
+              <% end %>
+            </th>
+            <th class="admin-table__th">写真</th>
+            <th class="admin-table__th">タイトル</th>
+            <th class="admin-table__th">掲載者名</th>
+            <th class="admin-table__th">
+              <%= sort_link @q, :publication_date, hide_indicator: true do %>
+                掲載日 <%= sort_link_arrow 'publication_date' %>
+              <% end%>
+            </th>
+            <th class="admin-table__th">
+              <%= search_form_for @q, url: admin_cats_path, class: 'form admin-table__form' do |f| %>
+                <%= f.hidden_field :deleted_flag_eq %>
+                <%= f.hidden_field :user_id, value: params.dig(:q, :user_id) %>
+                <%= f.label :publication_status_eq, '掲載ステータス', class: 'form__label' %>
+                <%= f.select :publication_status_eq, [['下書き', 0], ['公開', 1], ['非公開', 2], ['相談中', 3], ['里親決定', 4], ['募集終了', 5], ['掲載締め切り', 6]], { include_blank: '全て' }, onchange: 'submit(this.form)', class: 'selectbox' %>
+              <% end %>
+            </th>
+            <th class="admin-table__th">
+              <%= search_form_for @q, url: admin_cats_path, class: 'form admin-table__form' do |f| %>
+                <%= f.hidden_field :publication_status_eq %>
+                <%= f.hidden_field :user_id, value: params.dig(:q, :user_id) %>
+                <%= f.label :deleted_flag_eq, '状態', class: 'form__label' %>
+                <%= f.select :deleted_flag_eq, [['利用中', false], ['削除済', true]], { include_blank: '全て' }, onchange: 'submit(this.form)', class: 'selectbox' %>
+              <% end %>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <% if @cats.any? %>
+            <% @cats.each do |cat| %>
+              <tr class="admin-table__tbody-tr">
+                <td class="admin-table__td">
+                  <%= cat.id %>
+                </td>
+                <td class="admin-table__td admin-table__td--image">
+                  <div>
+                    <%= image_tag cat.photo_image_url(0) %>
+                  </div>
+                </td>
+                <td class="admin-table__td admin-table__td--link">
+                  <% if cat.publication_title.blank? %>
+                    <%= link_to 'タイトル未設定', admin_cat_path(cat.id) %>
+                  <% else %>
+                    <%= link_to truncate(cat.publication_title, length: 60), admin_cat_path(cat.id) %>
+                  <% end %>
+                </td>
+                <td class="admin-table__td admin-table__td--link">
+                  <%= link_to cat.user.name, admin_user_path(cat.user.id) %>
+                </td>
+                <td class="admin-table__td">
+                  <%= cat.publication_date.strftime('%Y/%m/%d') %>
+                </td>
+                <td class="admin-table__td admin-table__td--<%= cat.publication_status %>">
+                  <%= cat.publication_status_i18n %>
+                </td>
+                <% if cat.deleted_flag %>
+                  <td class="admin-table__td admin-table__td--secondary">
+                    削除済
+                  </td>
+                <% else %>
+                  <td class="admin-table__td admin-table__td--success">
+                    利用中
+                  </td>
+                <% end %>
+              </tr>
+            <% end %>
+          <% end %>
+      </tbody>
+    </table>
+    <%= paginate @cats %>
+  </div>
+</section>

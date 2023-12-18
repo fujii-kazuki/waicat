@@ -1,0 +1,28 @@
+<section>
+  <div class="container">
+    <h2 class="heading heading--2">通知一覧</h2>
+
+    <%= form_with url: search_notices_path, class: 'form notice-list__form', method: :get do |f| %>
+      <div class="notice-list__form-flex">
+        <%= f.select :pattern, ['全て', '未読のみ', '既読のみ'], { selected: params[:pattern] }, class: 'selectbox' %>
+        <%= f.select :sort, ['新しい順', '古い順'], { selected: params[:sort] }, class: 'selectbox' %>
+        <%= button_tag '検索', class: 'notice-list__form-search-button' %>
+      </div>
+    <% end %>
+
+    <% if @notices.any? %>
+      <ul class="notice-list">
+        <% @notices.each do |notice| %>
+          <li id="notice-<%= notice.id %>" class="notice-list__item">
+            <%= render 'content', notice: notice %>
+          </li>
+        <% end %>
+      </ul>
+      <%= paginate @notices %>
+    <% else %>
+      <p>通知はありません</p>
+    <% end %>
+
+  </div>
+</section>
+

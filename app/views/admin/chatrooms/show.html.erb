@@ -1,0 +1,48 @@
+<section class="chatroom">
+  <div class="container">
+    <h2 class="heading heading--2">チャットルーム詳細</h2>
+
+    <dl class="chatroom__grid">
+      <dt>応募元の掲載</dt>
+      <dd>
+        <div class="chatroom__cat-photo-wrap">
+          <%= image_tag @cat.photo_image_url(0) %>
+        </div>
+        <%= link_to @cat.publication_title, admin_cat_path(@cat.id), class: 'chatroom__link' %>
+      </dd>
+    </dl>
+
+    <%= render 'public/messages/list' %>
+
+    <div class="chatroom__container">
+      <% if @chatroom.deleted_flag %>
+        <p class="chatroom__ended-text">
+          <i class="fa-solid fa-circle-exclamation"></i>
+          このチャットルームは終了しています
+        </p>
+      <% else %>
+        <div>
+          <%= link_to 'チャットルームを削除', admin_chatroom_leave_path(@chatroom.id), method: :patch, class: 'chatroom__leave-button', data: { confirm: "このチャットルームを削除します。よろしいですか？" } %>
+        </div>
+      <% end %>
+      <%= link_to '< チャットルーム一覧に戻る', admin_chatrooms_path, class: 'chatroom__form-back-link' %>
+    </div>
+  </div>
+</section>
+
+
+<%# リアルタイムチャットでの自分と相手のスタイル差別化の為、ここへ記述 %>
+<style>
+  li[user-id="<%= @candidater.id %>"] {
+    direction: rtl;
+  }
+
+  li[user-id="<%= @candidater.id %>"] * {
+    direction: ltr;
+  }
+
+  li[user-id="<%= @candidater.id %>"] > .message-list__item-user-name,
+  li[user-id="<%= @candidater.id %>"] > .message-list__item-created-at {
+    text-align: right;
+  }
+</style>

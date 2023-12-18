@@ -1,0 +1,6 @@
+.featured-publish-section {
+  &__see-more-button {
+    margin-top: 50px;
+    @include button($waicat-accent, 'lg', 'round', 'center');
+  }
+}

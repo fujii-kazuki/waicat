@@ -1,0 +1,65 @@
+<div class="main-visual <%= 'main-visual--signed-in' if user_signed_in? %>">
+  <div class="container main-visual__container">
+    <div class="main-visual__logo">
+      <%= render 'layouts/logo' %>
+    </div>
+    <p class="main-visual__text">
+    「あなたの優しさ」と「出会い」をお手伝い。
+    </p>
+
+    <% if !user_signed_in? %>
+      <div class="main-visual__links">
+        <%= link_to '新規登録', new_user_registration_path, class: 'main-visual__link main-visual__link--sign-up' %>
+        <%= link_to 'ログイン', new_user_session_path, class: 'main-visual__link main-visual__link--log-in' %>
+        <p class="main-visual__text">
+        ----- お試しの方はこちら -----
+        </p>
+        <%= link_to 'ゲストログイン', guest_session_path, method: :post, class: 'main-visual__link main-visual__link--guest-log-in' %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="main-visual__img-wrap">
+    <%= image_tag 'main-visual/img-1.jpg', class: 'main-visual__img' %>
+  </div>
+</div>
+
+<% if user_signed_in? %>
+  <section class="select-usage-section">
+    <div class="container">
+      <h2 class="heading heading--2">
+        ご利用用途を選択
+      </h2>
+      <div class="select-usage-section__types">
+        <div class="select-usage-section__type">
+          <p class="select-usage-section__text">里親になりたい方はこちら</p>
+          <%= link_to '里親募集中の猫を探す', cats_path, class: 'select-usage-section__button select-usage-section__button--search' %>
+        </div>
+        <div class="select-usage-section__type">
+          <p class="select-usage-section__text">里親を募集したい方はこちら</p>
+          <%= link_to '里親募集の掲載を作成', new_cat_path, class: 'select-usage-section__button select-usage-section__button--create' %>
+          <p class="select-usage-section__text select-usage-section__text--small">
+            ゲストユーザーはご利用できません。ご利用には
+            <%= link_to '新規登録', new_user_registration_path, class: 'select-usage-section__link' %>
+            が必要です。
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="featured-publish-section">
+    <div class="container">
+      <h2 class="heading heading--2">
+        注目の里親募集掲載
+      </h2>
+      <% if @featured_cats.any? %>
+        <%= render 'public/cats/list', cats: @featured_cats %>
+      <% else %>
+        <p>現在注目の掲載はありません。</p>
+      <% end %>
+
+      <%= link_to '掲載をもっと見る', cats_path, class: 'featured-publish-section__see-more-button' %>
+    </div>
+  </section>
+<% end %>

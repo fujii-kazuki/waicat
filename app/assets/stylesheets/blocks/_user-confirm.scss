@@ -1,0 +1,25 @@
+.user-confirm {
+  &__text {
+    margin: 2em 0;
+    text-align: center;
+  }
+
+  &__flex {
+    display: flex;
+    justify-content: center;
+    gap: 2em;
+    margin-top: 50px;
+
+    @include media-breakpoint-down(md) {
+      flex-direction: column;
+    }
+  }
+
+  &__my-page-button {
+    @include button($primary);
+  }
+
+  &__leave-button {
+    @include button($secondary);
+  }
+}

@@ -1,0 +1,68 @@
+<div class="container">
+  <h2 class="heading heading--2">新規登録</h2>
+
+  <%= form_with model: @user, url: user_registration_path, class: 'form sign-up__form' do |f| %>
+    <div class="form__container">
+      <%= render "layouts/error_messages", obj: @user %>
+
+
+      <div class="sign-up__form-grid">
+        <p class="form__text">アカウントをお持ちの方は<%= link_to 'こちら', new_user_session_path, class: 'form__link' %></p>
+        
+        <div>
+          <%= f.label :name, class: 'form__label' %>
+          <%= f.text_field :name, autocomplete: 'name', autofocus: true, placeholder: '例）猫山太郎', required: true, class: 'text-field' %>
+        </div>
+
+        <div>
+          <%= f.label :postal_code, class: 'form__label' %>
+          <%= f.text_field :postal_code, autocomplete: 'postal_code', placeholder: '例）1234567', required: true, class: 'text-field' %>
+        </div>
+        
+        <div>
+          <p id="search_address_error_text" class="form__text form__text--error">
+            郵便番号に間違いがないか確認し、再度お試しするか手入力してください
+          </p>
+          <button type="button" id="search_address_button" class="form__search-address-button">住所検索</button>
+        </div>
+
+        <div>
+          <%= f.label :prefecture, class: 'form__label' %>
+          <%= f.collection_select :prefecture, Prefecture.all, :name, :name, { include_blank: true }, class: 'selectbox' %>
+        </div>
+
+        <div>
+          <%= f.label :city, class: 'form__label' %>
+          <%= f.text_field :city, autocomplete: 'city', placeholder: '例）新宿区', required: true, class: 'text-field' %>
+        </div>
+
+        <div>
+          <%= f.label :telephone_number, class: 'form__label' %>
+          <%= f.telephone_field :telephone_number, autocomplete: 'telephone_number', placeholder: '例）09012345678', required: true, class: 'text-field' %>
+        </div>
+
+        <div>
+          <%= f.label :email, class: 'form__label' %>
+          <%= f.email_field :email, autocomplete: "email", placeholder: '例）sample@sample.jp', required: true, class: 'text-field' %>
+        </div>
+
+        <div>
+          <%= f.label :password, class: 'form__label' %>
+          <% if @minimum_password_length %>
+            <p class="form__text"><%= @minimum_password_length %>文字以上のパスワードを入力してください</p>
+          <% end %>
+          <%= f.password_field :password, autocomplete: "new-password", required: true, class: 'text-field' %>
+        </div>
+
+        <div>
+          <%= f.label :password_confirmation, class: 'form__label' %>
+          <%= f.password_field :password_confirmation, autocomplete: "new-password", required: true, class: 'text-field' %>
+        </div>
+      </div>
+
+      <div class="form__flex">
+        <%= button_tag '確定', type: 'submit', class: 'sign-up__form-confirm-button' %>
+      </div>
+    </div>
+  <% end %>
+</div>
