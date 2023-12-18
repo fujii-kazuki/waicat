@@ -6,7 +6,7 @@
 
 # これらは架空のデータであり、実在の電話番号メールアドレス、郵便番号、住所ではありません。
 users = [
-  { name: '佐藤大輝', telephone_number: '09012345678', email: 'satohiroki@example.com', postal_code: '1234567', prefecture: '東京都', city: '千代田区一丁目1-1', password: 'password' },
+  { name: 'テストユーザー1', telephone_number: '09012345678', email: 'test@test1', postal_code: '1234567', prefecture: '東京都', city: '千代田区一丁目1-1', password: 'password' },
   { name: '鈴木悠斗', telephone_number: '08023456789', email: 'suzukiyuto@example.com', postal_code: '2345678', prefecture: '大阪府', city: '大阪市中央区二丁目2-2', password: 'password' },
   { name: '高橋健太', telephone_number: '07034567890', email: 'takahashikenta@example.com', postal_code: '3456789', prefecture: '神奈川県', city: '横浜市西区三丁目3-3', password: 'password' },
   { name: '田中拓真', telephone_number: '08098765432', email: 'tanakatakuma@example.com', postal_code: '4567890', prefecture: '愛知県', city: '名古屋市南区四丁目4-4', password: 'password' },
@@ -21,7 +21,7 @@ users = [
   { name: '佐々木陽一', telephone_number: '08055556666', email: 'sasakiyoichi@example.com', postal_code: '3456789', prefecture: '広島県', city: '広島市西区十三丁目13-13', password: 'password' },
   { name: '木村拓也', telephone_number: '09077778888', email: 'kimuratakuya@example.com', postal_code: '4565678', prefecture: '沖縄県', city: '那覇市南区十四丁目14-14', password: 'password' },
   { name: '山口大輔', telephone_number: '07099990000', email: 'yamaguchidaisuke@example.com', postal_code: '5674567', prefecture: '新潟県', city: '新潟市東区十五丁目15-15', password: 'password' },
-  { name: '佐藤美咲', telephone_number: '08011112222', email: 'satomisaki@example.com', postal_code: '6783456', prefecture: '青森県', city: '青森市西区十六丁目16-16', password: 'password' },
+  { name: 'テストユーザー2', telephone_number: '08011112222', email: 'test@test2', postal_code: '6783456', prefecture: '青森県', city: '青森市西区十六丁目16-16', password: 'password' },
   { name: '鈴木真由美', telephone_number: '09033334444', email: 'suzukimayumi@example.com', postal_code: '7892345', prefecture: '石川県', city: '金沢市南区十七丁目17-17', password: 'password' },
   { name: '高橋愛子', telephone_number: '07055556666', email: 'takahashiako@example.com', postal_code: '8901234', prefecture: '長野県', city: '長野市北区十八丁目18-18', password: 'password' },
   { name: '田中千紗', telephone_number: '08077778888', email: 'tanakachisa@example.com', postal_code: '9010123', prefecture: '福島県', city: '福島市東区十九丁目19-19', password: 'password' },
@@ -39,7 +39,7 @@ users = [
 ]
 
 users.each_with_index do |user, index|
-  User.find_or_create_by!(email: user[:email]) do |end_user|
+  user = User.find_or_create_by!(email: user[:email]) do |end_user|
     puts "Userモデルのレコード作成（#{index + 1}/#{users.count}）"
 
     end_user.name = user[:name]
@@ -49,5 +49,18 @@ users.each_with_index do |user, index|
     end_user.prefecture = user[:prefecture]
     end_user.city = user[:city]
     end_user.password = user[:password]
+    end_user.profile = 'こんにちは！
+
+                        私は20代で、自然とアートが好きなクリエイティブな仕事に従事しています。
+                        旅行や新しい料理に興味があり、日々の生活にも新しい発見も求めています。
+
+                        新しい出会いを楽しみにしています！'
+  end
+
+  case rand(0..5) # アバター画像無しor有り
+  when 0 then
+  else
+    user.avatar.attach(io: File.open(Rails.root.join("app/assets/images/avatars/img-#{rand(1..5)}.jpg")), filename: "#{rand(1..5)}.jpg")
+    user.save!
   end
 end

@@ -419,9 +419,9 @@ end
     test_cat_7(publisher_id)
   end
 
-  test_cat_8(publisher_id, candidater_id)
-  test_cat_9(publisher_id, candidater_id)
-  test_cat_10(publisher_id, candidater_id)
+  test_cat_8(rand(2..11), candidater_id)
+  test_cat_9(rand(2..11), candidater_id)
+  test_cat_10(rand(2..11), candidater_id)
   test_cat_11(publisher_id)
   test_cat_12(publisher_id)
   test_cat_13(publisher_id)
