@@ -14,9 +14,9 @@ prefecture_names = [
   '熊本県', '大分県', '宮崎県', '鹿児島県', '沖縄県'
 ]
 
-prefecture_names.each do |prefecture_name|
+prefecture_names.each_with_index do |prefecture_name, index|
   Prefecture.find_or_create_by!(name: prefecture_name) do |prefecture|
-    puts "Prefectureモデルのレコード作成"
+    puts "Prefectureモデルのレコード作成（#{index + 1}/#{prefecture_names.count}）"
 
     prefecture.name = prefecture_name
   end

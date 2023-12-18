@@ -38,9 +38,9 @@ users = [
   { name: '山口真理', telephone_number: '07099990000', email: 'yamaguchimari@example.com', postal_code: '0123456', prefecture: '兵庫県', city: '尼崎市東区三十丁目30-30', password: 'password' }
 ]
 
-users.each do |user|
+users.each_with_index do |user, index|
   User.find_or_create_by!(email: user[:email]) do |end_user|
-    puts "Userモデルのレコード作成"
+    puts "Userモデルのレコード作成（#{index + 1}/#{users.count}）"
 
     end_user.name = user[:name]
     end_user.telephone_number = user[:telephone_number]

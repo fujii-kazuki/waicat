@@ -38,9 +38,9 @@ breed_names = [
   'その他'
 ]
 
-breed_names.each do |breed_name|
+breed_names.each_with_index do |breed_name, index|
   Breed.find_or_create_by!(name: breed_name) do |breed|
-    puts "Breedモデルのレコード作成"
+    puts "Breedモデルのレコード作成（#{index + 1}/#{breed_names.count}）"
 
     breed.name = breed_name
   end
