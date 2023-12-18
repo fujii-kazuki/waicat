@@ -12,6 +12,8 @@ class Admin::UsersController < ApplicationController
     user = User.find(params[:user_id])
     user.update(deleted_flag: true)
     flash[:notice] = 'この会員を削除しました。'
+    # 削除した会員の掲載を全て削除
+    user.cats.update_all(deleted_flag: true)
     redirect_to admin_user_path(user.id)
   end
 end
