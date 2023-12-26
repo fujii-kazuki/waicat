@@ -10,10 +10,7 @@ class Public::UsersController < ApplicationController
       check_guest_user
       @cats = @user.cats.where(deleted_flag: false).page(params[:page]).per(6)
     else
-      @cats = @user.cats.where(
-        publication_status: ['public', 'in_consultation', 'foster_parents_decided', 'recruitment_closed'],
-        deleted_flag: false
-      ).page(params[:page]).per(6)
+      @cats = @user.cats.published.page(params[:page]).per(6)
     end
     @current_page = @cats.current_page
     @total_pages = @cats.total_pages == 0 ? 1 : @cats.total_pages

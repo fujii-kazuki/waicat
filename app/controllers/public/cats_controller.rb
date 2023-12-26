@@ -5,10 +5,7 @@ class Public::CatsController < ApplicationController
   before_action :set_q, only: [:index, :search]
 
   def index
-    @cats = Cat.where(
-      publication_status: ['public', 'in_consultation', 'foster_parents_decided', 'recruitment_closed'],
-      deleted_flag: false
-    ).order(created_at: :desc).page(params[:page]).per(12)
+    @cats = Cat.published.order(created_at: :desc).page(params[:page]).per(12)
     @current_page = @cats.current_page
     @total_pages = @cats.total_pages == 0 ? 1 : @cats.total_pages
     @total_count = @cats.total_count
@@ -142,10 +139,7 @@ class Public::CatsController < ApplicationController
   end
 
   def search
-    @cats = @q.result.where(
-      publication_status: ['public', 'in_consultation', 'foster_parents_decided', 'recruitment_closed'],
-      deleted_flag: false
-    ).order(created_at: :desc).page(params[:page]).per(12)
+    @cats = @q.result.published.order(created_at: :desc).page(params[:page]).per(12)
     @current_page = @cats.current_page
     @total_pages = @cats.total_pages == 0 ? 1 : @cats.total_pages
     @total_count = @cats.total_count
