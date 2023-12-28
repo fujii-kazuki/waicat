@@ -1,6 +1,9 @@
 class Public::MessagesController < ApplicationController
+  include AjaxHelper
+
   before_action :authenticate_user!
   before_action :check_guest_user, if: :user_signed_in?
+  before_action :check_correct_user, only: [:create]
 
   def create
     chatroom = Chatroom.find(params[:chatroom_id])
@@ -46,5 +49,16 @@ class Public::MessagesController < ApplicationController
       body: "#{message.body}",
       url: chatroom_path(message.chatroom.id)
     )
+  end
+
+  def check_correct_user
+    chatroom = Chatroom.find(params[:chatroom_id])
+    chatroom_user = chatroom.chatroom_users.select { |chatroom_user| chatroom_user.user_id == current_user.id }
+    if chatroom.deleted_flag || chatroom_user.empty?
+      flash[:alert] = '申し訳ございませんが、その操作を行うことはできません。'
+      respond_to do |format|
+        format.js { render ajax_redirect_to(chatrooms_path) }
+      end
+    end
   end
 end
