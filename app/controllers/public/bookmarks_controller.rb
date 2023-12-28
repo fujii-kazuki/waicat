@@ -12,8 +12,10 @@ class Public::BookmarksController < ApplicationController
 
   def create
     @cat = Cat.find(params[:cat_id])
-    current_user.bookmarks.create(cat_id: params[:cat_id])
-    flash.now[:notice] = 'ブックマークに登録しました。'
+    bookmark = Bookmark.new(user_id: current_user.id, cat_id: @cat.id)
+    if bookmark.save
+      flash.now[:notice] = 'ブックマークに登録しました。'
+    end
   end
 
   def destroy

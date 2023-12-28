@@ -1,6 +1,7 @@
 class Public::ChatroomsController < ApplicationController
   before_action :authenticate_user!
   before_action :check_guest_user, if: :user_signed_in?
+  before_action :check_correct_user, only: [:show, :close]
 
   def index
     @user = current_user
@@ -59,5 +60,14 @@ class Public::ChatroomsController < ApplicationController
       body: "#{cat.name}の元飼い主の#{recruiter.name}さんが、里親となったあなたに安心し、チャットを終了しました。
             これからも#{cat.name}の里親としてに十分に愛情を注ぎ、可愛がってあげてください♪"
     )
+  end
+
+  def check_correct_user
+    chatroom = Chatroom.find(params[:id])
+    chatroom_user = chatroom.chatroom_users.select { |chatroom_user| chatroom_user.user_id == current_user.id }
+    if chatroom.deleted_flag || chatroom_user.empty?
+      flash[:alert] = '申し訳ございませんが、その操作を行うことはできません。'
+      redirect_to chatrooms_path
+    end
   end
 end

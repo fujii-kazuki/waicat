@@ -1,6 +1,9 @@
 class Public::CommentsController < ApplicationController
+  include AjaxHelper
+
   before_action :authenticate_user!
   before_action :check_guest_user, if: :user_signed_in?
+  before_action :check_correct_user, only: [:destroy]
 
   def index
     @cat = Cat.find(params[:cat_id])
@@ -69,6 +72,15 @@ class Public::CommentsController < ApplicationController
               内容：#{comment.body}",
         url: cat_comments_path(comment.cat.id)
       )
+    end
+  end
+
+  def check_correct_user
+    if Comment.find(params[:id]).user_id != current_user.id
+      flash[:alert] = '申し訳ございませんが、その操作を行うことはできません。'
+      respond_to do |format|
+        format.js { render ajax_redirect_to(cat_comments_path(params[:cat_id])) }
+      end
     end
   end
 end
