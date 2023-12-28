@@ -3,6 +3,7 @@ class Public::CatsController < ApplicationController
   before_action :check_guest_user, except: [:index, :show, :search], if: :user_signed_in?
   # Gem「ransack」のフォームで使用するインスタンス変数「@q」定義
   before_action :set_q, only: [:index, :search]
+  before_action :check_correct_user, only: [:edit, :update, :destroy]
 
   def index
     @cats = Cat.published.order(created_at: :desc).page(params[:page]).per(12)
@@ -190,5 +191,12 @@ class Public::CatsController < ApplicationController
   # Gem「ransack」のフォームで使用するインスタンス変数「@q」定義
   def set_q
     @q = Cat.ransack(params[:q])
+  end
+
+  def check_correct_user
+    if Cat.find(params[:id]).user_id != current_user.id
+      flash[:alert] = '申し訳ございませんが、その操作を行うことはできません。'
+      redirect_to cats_path
+    end
   end
 end
