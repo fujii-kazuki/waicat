@@ -32,12 +32,19 @@
       </h2>
       <div class="select-usage-section__types">
         <div class="select-usage-section__type">
-          <p class="select-usage-section__text">里親になりたい方はこちら</p>
-          <%= link_to '里親募集中の猫を探す', cats_path, class: 'select-usage-section__button select-usage-section__button--search' %>
+          <%= link_to cats_path, class: 'select-usage-section__button select-usage-section__button--search' do %>
+            <span>里親になりたい方はこちら</span><br>
+            <i class="fa-solid fa-magnifying-glass"></i>
+            里親募集中の猫を探す
+          <% end %>
         </div>
         <div class="select-usage-section__type">
-          <p class="select-usage-section__text">里親を募集したい方はこちら</p>
-          <%= link_to '里親募集の掲載を作成', new_cat_path, class: 'select-usage-section__button select-usage-section__button--create' %>
+          <%= link_to new_cat_path, class: 'select-usage-section__button select-usage-section__button--create' do %>
+            <span>里親を募集したい方はこちら</span><br>
+            <i class="fa-regular fa-file-lines"></i>
+            里親募集の掲載を作成
+          <% end %>
+
           <p class="select-usage-section__text select-usage-section__text--small">
             ゲストユーザーはご利用できません。ご利用には
             <%= link_to '新規登録', new_user_registration_path, class: 'select-usage-section__link' %>
