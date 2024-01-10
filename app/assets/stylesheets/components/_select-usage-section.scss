@@ -2,6 +2,7 @@
   &__types {
     display: flex;
     justify-content: center;
+    column-gap: 20px;
 
     @include media-breakpoint-down(md) {
       flex-direction: column;
