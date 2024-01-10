@@ -1,0 +1,117 @@
+.select-usage-section {
+  &__types {
+    display: flex;
+    justify-content: center;
+    column-gap: 20px;
+
+    @include media-breakpoint-down(md) {
+      flex-direction: column;
+    }
+  }
+
+  &__type {
+    flex: 0 0 42%;
+    text-align: center;
+  }
+
+  &__text {
+    font-size: 1.8rem;
+    margin-bottom: .5em;
+
+    &--small {
+      font-size: 1.2rem;
+    }
+  }
+
+  &__link {
+    @include link($primary, true);
+    white-space: nowrap;
+  }
+  
+  &__button {
+    border-radius: 5px;
+    color: $white;
+    display: inline-block;
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin: 20px 0 20px;
+    padding: .2em 2em .75em;
+    position: relative;
+    transition: box-shadow 0.3s, transform 0.3s;
+    text-decoration: none;
+    white-space: nowrap;
+
+    &:hover {
+      transform: translate(0, 3px);
+    }
+
+    & > span {
+      background: #fff;
+      border-radius: 100vh;
+      box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2);
+      display: block;
+      font-size: 1.5rem;
+      padding: 0.2rem 0;
+      position: absolute;
+      top: -1.25rem;
+      left: calc(50% - 150px);
+      width: 300px;
+
+      &:before,
+      &:after {
+        content: "";
+        position: absolute;
+        left: calc(50% - 10px);
+      }
+
+      &:before {
+        bottom: -10px;
+        border-width: 10px 10px 0 10px;
+        border-style: solid;
+      }
+
+      &:after {
+        bottom: -7px;
+        border-width: 10px 10px 0 10px;
+        border-style: solid;
+        border-color: #fff transparent transparent transparent;
+      }
+    }
+
+    &--search {
+      background-color: $waicat-accent;
+      box-shadow: 0 5px 0 #df751c;
+
+      &:hover {
+        box-shadow: 0 2px 0 #df751c;
+      }
+
+      & > span {
+        border: 2px solid $waicat-accent;
+        color: $waicat-accent;
+
+        &:before {
+          border-color: $waicat-accent transparent transparent transparent;
+        }
+      }
+    }
+
+    &--create {
+      background-color: $primary;
+      box-shadow: 0 5px 0 #3075d6;
+
+      &:hover {
+        box-shadow: 0 2px 0 #3075d6;
+      }
+
+      & > span {
+        border: 2px solid $primary;
+        color: $primary;
+
+        &:before {
+          border-color: $primary transparent transparent transparent;
+        }
+      }
+    }
+  }
+}
